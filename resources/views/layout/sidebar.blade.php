@@ -70,7 +70,7 @@
             </a>
         </li>
 
-      <li class="nav-item nav-category">Components</li>
+     {{-- <li class="nav-item nav-category">Components</li>
       <li class="nav-item {{ active_class(['ui-components/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#uiComponents" role="button" aria-expanded="{{ is_active_route(['ui-components/*']) }}" aria-controls="uiComponents">
           <i class="link-icon" data-feather="feather"></i>
@@ -339,7 +339,7 @@
           <i class="link-icon" data-feather="hash"></i>
           <span class="link-title">Documentation</span>
         </a>
-      </li>
+      </li>--}}
     </ul>
   </div>
 </nav>
