@@ -35,7 +35,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials))
         {
             $request->session()->regenerate();
-            return redirect()->intended(route('dashboard'));
+            return redirect()->intended(route('recipes.index'));
         }
         return back()->withErrors([
             "email" => 'Identifiants incorrectes'
@@ -44,6 +44,7 @@ class AuthController extends Controller
 
     public function logout()
     {
+        dd('SAlut');
         Auth::logout();
         return to_route('login')->with('success', 'Vous êtes bien déconnecté');
     }

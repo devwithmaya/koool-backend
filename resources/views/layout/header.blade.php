@@ -72,7 +72,7 @@
                   <p class="tx-12 text-muted">Project status</p>
                 </div>
                 <p class="tx-12 text-muted">2 min ago</p>
-              </div>	
+              </div>
             </a>
             <a href="javascript:;" class="dropdown-item d-flex align-items-center py-2">
               <div class="me-3">
@@ -84,7 +84,7 @@
                   <p class="tx-12 text-muted">Client meeting</p>
                 </div>
                 <p class="tx-12 text-muted">30 min ago</p>
-              </div>	
+              </div>
             </a>
             <a href="javascript:;" class="dropdown-item d-flex align-items-center py-2">
               <div class="me-3">
@@ -96,7 +96,7 @@
                   <p class="tx-12 text-muted">Project updates</p>
                 </div>
                 <p class="tx-12 text-muted">1 hrs ago</p>
-              </div>	
+              </div>
             </a>
             <a href="javascript:;" class="dropdown-item d-flex align-items-center py-2">
               <div class="me-3">
@@ -108,7 +108,7 @@
                   <p class="tx-12 text-muted">Project deatline</p>
                 </div>
                 <p class="tx-12 text-muted">2 hrs ago</p>
-              </div>	
+              </div>
             </a>
             <a href="javascript:;" class="dropdown-item d-flex align-items-center py-2">
               <div class="me-3">
@@ -120,7 +120,7 @@
                   <p class="tx-12 text-muted">New record</p>
                 </div>
                 <p class="tx-12 text-muted">5 hrs ago</p>
-              </div>	
+              </div>
             </a>
           </div>
           <div class="px-3 py-2 d-flex align-items-center justify-content-center border-top">
@@ -148,7 +148,7 @@
               <div class="flex-grow-1 me-2">
                 <p>New Order Recieved</p>
                 <p class="tx-12 text-muted">30 min ago</p>
-              </div>	
+              </div>
             </a>
             <a href="javascript:;" class="dropdown-item d-flex align-items-center py-2">
               <div class="wd-30 ht-30 d-flex align-items-center justify-content-center bg-primary rounded-circle me-3">
@@ -157,7 +157,7 @@
               <div class="flex-grow-1 me-2">
                 <p>Server Limit Reached!</p>
                 <p class="tx-12 text-muted">1 hrs ago</p>
-              </div>	
+              </div>
             </a>
             <a href="javascript:;" class="dropdown-item d-flex align-items-center py-2">
               <div class="wd-30 ht-30 d-flex align-items-center justify-content-center bg-primary rounded-circle me-3">
@@ -166,7 +166,7 @@
               <div class="flex-grow-1 me-2">
                 <p>New customer registered</p>
                 <p class="tx-12 text-muted">2 sec ago</p>
-              </div>	
+              </div>
             </a>
             <a href="javascript:;" class="dropdown-item d-flex align-items-center py-2">
               <div class="wd-30 ht-30 d-flex align-items-center justify-content-center bg-primary rounded-circle me-3">
@@ -175,7 +175,7 @@
               <div class="flex-grow-1 me-2">
                 <p>Apps are ready for update</p>
                 <p class="tx-12 text-muted">5 hrs ago</p>
-              </div>	
+              </div>
             </a>
             <a href="javascript:;" class="dropdown-item d-flex align-items-center py-2">
               <div class="wd-30 ht-30 d-flex align-items-center justify-content-center bg-primary rounded-circle me-3">
@@ -184,7 +184,7 @@
               <div class="flex-grow-1 me-2">
                 <p>Download completed</p>
                 <p class="tx-12 text-muted">6 hrs ago</p>
-              </div>	
+              </div>
             </a>
           </div>
           <div class="px-3 py-2 d-flex align-items-center justify-content-center border-top">
@@ -202,8 +202,8 @@
               <img class="wd-80 ht-80 rounded-circle" src="{{ url('https://via.placeholder.com/80x80') }}" alt="">
             </div>
             <div class="text-center">
-              <p class="tx-16 fw-bolder">Amiah Burton</p>
-              <p class="tx-12 text-muted">amiahburton@gmail.com</p>
+              <p class="tx-16 fw-bolder">{{\Illuminate\Support\Facades\Auth::user()->name}}</p>
+              <p class="tx-12 text-muted">{{\Illuminate\Support\Facades\Auth::user()->email}}</p>
             </div>
           </div>
           <ul class="list-unstyled p-1">
@@ -225,12 +225,15 @@
                 <span>Switch User</span>
               </a>
             </li>
-            <li class="dropdown-item py-2">
-              <a href="javascript:;" class="text-body ms-0">
-                <i class="me-2 icon-md" data-feather="log-out"></i>
-                <span>Log Out</span>
-              </a>
-            </li>
+              <form action="{{ route('logout') }}" method="POST">
+                    @method('DELETE')
+                    <li class="dropdown-item py-2">
+                      <a href="javascript:;" class="text-body ms-0">
+                        <i class="me-2 icon-md" data-feather="log-out"></i>
+                        <span>Log Out</span>
+                      </a>
+                    </li>
+              </form>
           </ul>
         </div>
       </li>
