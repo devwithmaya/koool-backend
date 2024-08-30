@@ -21,7 +21,7 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        $recipes = Recipe::with('ingredientss')->orderBy('created_at', 'DESC')->get();
+        $recipes = Recipe::with('ingredientss')->with('categories')->orderBy('created_at', 'DESC')->get();
         #dd($recipes);
         return view('recipes.recipes',[
             'recipes' => $recipes
@@ -105,18 +105,7 @@ class RecipeController extends Controller
             //dd($recipe);
 
             return to_route('recipes.index');
-            return response()->json([
-                'id' => $recipe->id,
-                'title' => $recipe->title,
-                'image' => $recipe->image,
-                'summary' => $recipe->summary,
-                'ingredients' => $recipe->ingredients->map(function ($ingredient) {
-                    return [
-                        'name' => $ingredient->name,
-                        'quantity' => $ingredient->pivot->quantity,
-                    ];
-                }),
-            ], Response::HTTP_CREATED);
+
         } catch (\Exception $e) {
             DB::rollBack();
 
@@ -134,7 +123,7 @@ class RecipeController extends Controller
     public function show(string $id)
     {
         //dd($id);
-        $recipe = Recipe::with('ingredientss')->find($id);
+        $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
         return \response()->json([
             'recipe' => $recipe
         ],Response::HTTP_OK);
@@ -142,37 +131,46 @@ class RecipeController extends Controller
 
     public function edit(string $id)
     {
-        $recipe = Recipe::with('ingredientss')->find($id);
+        $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
+        $categories = Category::all();
         //dd($recipe->ingredientss);
         return view('recipes.edit-recipe',[
-            'recipe' => $recipe
+            'recipe' => $recipe,
+            'categories' => $categories
         ]);
     }
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): RedirectResponse|JsonResponse
+
+    public function update(Request $request, string $id)
     {
         $rules = [
             'title' => 'required|string|max:255',
-            'image' => 'required|string',
+            'image' => 'required|file',
             'summary' => 'required|string',
             'ingredients' => 'required|array|min:1',
             'ingredients.*.name' => 'required|string|max:255',
             'ingredients.*.quantity' => 'required|string|max:255',
+            'categories' => 'required|array|min:1',
+            'categories.*' => 'exists:categories,id',
         ];
 
         $validator = Validator::make($request->all(), $rules);
 
-        /*if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Validation errors',
-                'errors' => $validator->errors(),
-            ], 422);
-        }*/
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            $errorMessage = implode('\\n', $errors);
+
+            return response()->make("<script>
+                alert('Bad request: $errorMessage');
+                window.history.back();
+            </script>");
+        }
 
         $validatedData = $validator->validated();
-        $recipe = Recipe::with('ingredientss')->find($id);
+        $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
+        //dd($recipe);
         logger('recipe with ingredients',['recipe'=>$recipe]);
         try {
             DB::beginTransaction();
@@ -187,7 +185,6 @@ class RecipeController extends Controller
             logger('recipe detached', ['recipe'=>$recipe]);
 
             $ingredients = [];
-            dd($validatedData['ingredients']);
 
             foreach ($validatedData['ingredients'] as $ingredientData) {
                 //dd($ingredientData['name']);
@@ -197,21 +194,17 @@ class RecipeController extends Controller
                 );
 
                 $ingredients[$ingredient->id] = ['quantity' => $ingredientData['quantity']];
-                dd($ingredients);
             }
-            dd($ingredients);
             $recipe->ingredientss()->attach($ingredients);
 
+            $recipe->categories()->attach($validatedData['categories']);
             DB::commit();
 
             $recipe->load('ingredientss');
             //dd($recipe);
             logger('final recipe', ['recipe' => $recipe]);
             return to_route('recipes.index')->with('success', 'Your recipe have been updated successfully');
-            return response()->json([
 
-                'recipe' => $recipe
-            ], Response::HTTP_CREATED);
         } catch (\Exception $e) {
             DB::rollBack();
 
