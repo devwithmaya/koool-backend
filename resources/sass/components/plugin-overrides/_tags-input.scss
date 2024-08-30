@@ -5,12 +5,10 @@ div.tagsinput {
   padding: 6px 6px 1px;
   border-color: $input-border-color;
   border-radius: $input-border-radius;
-  background: $input-bg;
-  color: $text-muted;
   span.tag {
     background: $primary;
-    border: 0;
     color: $white;
+    border: 0;
     padding: 3px 7px;
     font-family: inherit;
     border-radius: .15rem;
@@ -35,6 +33,5 @@ div.tagsinput {
     margin: 0;
     padding: 1px;
     border-radius: $border-radius;
-    @extend .text-muted;
   }
 }

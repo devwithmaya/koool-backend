@@ -16,6 +16,19 @@
     .dataTables_filter {
       @media(max-width: 767px) {
         text-align: left;
+        margin-left: -19px;
+      }
+    }
+  }
+  div {
+    &.dataTables_paginate {
+      ul { 
+        &.pagination {
+          @extend .justify-content-center;
+          @extend .justify-content-md-end;
+          @extend .mt-3;
+          @extend .mt-md-0;
+        }
       }
     }
   }

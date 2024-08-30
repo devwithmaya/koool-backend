@@ -12,15 +12,15 @@
 .editor-toolbar {
   border: 1px solid $input-border-color;
   border-bottom: 0;
-  border-radius: 4px 4px 0 0;
+  border-radius: $input-border-radius $input-border-radius 0 0;
   &, &:hover {
     opacity: 1;
   }
   button {
     color: rgba($body-color, .7) !important;
     &:hover {
-      background: lighten($input-bg, 10%);
-      border-color: transparent;
+      background: $gray-200;
+      border: none;
     }
   }
   i.separator {
@@ -29,38 +29,19 @@
   }
 }
 
-.EasyMDEContainer .CodeMirror-fullscreen, 
+.EasyMDEContainer .CodeMirror-fullscreen,
 .editor-toolbar.fullscreen,
 .editor-preview-side {
   z-index: 999;
 }
 
-.editor-toolbar.fullscreen,
-.editor-toolbar.fullscreen::before,
-.editor-toolbar.fullscreen::after {
-  background: $input-bg;
-}
-
-.CodeMirror-cursor {
-  border-color: $body-color;
-}
-
-.editor-toolbar.disabled-for-preview button:not(.no-disable) {
-  background: $input-bg;
-}
-.editor-toolbar button.active,
-.editor-toolbar button:hover {
-  background: lighten($input-bg, 10%);
-  border-color: transparent;
-}
-
-.editor-preview, 
-.editor-preview-side {
-  background: lighten($input-bg, 1%);
-}
-
 .editor-preview-side {
   border-color: $input-border-color;
+}
+
+.editor-toolbar button.active,.editor-toolbar button:hover {
+  background: $gray-200;
+  border-color: transparent;
 }
 
 .editor-statusbar {

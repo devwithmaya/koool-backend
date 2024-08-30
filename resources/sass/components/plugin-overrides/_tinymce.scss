@@ -44,7 +44,7 @@
     color: rgba($body-color, .7);
   }
   .tox-tbtn:hover {
-    background: lighten($input-bg, 10%);
+    background: $gray-200;
     color: $body-color;
     svg {
       fill: $body-color;
@@ -54,12 +54,12 @@
     color: $body-color;
   }
   .tox-mbtn:hover:not(:disabled):not(.tox-mbtn--active) {
-    background: lighten($input-bg, 10%);
+    background: $gray-200;
     color: $body-color;
   }
   .tox-mbtn:focus:not(:disabled),
   .tox-mbtn--active {
-    background: lighten($input-bg, 10%);
+    background: $gray-200;
     color: $body-color;
   }
   .tox-tbtn svg {
@@ -69,20 +69,21 @@
   .tox-tbtn--disabled:hover svg,
   .tox-tbtn:disabled svg,
   .tox-tbtn:disabled:hover svg {
-    fill: lighten($input-bg, 10%);
+    fill: $input-disabled-bg;
   }
   .tox-split-button:hover {
     box-shadow: 0 0 0 1px $input-border-color inset;
   }
   .tox-split-button:focus {
-    background: lighten($input-bg, 10%);
+    background: $gray-200;
   }
   .tox-tbtn--enabled,
   .tox-tbtn--enabled:hover,
   .tox-tbtn:focus {
-    background: lighten($input-bg, 10%);
+    background: $gray-200;
   }
 }
+
 
 div.tox {
   .tox-menu {
@@ -94,16 +95,16 @@ div.tox {
   }
   .tox-collection--list .tox-collection__item--enabled {
     background-color: $primary;
-    color: $body-color;
+    color: $white;
   }
   .tox-collection--list .tox-collection__group {
     border-color: $border-color;
   }
   .tox-collection--toolbar .tox-collection__item--active {
-    background-color: lighten($input-bg, 10%);
+    background-color: $gray-200;
   }
   .tox-collection--list .tox-collection__item--active {
-    background-color: lighten($input-bg, 10%);
+    background-color: $gray-200;
   }
   .tox-collection--toolbar .tox-collection__item--active:not(.tox-collection__item--state-disabled) {
     color: $body-color;
@@ -135,14 +136,14 @@ div.tox {
   .tox-button--secondary:hover:not(:disabled) {
     background-color: $secondary;
     border-color: $secondary;
-    color: $body-color;
+    color: $white;
   }
   .tox-button--naked:hover:not(:disabled) {
     background-color: transparent;
     border-color: transparent;
   }
   .tox-button--naked.tox-button--icon:hover:not(:disabled) {
-    color: darken($body-color, 20%);
+    color: lighten($body-color, 20%);
   }
   .tox-listboxfield .tox-listbox--select, 
   .tox-textarea, 

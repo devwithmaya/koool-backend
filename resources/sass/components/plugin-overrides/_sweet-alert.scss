@@ -3,13 +3,6 @@
 
 .swal2-popup {
   font-size: $font-size-base;
-  background: lighten($card-bg, 5%);
-  box-shadow: $card-box-shadow;
-  
-  &.swal2-toast {
-    box-shadow: $card-box-shadow;
-    background: lighten($card-bg, 5%);
-  }
 
   .swal2-title {
     font-size: 25px;

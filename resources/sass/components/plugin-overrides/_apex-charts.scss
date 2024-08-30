@@ -4,7 +4,7 @@
 div.apexcharts-canvas {
   /*rtl:ignore*/
   direction: ltr; // RTL fix
-  
+
   .apexcharts-menu {
     background: $dropdown-bg !important;
     color: $body-color;
@@ -74,10 +74,12 @@ div.apexcharts-canvas {
     border-bottom-color: rgba($dropdown-bg, .8);
   }
 
-  .apexcharts-yaxistooltip-left:before {
+  .apexcharts-yaxistooltip-left:before,
+    .apexcharts-yaxistooltip-right:before {
     border-left-color: $dropdown-border-color;
   }
-  .apexcharts-yaxistooltip-left:after {
+  .apexcharts-yaxistooltip-left:after,
+    .apexcharts-yaxistooltip-right:after {
     border-left-color: rgba($dropdown-bg, .8);
   }
 

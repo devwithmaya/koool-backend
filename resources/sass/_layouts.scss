@@ -78,5 +78,21 @@
         z-index: 980;
       }
     }
-  }    
+
+
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+    .sidebar-folded .page-wrapper .navbar {
+        width: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+    }
+
+    .main-wrapper .page-wrapper {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
 }

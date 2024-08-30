@@ -1,13 +1,3 @@
-/*
-* NobleUI - Laravel Admin Dashboard Template v2.2
-* Copyright © 2023 NobleUI
-* Licensed under ThemeForest License
-*/
-
-// Theme style for demo2 (Vertical Menu - Dark | Dark-RTL)
-
-
-
 
 // Custom variables
 @import './variables';
@@ -74,6 +64,7 @@
 @import './typography';
 @import './demo';
 @import './spinner';
+@import './addons/dashboard';
 
 // Layout
 @import './vertical-wrapper';

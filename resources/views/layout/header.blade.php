@@ -226,13 +226,14 @@
               </a>
             </li>
               <form action="{{ route('logout') }}" method="POST">
-                    @method('DELETE')
-                    <li class="dropdown-item py-2">
-                      <a href="javascript:;" class="text-body ms-0">
-                        <i class="me-2 icon-md" data-feather="log-out"></i>
-                        <span>Log Out</span>
-                      </a>
-                    </li>
+                @csrf
+                @method('DELETE')
+                <li class="dropdown-item py-2">
+                  <button type="submit" class="text-body ms-0 bg-transparent border-0 p-0">
+                    <i class="me-2 icon-md" data-feather="log-out"></i>
+                    <span>Déconnexion</span>
+                  </button>
+                </li>
               </form>
           </ul>
         </div>

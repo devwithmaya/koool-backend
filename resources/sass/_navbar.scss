@@ -23,9 +23,7 @@
   // right: 0;
   // left: $sidebar-width-lg;
   z-index: 978;
-  -webkit-box-shadow: 3px 0 10px 0 #03060b;
-          box-shadow: 3px 0 10px 0 #03060b;
-  -webkit-transition: width .1s ease, left .1s ease;
+  box-shadow: 3px 0 10px 0 rgba(183,192,206,.2);
   transition: width .1s ease, left .1s ease;
 
   @media(max-width: 991px) {
@@ -39,7 +37,6 @@
   .sidebar-toggler {
     height: 100%;
     border-right: 1px solid $border-color;
-    display: flex;
     align-items: center;
     padding: 0 25px;
     display: none;
@@ -49,8 +46,6 @@
       color: $text-muted;
     }
     @media(max-width: 991px) {
-      display: -webkit-box;
-      display: -ms-flexbox;
       display: flex;    
     }
   }
@@ -75,22 +70,7 @@
       }
       .form-control {
         border: 0;
-        background: transparent;
-        padding: 0 .8rem;
         margin-top: 3px;
-        color: $text-muted;
-        &::-webkit-input-placeholder {
-          color: $text-muted;
-        }
-        &:-ms-input-placeholder {
-          color: $text-muted;
-        }
-        &::-ms-input-placeholder {
-          color: $text-muted;
-        }
-        &::placeholder {
-          color: $text-muted;
-        }
       }
     }
   }
@@ -116,7 +96,7 @@
         display: flex;
         align-items: center;
         .nav-link {
-          color: $text-muted;
+          color: $body-color;
           padding: 0;
           position: relative;
           margin-left: auto;
@@ -162,7 +142,6 @@
             right: -20px;
             left: auto;
             @extend .dropdownAnimation;
-            font-size: .875rem;
             &::before {
               content: '';
               width: 13px;
@@ -171,10 +150,9 @@
               position: absolute;
               top: -7px;
               right: 28px;
-              -webkit-transform: rotate(45deg);
-                      transform: rotate(45deg);
-              border-top: 1px solid $border-color;
-              border-left: 1px solid $border-color;
+              transform: rotate(45deg);
+              border-top: 1px solid $dropdown-border-color;
+              border-left: 1px solid $dropdown-border-color;
             }
             @media(max-width: 767px) {
               right: 20px;

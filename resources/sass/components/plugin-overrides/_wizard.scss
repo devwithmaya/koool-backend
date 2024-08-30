@@ -17,8 +17,8 @@
 .wizard>.steps .disabled a, 
 .wizard>.steps .disabled a:active, 
 .wizard>.steps .disabled a:hover {
-  background-color: lighten($input-bg, 5%);
-  color: $white;
+  background-color: $gray-200;
+  color: $body-color;
   border: 1px solid transparent;
 }
 
@@ -40,7 +40,7 @@
 .wizard>.steps .done a, 
 .wizard>.steps .done a:active, 
 .wizard>.steps .done a:hover {
-  background-color: rgba($primary, .1);
+  background-color: rgba($primary, .2);
   color: $primary;
   border: 1px solid $primary;
 }
@@ -106,9 +106,15 @@
 .wizard>.actions .disabled a, 
 .wizard>.actions .disabled a:active, 
 .wizard>.actions .disabled a:hover {
-  background: lighten($input-bg, 10%);
-  border-color: lighten($input-bg, 10%);
+  background: $gray-200;
+  border-color: $gray-200;
   cursor: not-allowed;
+  color: $gray-500;
+}
+
+.wizard>.actions .disabled a:focus {
+  box-shadow: none;
+  color: $gray-500;
 }
 
 .wizard>.actions>ul {
@@ -142,4 +148,8 @@
 .wizard.vertical>.actions {
   margin: 0;
   width: 100%;
+}
+
+.wizard.vertical>.actions>ul>li {
+  margin: 0 0 0 .7em;
 }

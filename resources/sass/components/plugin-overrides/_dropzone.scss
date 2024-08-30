@@ -2,7 +2,6 @@
 // github link: https://github.com/dropzone/dropzone
 
 .dropzone {
-  background: $input-bg;
   overflow: auto;
   border: 1px solid $input-border-color;
   border-radius: $input-border-radius;
@@ -20,14 +19,11 @@
     }
   }
   .dz-preview {
-    &.dz-image-preview {
-      background: $input-bg;
-    }
-    &.dz-file-preview,
-    &.dz-image-preview {
-     .dz-image {
+    &.dz-image-preview,
+    &.dz-file-preview {
+      .dz-image {
         border-radius: $input-border-radius;
-     }
+      }
     }
   }
 }
