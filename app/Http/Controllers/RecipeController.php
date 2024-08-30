@@ -97,10 +97,13 @@ class RecipeController extends Controller
         $validator = Validator::make($request->all(), $rules);
         //dd($validator->fails());
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Validation errors',
-                'errors' => $validator->errors(),
-            ], 422);
+            $errors = $validator->errors()->all();
+            $errorMessage = implode('\\n', $errors);
+
+            return response()->make("<script>
+                alert('Bad request: $errorMessage');
+                window.history.back();
+            </script>");
         }
 
         $validatedData = $validator->validated();
