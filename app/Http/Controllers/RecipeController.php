@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Ingredient;
 use App\Recipe;
 use Illuminate\Http\JsonResponse;
@@ -14,44 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RecipeController extends Controller
 {
-    public function search(Request $request)
-    {
-        //dd(Auth::id());
-        $query = $request->input('query');
-        //dd($query);
-        $response = Http::get('https://api.spoonacular.com/recipes/complexSearch', [
-            'query' => $query,
-            'apiKey' => env('SPOONACULAR_API_KEY'),
-            'number' => 10,
-        ]);
-        //dd($response);
-        $recipes = $response->json()['results'];
 
-        foreach ($recipes as $recipe) {
-            $detailsResponse = Http::get('https://api.spoonacular.com/recipes/' . $recipe['id'] . '/information', [
-                'apiKey' => env('SPOONACULAR_API_KEY'),
-            ]);
-            $details = $detailsResponse->json();
-            //dd($details);
-
-            Recipe::updateOrCreate(
-                ['title' => $recipe['title']],
-                [
-                    'title' => $recipe['title'],
-                    'image' => $details['image'],
-                    'summary' => $details['summary'] ?? null,
-                    'ingredients' => json_encode(array_column($details['extendedIngredients'], 'original')),
-                ]
-            );
-        }
-        //dd($recipes);
-
-        return response()->json([
-            'error' => false,
-            'message' => "Vos recettes ont été généré avec succés",
-            'recipes' => $recipes
-        ], Response::HTTP_OK);
-    }
     /**
      * Display a listing of the resource.
      */
@@ -62,19 +26,17 @@ class RecipeController extends Controller
         return view('recipes.recipes',[
             'recipes' => $recipes
         ]);
-        return response()->json([
-            'status' => Response::HTTP_OK,
-            'message' => 'Liste des recettes',
-            'recipes' => $recipes
 
-        ],Response::HTTP_OK);
     }
 
     public function create()
     {
         $ingredients = Ingredient::all();
+
         return view('recipes.create-recipe',[
-            'ingredients' => $ingredients
+            'ingredients' => $ingredients,
+            'categories' => Category::all()
+
         ]);
     }
 
@@ -82,7 +44,7 @@ class RecipeController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(Request $request): RedirectResponse|JsonResponse
+    public function store(Request $request)
     {
         //dd('salut');
         $rules = [
@@ -92,10 +54,12 @@ class RecipeController extends Controller
             'ingredients' => 'required|array|min:1',
             'ingredients.*.name' => 'required|string|max:255',
             'ingredients.*.quantity' => 'required|string|max:255',
+            'categories' => 'required|array|min:1',
+            'categories.*' => 'exists:categories,id',
         ];
 
         $validator = Validator::make($request->all(), $rules);
-        //dd($validator->fails());
+
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             $errorMessage = implode('\\n', $errors);
@@ -105,7 +69,6 @@ class RecipeController extends Controller
                 window.history.back();
             </script>");
         }
-
         $validatedData = $validator->validated();
         //dd($validatedData);
         if ($request->hasFile('image')){
@@ -129,9 +92,12 @@ class RecipeController extends Controller
                 );
                 $ingredients[$ingredient->id] = ['quantity' => $ingredientData['quantity']];
             }
-                //dd($ingredients);
+            //dd($ingredients);
 
             $recipe->ingredientss()->attach($ingredients);
+
+
+            $recipe->categories()->attach($validatedData['categories']);
             //dd($recipe);
             DB::commit();
 

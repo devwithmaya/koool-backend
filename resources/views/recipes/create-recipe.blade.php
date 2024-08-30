@@ -44,9 +44,7 @@
                         <div class="col-md-4">
                             <input type="text" class="form-control" name="ingredients[0][quantity]" placeholder="Quantité" required>
                         </div>
-                        <div class="col-md-2">
-                            <i data-feather="x-circle"></i>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -54,7 +52,21 @@
             <div class="mb-3">
                 <button type="button" class="btn btn-secondary" id="add-ingredient"><i data-feather="plus"></i>Ajouter un ingrédient</button>
             </div>
-
+            <div class="mb-3">
+                <label class="form-label">Category</label>
+                <div>
+                    @if($categories)
+                        @foreach($categories as $category)
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" name="categories[]" class="form-check-input" id="checkInline{{$category->id}}" value="{{ $category->id }}">
+                                <label class="form-check-label" for="checkInline{{$category->id}}">
+                                    {{$category->name}}
+                                </label>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Summary</label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" name="summary" rows="5"></textarea>
