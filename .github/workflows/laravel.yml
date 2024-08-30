@@ -30,5 +30,4 @@ jobs:
           **/node_modules/**
           **/.gitignore
           **/package-lock.json
-          **/composer.json
           **/readme.md
