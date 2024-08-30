@@ -8,11 +8,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @group Ingredient Management
+ *
+ * APIs for managing ingredients
+ */
 class IngredientController extends Controller
 {
     /**
      * Display a listing of the resource.
-     */
+     * *
+     * * @response {
+     * *   "status": 200,
+     * *   "message": "Liste des ingrédients",
+     * *   "ingredients": [
+     * *      {"id": 1, "name": "Tomato", "quantity": "2 kg", "created_at": "2024-08-29", "updated_at": "2024-08-29"},
+     * *      {"id": 2, "name": "Onion", "quantity": "1 kg", "created_at": "2024-08-29", "updated_at": "2024-08-29"}
+     * *   ]
+     * * }
+ */
     public function index()
     {
         return response()->json([
@@ -22,12 +36,32 @@ class IngredientController extends Controller
         ]);
     }
 
-    public function create()
-    {
-        return view('pages.forms.create-ingredient');
-    }
+
     /**
      * Store a newly created resource in storage.
+     *
+     * @bodyParam name string required The name of the ingredient. Example: Tomato
+     * @bodyParam quantity string required The quantity of the ingredient. Example: 2 kg
+     *
+     * @response 201 {
+     * "status": 201,
+     * "message": "Recipe add successfully",
+     * "ingredient": {
+     * "id": 1,
+     * "name": "Tomato",
+     * "quantity": "2 kg",
+     * "created_at": "2024-08-29",
+     * "updated_at": "2024-08-29"
+     * }
+     * }
+     * @response 400 {
+     *  "status": 400,
+     *  "message": "Bad Request",
+     *  "errors": {
+     *  "name": ["The name field is required."],
+     *  "quantity": ["The quantity field is required."]
+     *  }
+     * }
      */
     public function store(Request $request)
     {
@@ -56,6 +90,19 @@ class IngredientController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @urlParam id integer required The ID of the ingredient. Example: 1
+     *
+     * @response {
+     * "message": "Liste des ingrédients",
+     * "ingredient": {
+     * "id": 1,
+     * "name": "Tomato",
+     * "quantity": "2 kg",
+     * "created_at": "2024-08-29",
+     * "updated_at": "2024-08-29"
+     * }
+     * }
      */
     public function show(Ingredient $ingredient)
     {
@@ -65,15 +112,33 @@ class IngredientController extends Controller
         ], Response::HTTP_OK);
     }
 
-    public function edit(Ingredient $ingredient)
-    {
-        return view('ingredients.edit-ingredient',[
-            'ingredient' => $ingredient
-        ]);
-    }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @urlParam id integer required The ID of the ingredient. Example: 1
+     * @bodyParam name string required The name of the ingredient. Example: Tomato
+     * @bodyParam quantity string required The quantity of the ingredient. Example: 2 kg
+     *
+     * @response 201 {
+     * "status": 201,
+     * "message": "Recipe update successfully",
+     * "ingredient": {
+     * "id": 1,
+     * "name": "Tomato",
+     * "quantity": "2 kg",
+     * "created_at": "2024-08-29",
+     * "updated_at": "2024-08-29"
+     * }
+     * }
+     * @response 400 {
+     * "status": 400,
+     * "message": "Bad Request",
+     * "errors": {
+     * "name": ["The name field is required."],
+     * "quantity": ["The quantity field is required."]
+     * }
+     * }
      */
     public function update(Request $request, string $id)
     {
@@ -101,6 +166,13 @@ class IngredientController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @urlParam id integer required The ID of the ingredient. Example: 1
+     *
+     * @response 204 {
+     * "status": 204,
+     * "message": "Your ingredient have been deleted with successfully"
+     * }
      */
     public function destroy(Ingredient $ingredient)
     {

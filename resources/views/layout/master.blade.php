@@ -24,10 +24,10 @@ License: For each use you must have a valid license purchased only from above li
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <!-- End fonts -->
-  
+
   <!-- CSRF Token -->
   <meta name="_token" content="{{ csrf_token() }}">
-  
+
   <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}">
 
   <!-- plugin css -->
@@ -43,7 +43,7 @@ License: For each use you must have a valid license purchased only from above li
 
   @stack('style')
 </head>
-<body data-base-url="{{url('/')}}">
+<body data-base-url="{{url('/')}}" >
 
   <script src="{{ asset('assets/js/spinner.js') }}"></script>
 

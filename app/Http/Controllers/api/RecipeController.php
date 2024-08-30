@@ -12,49 +12,42 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
-
+/**
+ * @group Recipe Management
+ *
+ * APIs for managing recipes.
+ */
 class RecipeController extends Controller
 {
-    public function search(Request $request)
-    {
-        //dd(Auth::id());
-        $query = $request->input('query');
-        //dd($query);
-        $response = Http::get('https://api.spoonacular.com/recipes/complexSearch', [
-            'query' => $query,
-            'apiKey' => env('SPOONACULAR_API_KEY'),
-            'number' => 10,
-        ]);
-        //dd($response);
-        $recipes = $response->json()['results'];
 
-        foreach ($recipes as $recipe) {
-            $detailsResponse = Http::get('https://api.spoonacular.com/recipes/' . $recipe['id'] . '/information', [
-                'apiKey' => env('SPOONACULAR_API_KEY'),
-            ]);
-            $details = $detailsResponse->json();
-            //dd($details);
 
-            Recipe::updateOrCreate(
-                ['title' => $recipe['title']],
-                [
-                    'title' => $recipe['title'],
-                    'image' => $details['image'],
-                    'summary' => $details['summary'] ?? null,
-                    'ingredients' => json_encode(array_column($details['extendedIngredients'], 'original')),
-                ]
-            );
-        }
-        //dd($recipes);
-
-        return response()->json([
-            'error' => false,
-            'message' => "Vos recettes ont été généré avec succés",
-            'recipes' => $recipes
-        ], Response::HTTP_OK);
-    }
     /**
-     * Display a listing of the resource.
+     * Get all recipes.
+     *
+     * This endpoint retrieves a list of all recipes in the database.
+     *
+     * @response {
+     * "status": 200,
+     * "message": "Liste des recettes",
+     * "recipes": [
+     * {
+     * "id": 1,
+     * "title": "Spaghetti Bolognese",
+     * "image": "path/to/image.jpg",
+     * "summary": "A classic Italian pasta dish.",
+     * "ingredients": [
+     * {
+     * "name": "Spaghetti",
+     * "quantity": "200g"
+     * },
+     * {
+     * "name": "Ground Beef",
+     * "quantity": "100g"
+     * }
+     * ]
+     * }
+     * ]
+     * }
      */
     public function index()
     {
@@ -71,7 +64,41 @@ class RecipeController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created recipe.
+     *
+     * This endpoint allows users to create a new recipe.
+     *
+     * @bodyParam title string required The title of the recipe. Example: "Chocolate Cake"
+     * @bodyParam image file required An image of the recipe.
+     * @bodyParam summary string required A brief summary of the recipe.
+     * @bodyParam ingredients array required A list of ingredients with their quantities.
+     * @bodyParam ingredients.*.name string required The name of the ingredient. Example: "Flour"
+     * @bodyParam ingredients.*.quantity string required The quantity of the ingredient. Example: "200g"
+     *
+     * @response 201 {
+     * "id": 1,
+     * "title": "Chocolate Cake",
+     * "image": "path/to/image.jpg",
+     * "summary": "A rich and moist chocolate cake.",
+     * "ingredients": [
+     * {
+     * "name": "Flour",
+     * "quantity": "200g"
+     * },
+     * {
+     * "name": "Cocoa Powder",
+     * "quantity": "50g"
+     * }
+     * ]
+     * }
+     *
+     * @response 422 {
+     * "message": "Validation errors",
+     * "errors": {
+     * "title": ["The title field is required."],
+     * "image": ["The image field is required."]
+     * }
+     * }
      */
 
     public function store(Request $request): RedirectResponse|JsonResponse
@@ -100,7 +127,6 @@ class RecipeController extends Controller
         if ($request->hasFile('image')){
             $validatedData['image'] = $request->file('image')->store('images');
         }
-        //$validatedData['image'] = $validatedData->image->store('uploads');
         try {
             DB::beginTransaction();
 
@@ -151,7 +177,30 @@ class RecipeController extends Controller
 
 
     /**
-     * Display the specified resource.
+     * Show a specific recipe.
+     *
+     * This endpoint allows users to view a specific recipe by its ID.
+     *
+     * @urlParam id integer required The ID of the recipe. Example: 1
+     *
+     * @response {
+     * "recipe": {
+     * "id": 1,
+     * "title": "Spaghetti Bolognese",
+     * "image": "path/to/image.jpg",
+     * "summary": "A classic Italian pasta dish.",
+     * "ingredients": [
+     * {
+     * "name": "Spaghetti",
+     * "quantity": "200g"
+     * },
+     * {
+     * "name": "Ground Beef",
+     * "quantity": "100g"
+     * }
+     * ]
+     * }
+     * }
      */
     public function show(string $id)
     {
@@ -164,13 +213,52 @@ class RecipeController extends Controller
 
 
     /**
-     * Update the specified resource in storage.
+     * Update an existing recipe.
+     *
+     * This endpoint allows users to update a specific recipe.
+     *
+     * @urlParam id integer required The ID of the recipe. Example: 1
+     * @bodyParam title string required The title of the recipe. Example: "Vegan Pancakes"
+     * @bodyParam image string required The image of the recipe.
+     * @bodyParam summary string required A brief summary of the recipe.
+     * @bodyParam ingredients array required A list of ingredients with their quantities.
+     * @bodyParam ingredients.*.name string required The name of the ingredient. Example: "Banana"
+     * @bodyParam ingredients.*.quantity string required The quantity of the ingredient. Example: "2"
+     *
+     * @response 201 {
+     * "status": 201,
+     * "message": "Your recipes have been updated successfully",
+     * "recipe": {
+     * "id": 1,
+     * "title": "Vegan Pancakes",
+     * "image": "path/to/image.jpg",
+     * "summary": "Delicious and healthy vegan pancakes.",
+     * "ingredients": [
+     * {
+     * "name": "Banana",
+     * "quantity": "2"
+     * },
+     * {
+     * "name": "Almond Milk",
+     * "quantity": "200ml"
+     * }
+     * ]
+     * }
+     * }
+     *
+     * @response 422 {
+     * "message": "Validation errors",
+     * "errors": {
+     * "title": ["The title field is required."],
+     * "image": ["The image field is required."]
+     * }
+     * }
      */
     public function update(Request $request, string $id): RedirectResponse|JsonResponse
     {
         $rules = [
             'title' => 'required|string|max:255',
-            'image' => 'required|string',
+            'image' => 'required|file',
             'summary' => 'required|string',
             'ingredients' => 'required|array|min:1',
             'ingredients.*.name' => 'required|string|max:255',
@@ -179,15 +267,18 @@ class RecipeController extends Controller
 
         $validator = Validator::make($request->all(), $rules);
 
-        /*if ($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json([
                 'message' => 'Validation errors',
                 'errors' => $validator->errors(),
             ], 422);
-        }*/
+        }
 
         $validatedData = $validator->validated();
         $recipe = Recipe::with('ingredientss')->find($id);
+        if ($request->hasFile('image')){
+            $validatedData['image'] = $request->file('image')->store('images');
+        }
         logger('recipe with ingredients',['recipe'=>$recipe]);
         try {
             DB::beginTransaction();
@@ -240,7 +331,21 @@ class RecipeController extends Controller
 
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a specific recipe.
+     *
+     * This endpoint allows users to delete a recipe by its ID.
+     *
+     * @urlParam id integer required The ID of the recipe. Example: 1
+     *
+     * @response 204 {
+     * "status": 204,
+     * "message": "Your recipe has been deleted successfully"
+     * }
+     *
+     * @response 404 {
+     * "status": 404,
+     * "message": "Recette introuvable"
+     * }
      */
     public function destroy(string $id)
     {

@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\IngredientController;
-use App\Http\Controllers\RecipeController;
+
+use App\Http\Controllers\api\IngredientController;
+use App\Http\Controllers\api\RecipeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,9 +23,10 @@ use Illuminate\Support\Facades\Route;
 #Route::delete('logout',[\App\Http\Controllers\AuthController::class,'logout'])->middleware('auth')->name('logout');
 
 #Api public
-Route::get('/generateRecipes',[RecipeController::class,'search'])->middleware('auth');
-Route::apiResource('recipes',RecipeController::class)->middleware('auth');
-Route::apiResource('ingredients',IngredientController::class)->middleware('auth');
+#Route::get('/generateRecipes',[RecipeController::class,'search'])->middleware('auth');
+Route::apiResource('recipes',RecipeController::class);
+Route::apiResource('ingredients',IngredientController::class);
+Route::apiResource('categories',\App\Http\Controllers\api\CategoryController::class);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
