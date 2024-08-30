@@ -30,9 +30,9 @@ Route::delete('logout',[\App\Http\Controllers\AuthController::class,'logout'])
     ->name('logout');
 
 
-Route::resource('recipes',\App\Http\Controllers\RecipeController::class);
-Route::resource('ingredients',\App\Http\Controllers\IngredientController::class);
-Route::resource('categories',\App\Http\Controllers\CategoryController::class);
+Route::resource('recipes',\App\Http\Controllers\RecipeController::class)->middleware('auth');
+Route::resource('ingredients',\App\Http\Controllers\IngredientController::class)->middleware('auth');
+Route::resource('categories',\App\Http\Controllers\CategoryController::class)->middleware('auth');
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });
