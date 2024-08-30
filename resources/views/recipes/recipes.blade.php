@@ -33,7 +33,9 @@
               <tr>
                 <th>Image</th>
                 <th>Title</th>
-                <th>Start date</th>
+                <th>Ingredients</th>
+                  <th>Categories</th>
+
                   <th>Actions</th>
               </tr>
             </thead>
@@ -41,9 +43,26 @@
             @if($recipes)
             @foreach($recipes as $recipe)
               <tr>
-                <td><img src="{{asset('storage/'.$recipe->image)}}" alt="Image des recêtte"></td>
+                <td><img src="{{asset('storage/'.$recipe->image)}}" alt="Image du recipe"></td>
                 <td>{{$recipe->title}}</td>
-                <td>{{ $recipe->created_at }}</td>
+                <td>
+                    <select class="js-example-basic-single form-control"  data-width="100%">
+                        @if($recipe->ingredientss)
+                            @foreach($recipe->ingredientss as $ingredient)
+                                <option value="">{{$ingredient->name}}({{$ingredient->quantity}}g)</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </td>
+                  <td>
+                      <select class="js-example-basic-single form-control"  data-width="100%">
+                          @if($recipe->categories)
+                              @foreach($recipe->categories as $category)
+                                  <option value="">{{$category->name}}</option>
+                              @endforeach
+                          @endif
+                      </select>
+                  </td>
                   <td class="d-flex d-inline-block gap-2">
                       <form action="{{ route('recipes.destroy',$recipe->id) }}" method="POST">
                           @csrf
