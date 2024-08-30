@@ -5,11 +5,8 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Ingredient;
 use App\Recipe;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +19,6 @@ class RecipeController extends Controller
     public function index()
     {
         $recipes = Recipe::with('ingredientss')->with('categories')->orderBy('created_at', 'DESC')->get();
-        #dd($recipes);
         return view('recipes.recipes',[
             'recipes' => $recipes
         ]);
@@ -96,7 +92,6 @@ class RecipeController extends Controller
 
             $recipe->ingredientss()->attach($ingredients);
 
-
             $recipe->categories()->attach($validatedData['categories']);
             //dd($recipe);
             DB::commit();
@@ -108,11 +103,13 @@ class RecipeController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
+                $errorMessage =  $e->getMessage();
+                return response()->make("<script>
+                alert('Bad request: $errorMessage');
+                window.history.back();
+            </script>");
 
-            return response()->json([
-                'message' => 'An error occurred while creating the recipe.',
-                'error' => $e->getMessage(),
-            ], 500);
+
         }
     }
 
@@ -122,7 +119,6 @@ class RecipeController extends Controller
      */
     public function show(string $id)
     {
-        //dd($id);
         $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
         return \response()->json([
             'recipe' => $recipe
@@ -208,10 +204,13 @@ class RecipeController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return response()->json([
-                'message' => 'An error occurred while updating the recipe.',
-                'error' => $e->getMessage(),
-            ], 500);
+                $errorMessage =  $e->getMessage();
+                return response()->make("<script>
+                alert('Bad request: $errorMessage');
+                window.history.back();
+            </script>");
+
+
         }
     }
 
@@ -223,20 +222,17 @@ class RecipeController extends Controller
     public function destroy(string $id)
     {
         //dd($id);
-        $recipe = Recipe::with('ingredientss')->find($id);
+        $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
         //dd($recipe);
-        /*if ($recipe === null)
-        {
-            return \response()->json([
-                'status' => Response::HTTP_NOT_FOUND,
-                'message' => 'Recette introuvable'
-            ]);
-        }*/
+        if ($recipe === null) {
+            $errorMessage = 'Recipe not found';
+            return response()->make("<script>
+                alert('Bad request: $errorMessage');
+                window.history.back();
+            </script>");
+        }
         $recipe->delete();
         return to_route('recipes.index')->with('success','Your recipe have been deleted with successfully');
-        return \response()->json([
-            'status' => Response::HTTP_NO_CONTENT,
-            'message' => 'Recette supprimée avec succeés'
-        ]);
+
     }
 }
