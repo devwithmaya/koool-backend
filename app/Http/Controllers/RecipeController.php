@@ -7,6 +7,7 @@ use App\Ingredient;
 use App\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -67,7 +68,10 @@ class RecipeController extends Controller
         }
         $validatedData = $validator->validated();
         //dd($validatedData);
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image')) {
+            if ($validatedData['image'] && Storage::exists($validatedData['image'])) {
+                Storage::delete($validatedData['image']);
+            }
             $validatedData['image'] = $request->file('image')->store('images');
         }
         //$validatedData['image'] = $validatedData->image->store('uploads');
@@ -97,8 +101,8 @@ class RecipeController extends Controller
             DB::commit();
 
             $recipe->load('ingredientss');
+            $recipe->load('categories');
             //dd($recipe);
-
             return to_route('recipes.index');
 
         } catch (\Exception $e) {
@@ -170,6 +174,15 @@ class RecipeController extends Controller
         logger('recipe with ingredients',['recipe'=>$recipe]);
         try {
             DB::beginTransaction();
+            if ($request->hasFile('image')) {
+                if ($recipe->image && Storage::exists($recipe->image)) {
+                    Storage::delete($recipe->image);
+                }
+                $validatedData['image'] = $request->file('image')->store('images');
+            } else {
+                $validatedData['image'] = $recipe->image;
+            }
+           // dd($validatedData);
 
             $recipe->update([
                 'title' => $validatedData['title'],
@@ -197,6 +210,8 @@ class RecipeController extends Controller
             DB::commit();
 
             $recipe->load('ingredientss');
+            $recipe->load('categories');
+
             //dd($recipe);
             logger('final recipe', ['recipe' => $recipe]);
             return to_route('recipes.index')->with('success', 'Your recipe have been updated successfully');

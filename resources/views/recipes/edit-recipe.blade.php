@@ -24,7 +24,6 @@
                     <h4 class="card-title">Update Your Recipe</h4>
                     {{--        <p class="text-muted mb-3">Read the <a href="https://jqueryvalidation.org/" target="_blank"> Official jQuery Validation Documentation </a>for a full list of instructions and other options.</p>--}}
                     <form  action="{{ route('recipes.update',$recipe) }}" method="POST" enctype="multipart/form-data">
-
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
@@ -36,7 +35,6 @@
                             <input id="image" class="form-control" name="image" value="{{$recipe->image}}" type="file">
                         </div>
                         <div id="ingredients-container" class="mb-3">
-
                             <h4>Ingrédients</h4>
                             <div class="ingredient-item">
                                 @foreach($recipe->ingredientss as $ingredient)

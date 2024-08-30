@@ -30,6 +30,7 @@
             <label for="name" class="form-label">Title</label>
             <input id="name" class="form-control" name="title" type="text">
           </div>
+
           <div class="mb-3">
             <label for="image" class="form-label">Image</label>
             <input id="image" class="form-control" name="image" type="file">

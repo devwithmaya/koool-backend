@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 /**
@@ -51,9 +52,8 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        $recipes = Recipe::with('ingredientss')->orderBy('created_at', 'DESC')->get();
+        $recipes = Recipe::with('ingredientss')->with('categories')->orderBy('created_at', 'DESC')->get();
         #dd($recipes);
-
         return response()->json([
             'status' => Response::HTTP_OK,
             'message' => 'Liste des recettes',
@@ -103,7 +103,6 @@ class RecipeController extends Controller
 
     public function store(Request $request): RedirectResponse|JsonResponse
     {
-        //dd('salut');
         $rules = [
             'title' => 'required|string|max:255',
             'image' => 'required|file',
@@ -111,6 +110,8 @@ class RecipeController extends Controller
             'ingredients' => 'required|array|min:1',
             'ingredients.*.name' => 'required|string|max:255',
             'ingredients.*.quantity' => 'required|string|max:255',
+            'categories' => 'required|array|min:1',
+            'categories.*' => 'exists:categories,id',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -124,7 +125,10 @@ class RecipeController extends Controller
 
         $validatedData = $validator->validated();
         //dd($validatedData);
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image')) {
+            if ($validatedData['image'] && Storage::exists($validatedData['image'])) {
+                Storage::delete($validatedData['image']);
+            }
             $validatedData['image'] = $request->file('image')->store('images');
         }
         try {
@@ -147,7 +151,7 @@ class RecipeController extends Controller
             //dd($ingredients);
 
             $recipe->ingredientss()->attach($ingredients);
-            //dd($recipe);
+            $recipe->categories()->attach($validatedData['categories']);
             DB::commit();
 
             $recipe->load('ingredientss');
@@ -205,7 +209,7 @@ class RecipeController extends Controller
     public function show(string $id)
     {
         //dd($id);
-        $recipe = Recipe::with('ingredientss')->find($id);
+        $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
         return \response()->json([
             'recipe' => $recipe
         ],Response::HTTP_OK);
@@ -263,6 +267,8 @@ class RecipeController extends Controller
             'ingredients' => 'required|array|min:1',
             'ingredients.*.name' => 'required|string|max:255',
             'ingredients.*.quantity' => 'required|string|max:255',
+            'categories' => 'required|array|min:1',
+            'categories.*' => 'exists:categories,id',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -275,14 +281,21 @@ class RecipeController extends Controller
         }
 
         $validatedData = $validator->validated();
-        $recipe = Recipe::with('ingredientss')->find($id);
+        $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
         if ($request->hasFile('image')){
             $validatedData['image'] = $request->file('image')->store('images');
         }
         logger('recipe with ingredients',['recipe'=>$recipe]);
         try {
             DB::beginTransaction();
-
+            if ($request->hasFile('image')) {
+                if ($recipe->image && Storage::exists($recipe->image)) {
+                    Storage::delete($recipe->image);
+                }
+                $validatedData['image'] = $request->file('image')->store('images');
+            } else {
+                $validatedData['image'] = $recipe->image;
+            }
             $recipe->update([
                 'title' => $validatedData['title'],
                 'image' => $validatedData['image'],
@@ -307,6 +320,7 @@ class RecipeController extends Controller
             }
             //dd($ingredients);
             $recipe->ingredientss()->attach($ingredients);
+            $recipe->categories()->attach($validatedData['categories']);
 
             DB::commit();
 
@@ -350,13 +364,13 @@ class RecipeController extends Controller
     public function destroy(string $id)
     {
         //dd($id);
-        $recipe = Recipe::with('ingredientss')->find($id);
+        $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
         //dd($recipe);
         if ($recipe === null)
         {
             return \response()->json([
                 'status' => Response::HTTP_NOT_FOUND,
-                'message' => 'Recette introuvable'
+                'message' => 'Recipe not found'
             ]);
         }
         $recipe->delete();

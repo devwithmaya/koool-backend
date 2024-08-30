@@ -44,7 +44,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        dd('SAlut');
+        //dd('SAlut');
         Auth::logout();
         return to_route('login')->with('success', 'Vous êtes bien déconnecté');
     }
