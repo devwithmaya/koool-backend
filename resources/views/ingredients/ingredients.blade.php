@@ -18,7 +18,7 @@
       <div class="card-body">
           <div class="d-flex justify-content-between align-items my-3">
               <h6 class="card-title">Data Table Ingredients</h6>
-              <button class="btn btn-primary">Create</button>
+              <a href="{{route('ingredients.create')}}" class="btn btn-primary">Create</a>
           </div>        <div class="table-responsive">
             @if(session('success'))
                 <div class="w-50 m-auto alert bg-alert-success">
