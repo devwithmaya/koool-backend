@@ -32,10 +32,10 @@
               <tr>
                 <th>Image</th>
                 <th>Title</th>
+                <th>Start date</th>
                 <th>Ingredients</th>
-                  <th>Categories</th>
-
-                  <th>Actions</th>
+                <th>Categories</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -77,6 +77,7 @@
               </tr>
             @endforeach
             @endif
+
             </tbody>
           </table>
         </div>
