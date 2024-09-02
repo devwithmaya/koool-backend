@@ -94,14 +94,14 @@ class RecipeController extends Controller
         }
         $validatedData = $validator->validated();
         //dd($validatedData);
+        //$validatedData['image'] = $validatedData->image->store('uploads');
+        try {
         if ($request->hasFile('image')) {
             if ($validatedData['image'] && Storage::exists($validatedData['image'])) {
                 Storage::delete($validatedData['image']);
             }
             $validatedData['image'] = $request->file('image')->store('images');
         }
-        //$validatedData['image'] = $validatedData->image->store('uploads');
-        try {
             DB::beginTransaction();
 
             $recipe = Recipe::create([

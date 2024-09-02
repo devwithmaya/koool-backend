@@ -39,44 +39,45 @@
               </tr>
             </thead>
             <tbody>
-                @if($recipes)
-                  @foreach($recipes as $recipe)
-                    <tr>
-                      <td><img src="{{asset('storage/'.$recipe->image)}}" alt="Image du recipe"></td>
-                      <td>{{$recipe->title}}</td>
-                      <td>
-                          <select class="js-example-basic-single form-control"  data-width="100%">
-                              @if($recipe->ingredientss)
-                                  @foreach($recipe->ingredientss as $ingredient)
-                                      <option value="">{{$ingredient->name}}({{$ingredient->quantity}}g)</option>
-                                  @endforeach
-                              @endif
-                          </select>
-                      </td>
-                        <td>
-                            <select class="js-example-basic-single form-control"  data-width="100%">
-                                @if($recipe->categories)
-                                    @foreach($recipe->categories as $category)
-                                        <option value="">{{$category->name}}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </td>
-                        <td class="d-flex d-inline-block gap-2">
-                            <form action="{{ route('recipes.destroy',$recipe->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-sm btn-danger circle">
-                                    <i data-feather="delete"></i>
-                                </button>
-                            </form>
-                            <a class="btn btn-sm btn-success circle" href="{{route('recipes.edit',$recipe->id)}}">
-                                <i data-feather="edit"></i>
-                            </a>
-                        </td>
-                    </tr>
-                  @endforeach
-                @endif
+            @if($recipes)
+            @foreach($recipes as $recipe)
+              <tr>
+                <td><img src="{{asset('storage/'.$recipe->image)}}" alt="Image du recipe"></td>
+                <td>{{$recipe->title}}</td>
+                <td>
+
+                        @if($recipe->ingredientss)
+                            @foreach($recipe->ingredientss as $ingredient)
+                                <div class="badge badge-primary" >{{$ingredient->name}}/{{$ingredient->quantity}}</div>
+                            @endforeach
+                        @endif
+
+                </td>
+                  <td>
+                      <select class="js-example-basic-single form-control"  data-width="100%">
+                          @if($recipe->categories)
+                              @foreach($recipe->categories as $category)
+                                  <option value="">{{$category->name}}</option>
+                              @endforeach
+                          @endif
+                      </select>
+                  </td>
+                  <td class="d-flex d-inline-block gap-2">
+                      <form action="{{ route('recipes.destroy',$recipe->id) }}" method="POST">
+                          @csrf
+                          @method('DELETE')
+                          <button class="btn btn-sm btn-danger">
+                              <i data-feather="delete"></i>
+                          </button>
+                      </form>
+                      <a class="btn btn-sm btn-success" href="{{route('recipes.edit',$recipe->id)}}">
+                          <i data-feather="edit"></i>
+                      </a>
+                  </td>
+              </tr>
+            @endforeach
+            @endif
+
             </tbody>
           </table>
         </div>
