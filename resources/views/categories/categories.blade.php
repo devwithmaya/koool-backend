@@ -37,26 +37,25 @@
               </tr>
             </thead>
             <tbody>
-            @if($categories)
-            @foreach($categories as $recipe)
-              <tr>
-                <td>{{$recipe->name}}</td>
-                  <td class="d-flex d-inline-block gap-2">
-                      <form action="{{ route('categories.destroy',$recipe->id) }}" method="POST">
-                          @csrf
-                          @method('DELETE')
-                          <button class="btn btn-sm btn-danger">
-                              <i data-feather="delete"></i>
-                          </button>
-                      </form>
-                      <a class="btn btn-sm btn-success" href="{{route('categories.edit',$recipe->id)}}">
-                          <i data-feather="edit"></i>
-                      </a>
-                  </td>
-
-              </tr>
-            @endforeach
-            @endif
+              @if($categories)
+                @foreach($categories as $recipe)
+                  <tr>
+                    <td>{{$recipe->name}}</td>
+                    <td class="d-flex d-inline-block gap-2">
+                        <form action="{{ route('categories.destroy',$recipe->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-danger circle">
+                                <i data-feather="trash"></i>
+                            </button>
+                        </form>
+                        <a class="btn btn-sm btn-success circle" href="{{route('categories.edit',$recipe->id)}}">
+                            <i data-feather="edit"></i>
+                        </a>
+                    </td>
+                  </tr>
+                @endforeach
+              @endif
             </tbody>
           </table>
 {{--            {{$recipes->links()}}--}}
