@@ -26,7 +26,31 @@ body {
      color: #fe0201;
      fill: #fff;
  }
-
+ 
+ /* Path: public\css\custom.css */
+.sidebar div.sidebar-body {
+    background: #030a29 !important;
+}
+ 
+.sidebar .sidebar-body .nav .nav-item .nav-link,
+.sidebar .sidebar-body .nav .nav-item.nav-category {
+    color: white;
+}
+ 
+.sidebar .sidebar-body .nav .nav-item .nav-link:hover {
+    color: #fe0201;
+}
+ 
+.sidebar .sidebar-body .nav .nav-item:hover .nav-link .link-icon {
+    color: #fe0201;
+    fill: #fff;
+}
+ 
+.sidebar .sidebar-body .nav .nav-item .nav-link[aria-expanded="true"] {
+    color: #fe0201;
+    fill: #fff;
+}
+ 
  .sidebar .sidebar-body .nav.sub-menu .nav-item .nav-link {
      height: 25px;
      color: #fff;
@@ -62,13 +86,10 @@ body {
      color: #fed700;
  }
 
-
-
  .select2-container {
      width: 100% !important;
  }
-
-
+ 
  .btn-radius {
      border-radius: 100%;
      padding: 6px;
@@ -77,7 +98,7 @@ body {
  .circle {
      width: 30px;
      height: 30px;
-     border-radius: 50%;
+     border-radius: 100%;
      border: none;
      cursor: pointer;
      display: flex;
@@ -89,7 +110,7 @@ body {
  .circle svg {
      width: 75%;
  }
-
+ 
  .nav-pills {
      text-align: left;
  }
@@ -108,8 +129,6 @@ body {
      color: #030a29;
      font-weight: 700;
  }
-
-
 
  /*pagination*/
  .pagination {
@@ -148,7 +167,6 @@ body {
      border: none !important;
  }
 
-
  .pagination .page-item {
      margin: 0 10px 0 0;
  }
@@ -170,12 +188,14 @@ body {
      border: none !important;
  }
 
-
  .select2-container .select2-selection--multiple .select2-selection__rendered {
      display: flex !important;
  }
-
-
+ 
+ .select2-container .select2-selection--multiple .select2-selection__rendered {
+     display: flex !important;
+ }
+ 
  .select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__rendered .select2-selection__choice {
 
      font-size: .8em;
@@ -205,11 +225,9 @@ body {
      width: 40% !important;
  }
 
-
  .btn {
      border-radius: 50px !important;
  }
-
 
  @media screen and (max-width: 560px) {
      .sidebar-folded .page-wrapper .navbar {

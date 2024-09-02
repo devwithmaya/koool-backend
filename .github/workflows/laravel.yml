@@ -13,10 +13,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
+    - name: Composer install
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: 📂 Sync Files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
@@ -24,3 +24,10 @@ jobs:
         username: ${{ secrets.sftp_user }}
         password: ${{ secrets.sftp_password }}
         server-dir: "/sites/koool.mayaapps.site/"
+        exclude: |
+          **/.github/**
+          **/.releases/**
+          **/node_modules/**
+          **/.gitignore
+          **/package-lock.json
+          **/readme.md

@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RecipeController extends Controller
 {
+       
+    
 
     /**
      * Display a listing of the resource.
@@ -139,6 +141,7 @@ class RecipeController extends Controller
             'categories' => $categories
         ]);
     }
+    
     /**
      * Update the specified resource in storage.
      */
