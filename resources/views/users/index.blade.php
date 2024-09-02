@@ -15,6 +15,22 @@
 </nav>
 
 <div class="row">
+  <div class="col-md-12">
+    @if(Session::has("success"))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ Session::get("success") }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"></button>
+        </div>
+    @endif
+
+    @if(Session::has("error"))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ Session::get("erreur") }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"></button>
+        </div>
+    @endif
+  </div>
+
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
@@ -43,7 +59,11 @@
                     <tr>
                          <td>{{$user->name}}</td>
                          <td>{{$user->email}}</td>
-                         <td>{{$user->email}}</td>
+                         <td>
+                          @foreach ($user->roles as $role)
+                            <div class="badge bg-primary">{{ $role->name }}</div>
+                          @endforeach
+                         </td>
                          <td class="d-flex justify-content-center gap-2">
                               <form action="{{ route('users.destroy',$user->id) }}" method="POST">
                                    @csrf
