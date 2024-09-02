@@ -264,8 +264,11 @@ body {
     --bs-btn-disabled-bg: #23D367;
     --bs-btn-disabled-border-color: #23D367;
 }
+.table th, .table td {
+    white-space: wrap;
+}
 
- @media screen and (max-width: 560px) {
+@media screen and (max-width: 560px) {
      .sidebar-folded .page-wrapper .navbar {
          width: 100% !important;
          left: 0 !important;
@@ -280,4 +283,4 @@ body {
          width: 100% !important;
          margin-left: 0 !important;
      }
- }
+}
