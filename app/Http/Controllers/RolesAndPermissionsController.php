@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
+class RolesAndPermissionsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +17,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('users.index', compact('users'));
+        $roles = Role::all();
+        return view('roles.index', compact('roles'));
     }
 
     /**
@@ -26,8 +28,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
-        return view('users.create', compact("roles"));
+        $permission_groups = Permission::all()->groupBy('section');
+        
+        return view('roles.create', compact("permission_groups"));
     }
 
     /**
@@ -38,7 +41,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        $role = Role::where("name", $request->name)->first();
+        if ($role) {
+            $role->syncPermissions($request->permissions);
+        }else{
+            $role = Role::create(['name' => $request->name]);
+            $role->syncPermissions($request->permissions);
+        }
+
+        return redirect()->route('roles.index')->with("success", "Role a bien été enregistré");
     }
 
     /**
@@ -49,8 +61,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        return view('users.show', compact('user'));
+        
     }
 
     /**
@@ -61,8 +72,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        return view('users.edit', compact('user'));
+        //
     }
 
     /**
@@ -86,5 +96,20 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function storePermissions()
+    {
+        try {
+            DB::table('permissions')->delete();
+            $sqlPath = base_path('database/permission.sql');
+            // get permissions the
+            DB::unprepared(file_get_contents($sqlPath));
+        } catch (Exception $e) {
+            return $e->getMessage();
+            return back()->with("error", "Erreur lors de la création des permissions");
+        }
+
+        return back()->with("success", "Les permissions ont été créées avec succès");
     }
 }

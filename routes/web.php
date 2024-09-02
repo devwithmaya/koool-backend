@@ -14,6 +14,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\RolesAndPermissionsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,9 @@ Route::resource('ingredients', IngredientController::class)->middleware('auth');
 Route::resource('categories', CategoryController::class)->middleware('auth');
 
 Route::resource('users', UserController::class)->middleware('auth');
+
+Route::resource('roles', RolesAndPermissionsController::class)->middleware('auth');
+Route::get('/permissions', [RolesAndPermissionsController::class, 'storePermissions'])->name('roles.permissions.store');
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });

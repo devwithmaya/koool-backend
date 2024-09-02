@@ -33,6 +33,7 @@
                     <tr>
                          <th>Name</th>
                          <th>Email</th>
+                         <th>Role</th>
                          <th class="no-sort" width="10%">Actions</th>
                     </tr>
                </thead>
@@ -41,6 +42,7 @@
                     @foreach($users as $user)
                     <tr>
                          <td>{{$user->name}}</td>
+                         <td>{{$user->email}}</td>
                          <td>{{$user->email}}</td>
                          <td class="d-flex justify-content-center gap-2">
                               <form action="{{ route('users.destroy',$user->id) }}" method="POST">

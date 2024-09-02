@@ -12,7 +12,7 @@
   <div class="sidebar-body">
     <ul class="nav">
       <li class="nav-item nav-category">Main</li>
-      
+
       <li class="nav-item {{ active_class(['/']) }}">
         <a href="{{ url('/') }}" class="nav-link">
           <i class="link-icon" data-feather="box"></i>
@@ -77,10 +77,17 @@
           </a>
       </li>
 
+      <li class="nav-item nav-category">Management</li>
       <li class="nav-item {{ active_class(['users']) }}">
         <a href="{{ route('users.index') }}" class="nav-link">
             <i class="link-icon" data-feather="users"></i>
             <span class="link-title">Les utilisateurs</span>
+        </a>
+      </li>
+      <li class="nav-item {{ active_class(['roles']) }}">
+        <a href="{{ route('roles.index') }}" class="nav-link">
+            <i class="link-icon" data-feather="shield"></i>
+            <span class="link-title">Roles et permessions</span>
         </a>
       </li>
 
