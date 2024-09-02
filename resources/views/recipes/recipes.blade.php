@@ -6,7 +6,6 @@
 
 @section('content')
    {{-- @dump($recipes)--}}
-
    <nav class="page-breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">Tables</a></li>

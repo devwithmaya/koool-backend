@@ -12,16 +12,27 @@
           </div>
         </div>
 
+
           <div class="col-md-12 ps-md-0">
             <div class="auth-form-wrapper px-4 py-5">
               <a href="#" class="noble-ui-logo d-block mb-2">Noble<span>UI</span></a>
               <h5 class="text-muted fw-normal mb-4">Welcome back! Log in to your account.</h5>
+
               <form class="forms-sample" action="{{route('login')}}" method="POST">
                   @csrf
-                <div class="mb-3">
-                  <label for="userEmail" class="form-label">Email address</label>
-                  <input type="email" class="form-control" name="email" id="userEmail" placeholder="Email">
-                </div>
+                  <div class="mb-3">
+                      <label for="email" class="form-label">Email address</label>
+                      <input type="email"
+                             class="form-control @if($errors->any()) is-invalid @endif"
+                             name="email"
+                             id="email"
+                             placeholder="Email">
+                      @if($errors->any())
+                      <div class="invalid-feedback">
+                          Identifiants Incorrects
+                      </div>
+                      @endif
+                  </div>
                 <div class="mb-3">
                   <label for="userPassword" class="form-label">Password</label>
                   <input type="password" class="form-control" name="password" id="userPassword" autocomplete="current-password" placeholder="Password">
