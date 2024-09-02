@@ -48,19 +48,17 @@
 
                                             @if($recipe->ingredientss)
                                                 @foreach($recipe->ingredientss as $ingredient)
-                                                    <div class="badge badge-primary" >{{$ingredient->name}}/{{$ingredient->quantity}}</div>
+                                                    <div class="badge bg-primary" >{{$ingredient->name}}/{{$ingredient->quantity}}</div>
                                                 @endforeach
                                             @endif
 
                                         </td>
                                         <td>
-                                            <select class="js-example-basic-single form-control"  data-width="100%">
                                                 @if($recipe->categories)
                                                     @foreach($recipe->categories as $category)
-                                                        <option value="">{{$category->name}}</option>
+                                                        <div class="badge bg-primary">{{$category->name}}</div>
                                                     @endforeach
                                                 @endif
-                                            </select>
                                         </td>
                                         <td class="d-flex d-inline-block gap-2">
                                             <form action="{{ route('recipes.destroy',$recipe->id) }}" method="POST">
