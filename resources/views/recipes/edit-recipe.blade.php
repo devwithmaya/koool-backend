@@ -23,8 +23,7 @@
                     {{--          id="signupForm"--}}
                     <h4 class="card-title">Update Your Recipe</h4>
                     {{--        <p class="text-muted mb-3">Read the <a href="https://jqueryvalidation.org/" target="_blank"> Official jQuery Validation Documentation </a>for a full list of instructions and other options.</p>--}}
-                    <form  action="{{ route('recipes.update',$recipe) }}" method="POST">
-
+                    <form  action="{{ route('recipes.update',$recipe) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
@@ -33,10 +32,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Image</label>
-                            <input id="image" class="form-control" name="image" value="{{$recipe->image}}" type="text">
+                            <input id="image" class="form-control" name="image" value="{{$recipe->image}}" type="file">
                         </div>
                         <div id="ingredients-container" class="mb-3">
-
                             <h4>Ingrédients</h4>
                             <div class="ingredient-item">
                                 @foreach($recipe->ingredientss as $ingredient)
@@ -47,9 +45,7 @@
                                     <div class="col-md-4">
                                         <input type="text" class="form-control" name="ingredients[0][quantity]" value="{{$ingredient->quantity}}" placeholder="Quantité" required>
                                     </div>
-                                    <div class="col-md-2">
-                                        <i data-feather="x-circle"></i>
-                                    </div>
+
                                 </div>
                                 @endforeach
                             </div>
@@ -58,7 +54,19 @@
                         <div class="mb-3">
                             <button type="button" class="btn btn-secondary" id="add-ingredient"><i data-feather="plus"></i>Ajouter un ingrédient</button>
                         </div>
-
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <div>
+                                @foreach($categories as $category)
+                                    <div class="form-check form-check-inline">
+                                        <input type="checkbox" name="categories[]" class="form-check-input" @if($recipe->categories->contains($category->id)) checked @endif id="checkInline{{$category->id}}" value="{{ $category->id }}">
+                                        <label class="form-check-label" for="checkInline{{$category->id}}">
+                                            {{$category->name}}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
                         <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">Summary</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1"  name="summary" rows="5">{{$recipe->summary}}</textarea>
