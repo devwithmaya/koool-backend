@@ -54,11 +54,11 @@
 
                                         </td>
                                         <td>
-                                                @if($recipe->categories)
-                                                    @foreach($recipe->categories as $category)
-                                                        <div class="badge bg-primary">{{$category->name}}</div>
-                                                    @endforeach
-                                                @endif
+                                            @if($recipe->categories)
+                                                @foreach($recipe->categories as $category)
+                                                    <div class="badge bg-primary">{{$category->name}}</div>
+                                                @endforeach
+                                            @endif
                                         </td>
                                         <td class="d-flex d-inline-block gap-2">
                                             <form action="{{ route('recipes.destroy',$recipe->id) }}" method="POST">
