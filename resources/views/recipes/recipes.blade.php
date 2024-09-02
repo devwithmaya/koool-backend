@@ -32,7 +32,6 @@
                             <tr>
                                 <th>Image</th>
                                 <th>Title</th>
-                                <th>Start date</th>
                                 <th>Ingredients</th>
                                 <th>Categories</th>
                                 <th>Actions</th>
@@ -64,11 +63,11 @@
                                             <form action="{{ route('recipes.destroy',$recipe->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-sm btn-danger">
+                                                <button class="btn btn-sm btn-danger circle">
                                                     <i data-feather="delete"></i>
                                                 </button>
                                             </form>
-                                            <a class="btn btn-sm btn-success" href="{{route('recipes.edit',$recipe->id)}}">
+                                            <a class="btn btn-sm btn-success circle" href="{{route('recipes.edit',$recipe->id)}}">
                                                 <i data-feather="edit"></i>
                                             </a>
                                         </td>
