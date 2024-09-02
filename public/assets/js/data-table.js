@@ -13,8 +13,15 @@ $(function() {
       "iDisplayLength": 10,
       "language": {
         search: ""
-      }
+      },
+      "columnDefs": [ 
+        {
+          "targets": 'no-sort',
+          "orderable": false,
+        } 
+      ]
     });
+
     $('#dataTableExample').each(function() {
       var datatable = $(this);
       // SEARCH - Add the placeholder for Search and Turn this into in-line form control

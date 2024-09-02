@@ -2,6 +2,9 @@ body {
      overflow-x: hidden;
  }
 
+ a{
+    color: #23D367;
+ }
  /* Path: public\css\custom.css */
 
  .sidebar div.sidebar-body {
@@ -14,22 +17,22 @@ body {
  }
 
  .sidebar .sidebar-body .nav .nav-item .nav-link:hover {
-     color: #fe0201;
+     color: #23D367;
  }
 
  .sidebar .sidebar-body .nav .nav-item:hover .nav-link .link-icon {
-     color: #fe0201;
+     color: #23D367;
      fill: #fff;
  }
 
  .sidebar .sidebar-body .nav .nav-item .nav-link[aria-expanded="true"] {
-     color: #fe0201;
+     color: #23D367;
      fill: #fff;
  }
  
  /* Path: public\css\custom.css */
 .sidebar div.sidebar-body {
-    background: #030a29 !important;
+    background: #052E1C !important;
 }
  
 .sidebar .sidebar-body .nav .nav-item .nav-link,
@@ -38,16 +41,16 @@ body {
 }
  
 .sidebar .sidebar-body .nav .nav-item .nav-link:hover {
-    color: #fe0201;
+    color: #23D367;
 }
  
 .sidebar .sidebar-body .nav .nav-item:hover .nav-link .link-icon {
-    color: #fe0201;
+    color: #23D367;
     fill: #fff;
 }
  
 .sidebar .sidebar-body .nav .nav-item .nav-link[aria-expanded="true"] {
-    color: #fe0201;
+    color: #23D367;
     fill: #fff;
 }
  
@@ -59,22 +62,22 @@ body {
  }
 
  .sidebar .sidebar-body .nav.sub-menu .nav-item .nav-link.active {
-     color: #fe0201;
+     color: #23D367;
  }
 
  .sidebar .sidebar-body .nav.sub-menu .nav-item .nav-link.active::before {
-     border: 1px solid #fe0201;
-     background: #fe0201;
+     border: 1px solid #23D367;
+     background: #23D367;
  }
 
  .sidebar .sidebar-body .nav.sub-menu .nav-item:hover .nav-link {
-     color: #fe0201;
+     color: #23D367;
      margin-left: 3px;
  }
 
  .sidebar .sidebar-body .nav.sub-menu .nav-item:hover .nav-link::before {
-     border: 1px solid #fe0201;
-     background: #fe0201;
+     border: 1px solid #23D367;
+     background: #23D367;
  }
 
  .sidebar .sidebar-body .nav .nav-item.active .nav-link {
@@ -228,6 +231,39 @@ body {
  .btn {
      border-radius: 50px !important;
  }
+
+ .btn-danger{
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #FF1700;
+    --bs-btn-border-color: #FF1700;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #FF1700;
+    --bs-btn-hover-border-color: #FF1700;
+    --bs-btn-focus-shadow-rgb: 124, 134, 255;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #FF1700;
+    --bs-btn-active-border-color: #FF1700;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #FF1700;
+    --bs-btn-disabled-border-color: #FF1700;
+ }
+ .btn-success {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #23D367;
+    --bs-btn-border-color: #23D367;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #11a54a;
+    --bs-btn-hover-border-color: #11a54a;
+    --bs-btn-focus-shadow-rgb: 43, 177, 101;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #11a54a;
+    --bs-btn-active-border-color: #11a54a;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #23D367;
+    --bs-btn-disabled-border-color: #23D367;
+}
 
  @media screen and (max-width: 560px) {
      .sidebar-folded .page-wrapper .navbar {

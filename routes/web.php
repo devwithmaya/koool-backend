@@ -11,6 +11,10 @@
 |
 */
 
+use App\Http\Controllers\api\CategoryController;
+use App\Http\Controllers\api\IngredientController;
+use App\Http\Controllers\api\RecipeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -30,9 +34,13 @@ Route::delete('logout',[\App\Http\Controllers\AuthController::class,'logout'])
     ->name('logout');
 
 
-Route::resource('recipes',\App\Http\Controllers\RecipeController::class)->middleware('auth');
-Route::resource('ingredients',\App\Http\Controllers\IngredientController::class)->middleware('auth');
-Route::resource('categories',\App\Http\Controllers\CategoryController::class)->middleware('auth');
+Route::resource('recipes', RecipeController::class)->middleware('auth');
+
+Route::resource('ingredients', IngredientController::class)->middleware('auth');
+
+Route::resource('categories', CategoryController::class)->middleware('auth');
+
+Route::resource('users', UserController::class)->middleware('auth');
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });
