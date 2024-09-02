@@ -11,9 +11,9 @@
 |
 */
 
-use App\Http\Controllers\api\CategoryController;
-use App\Http\Controllers\api\IngredientController;
-use App\Http\Controllers\api\RecipeController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;

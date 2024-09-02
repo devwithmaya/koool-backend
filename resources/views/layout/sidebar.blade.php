@@ -12,12 +12,14 @@
   <div class="sidebar-body">
     <ul class="nav">
       <li class="nav-item nav-category">Main</li>
+      
       <li class="nav-item {{ active_class(['/']) }}">
         <a href="{{ url('/') }}" class="nav-link">
           <i class="link-icon" data-feather="box"></i>
           <span class="link-title">Dashboard</span>
         </a>
       </li>
+
       <li class="nav-item nav-category">web apps</li>
       <li class="nav-item {{ active_class(['email/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#email" role="button" aria-expanded="{{ is_active_route(['email/*']) }}" aria-controls="email">
@@ -39,43 +41,48 @@
           </ul>
         </div>
       </li>
+
       <li class="nav-item {{ active_class(['apps/chat']) }}">
         <a href="{{ url('/apps/chat') }}" class="nav-link">
           <i class="link-icon" data-feather="message-square"></i>
           <span class="link-title">Chat</span>
         </a>
       </li>
+
       <li class="nav-item {{ active_class(['apps/calendar']) }}">
         <a href="{{ url('/apps/calendar') }}" class="nav-link">
           <i class="link-icon" data-feather="calendar"></i>
           <span class="link-title">Calendar</span>
         </a>
       </li>
-        <li class="nav-item {{ active_class(['recipes']) }}">
-            <a href="{{route('recipes.index')}}" class="nav-link">
-                <svg stroke="currentColor" class="link-icon" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M21 15c0-4.625-3.507-8.441-8-8.941V4h-2v2.059C6.507 6.559 3 10.375 3 15v2h18V15zM5 15c0-3.859 3.141-7 7-7s7 3.141 7 7H5zM2 18H22V20H2z"></path></svg>
-                <span class="link-title">Recipes</span>
-            </a>
-        </li>
-        <li class="nav-item {{ active_class(['ingredients']) }}">
-            <a href="{{ route('ingredients.index') }}" class="nav-link">
-                <i class="link-icon" data-feather="sliders"></i>
-                <span class="link-title">Ingredients</span>
-            </a>
-        </li>
-        <li class="nav-item {{ active_class(['categories']) }}">
-            <a href="{{ route('categories.index') }}" class="nav-link">
-                <i class="link-icon" data-feather="filter"></i>
-                <span class="link-title">Categories</span>
-            </a>
-        </li>
 
-        <li class="nav-item {{ active_class(['users']) }}">
-          <a href="{{ route('users.index') }}" class="nav-link">
-              <i class="link-icon" data-feather="users"></i>
-              <span class="link-title">Les utilisateurs</span>
+      <li class="nav-item {{ active_class(['recipes']) }}">
+          <a href="{{route('recipes.index')}}" class="nav-link">
+              <svg stroke="currentColor" class="link-icon" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M21 15c0-4.625-3.507-8.441-8-8.941V4h-2v2.059C6.507 6.559 3 10.375 3 15v2h18V15zM5 15c0-3.859 3.141-7 7-7s7 3.141 7 7H5zM2 18H22V20H2z"></path></svg>
+              <span class="link-title">Recipes</span>
           </a>
-        </li>
+      </li>
+
+      <li class="nav-item {{ active_class(['ingredients']) }}">
+          <a href="{{ route('ingredients.index') }}" class="nav-link">
+              <i class="link-icon" data-feather="sliders"></i>
+              <span class="link-title">Ingredients</span>
+          </a>
+      </li>
+
+      <li class="nav-item {{ active_class(['categories']) }}">
+          <a href="{{ route('categories.index') }}" class="nav-link">
+              <i class="link-icon" data-feather="filter"></i>
+              <span class="link-title">Categories</span>
+          </a>
+      </li>
+
+      <li class="nav-item {{ active_class(['users']) }}">
+        <a href="{{ route('users.index') }}" class="nav-link">
+            <i class="link-icon" data-feather="users"></i>
+            <span class="link-title">Les utilisateurs</span>
+        </a>
+      </li>
 
      {{-- <li class="nav-item nav-category">Components</li>
       <li class="nav-item {{ active_class(['ui-components/*']) }}">
