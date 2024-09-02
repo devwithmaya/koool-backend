@@ -13,31 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RecipeController extends Controller
 {
-        foreach ($recipes as $recipe) {
-            $detailsResponse = Http::get('https://api.spoonacular.com/recipes/' . $recipe['id'] . '/information', [
-                'apiKey' => env('SPOONACULAR_API_KEY'),
-            ]);
-            $details = $detailsResponse->json();
-            //dd($details);
-
-            Recipe::updateOrCreate(
-                ['title' => $recipe['title']],
-                [
-                    'title' => $recipe['title'],
-                    'image' => $details['image'],
-                    'summary' => $details['summary'] ?? null,
-                    'ingredients' => json_encode(array_column($details['extendedIngredients'], 'original')),
-                ]
-            );
-        }
-        //dd($recipes);
-
-        return response()->json([
-            'error' => false,
-            'message' => "Vos recettes ont été généré avec succés",
-            'recipes' => $recipes
-        ], Response::HTTP_OK);
-    }
+       
     
 
     /**
