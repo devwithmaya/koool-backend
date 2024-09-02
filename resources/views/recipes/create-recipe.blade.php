@@ -28,24 +28,43 @@
             @csrf
           <div class="mb-3">
             <label for="name" class="form-label">Title</label>
-            <input id="name" class="form-control" name="title" type="text">
+            <input id="name" class="form-control @if($errors->any()) is-invalid @endif" name="title" type="text">
+              @if($errors->any())
+                      <div class="invalid-feedback">
+                          title is required
+                      </div>
+              @endif
           </div>
 
           <div class="mb-3">
             <label for="image" class="form-label">Image</label>
-            <input id="image" class="form-control" name="image" type="file">
+            <input id="image" class="form-control @if($errors->any()) is-invalid @endif" name="image" type="file">
+              @if($errors->any())
+                      <div class="invalid-feedback">
+                          Image is required
+                      </div>
+              @endif
           </div>
             <div id="ingredients-container" class="mb-3">
                 <h4>Ingrédients</h4>
                 <div class="ingredient-item">
                     <div class="row">
                         <div class="col-md-6">
-                            <input type="text" class="form-control" name="ingredients[0][name]" placeholder="Nom de l'ingrédient" required>
+                            <input type="text" class="form-control @if($errors->any()) is-invalid @endif" name="ingredients[0][name]" placeholder="Nom de l'ingrédient" required>
+                            @if($errors->any())
+                              <div class="invalid-feedback">
+                                  ingredient name is required
+                              </div>
+                            @endif
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" name="ingredients[0][quantity]" placeholder="Quantité" required>
+                            <input type="text" class="form-control @if($errors->any()) is-invalid @endif" name="ingredients[0][quantity]" placeholder="Quantité" required>
+                            @if($errors->any())
+                              <div class="invalid-feedback">
+                                  ingredient quantity is required
+                              </div>
+                            @endif
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -59,7 +78,12 @@
                     @if($categories)
                         @foreach($categories as $category)
                             <div class="form-check form-check-inline">
-                                <input type="checkbox" name="categories[]" class="form-check-input" id="checkInline{{$category->id}}" value="{{ $category->id }}">
+                                <input type="checkbox" name="categories[]" class="form-check-input @if($errors->any()) is-invalid @endif" id="checkInline{{$category->id}}" value="{{ $category->id }}">
+                                @if($errors->any())
+                                  <div class="invalid-feedback">
+                                      categories is required
+                                  </div>
+                                @endif
                                 <label class="form-check-label" for="checkInline{{$category->id}}">
                                     {{$category->name}}
                                 </label>

@@ -28,11 +28,21 @@
                         @method('PUT')
                         <div class="mb-3">
                             <label for="name" class="form-label">Title</label>
-                            <input id="name" class="form-control" name="title" value="{{$recipe->title}}" type="text">
+                            <input id="name" class="form-control @if($errors->any()) is-invalid @endif" name="title" value="{{$recipe->title}}" type="text">
+                            @if($errors->any())
+                      <div class="invalid-feedback">
+                          title is required
+                      </div>
+              @endif
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Image</label>
-                            <input id="image" class="form-control" name="image" value="{{$recipe->image}}" type="file">
+                            <input id="image" class="form-control @if($errors->any()) is-invalid @endif" name="image" value="{{$recipe->image}}" type="file">
+                            @if($errors->any())
+                      <div class="invalid-feedback">
+                          Image is required
+                      </div>
+              @endif
                         </div>
                         <div id="ingredients-container" class="mb-3">
                             <h4>Ingrédients</h4>
@@ -40,10 +50,20 @@
                                 @foreach($recipe->ingredientss as $ingredient)
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" name="ingredients[0][name]" value="{{$ingredient->name}}" placeholder="Nom de l'ingrédient" required>
+                                        <input type="text" class="form-control @if($errors->any()) is-invalid @endif" name="ingredients[0][name]" value="{{$ingredient->name}}" placeholder="Nom de l'ingrédient" required>
+                                        @if($errors->any())
+                              <div class="invalid-feedback">
+                                  ingredient name is required
+                              </div>
+                            @endif
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control" name="ingredients[0][quantity]" value="{{$ingredient->quantity}}" placeholder="Quantité" required>
+                                        <input type="text" class="form-control @if($errors->any()) is-invalid @endif" name="ingredients[0][quantity]" value="{{$ingredient->quantity}}" placeholder="Quantité" required>
+                                        @if($errors->any())
+                              <div class="invalid-feedback">
+                                  ingredient quantity is required
+                              </div>
+                            @endif
                                     </div>
 
                                 </div>
@@ -59,7 +79,12 @@
                             <div>
                                 @foreach($categories as $category)
                                     <div class="form-check form-check-inline">
-                                        <input type="checkbox" name="categories[]" class="form-check-input" @if($recipe->categories->contains($category->id)) checked @endif id="checkInline{{$category->id}}" value="{{ $category->id }}">
+                                        <input type="checkbox" name="categories[]" class="form-check-input @if($errors->any()) is-invalid @endif" @if($recipe->categories->contains($category->id)) checked @endif id="checkInline{{$category->id}}" value="{{ $category->id }}">
+                                        @if($errors->any())
+                                  <div class="invalid-feedback">
+                                      categories is required
+                                  </div>
+                                @endif
                                         <label class="form-check-label" for="checkInline{{$category->id}}">
                                             {{$category->name}}
                                         </label>
