@@ -59,15 +59,22 @@
         </li>
         <li class="nav-item {{ active_class(['ingredients']) }}">
             <a href="{{ route('ingredients.index') }}" class="nav-link">
-                <i class="link-icon" data-feather="message-square"></i>
+                <i class="link-icon" data-feather="sliders"></i>
                 <span class="link-title">Ingredients</span>
             </a>
         </li>
         <li class="nav-item {{ active_class(['categories']) }}">
             <a href="{{ route('categories.index') }}" class="nav-link">
-                <i class="link-icon" data-feather="message-square"></i>
-                <span class="link-title">Category</span>
+                <i class="link-icon" data-feather="filter"></i>
+                <span class="link-title">Categories</span>
             </a>
+        </li>
+
+        <li class="nav-item {{ active_class(['users']) }}">
+          <a href="{{ route('users.index') }}" class="nav-link">
+              <i class="link-icon" data-feather="users"></i>
+              <span class="link-title">Les utilisateurs</span>
+          </a>
         </li>
 
      {{-- <li class="nav-item nav-category">Components</li>
