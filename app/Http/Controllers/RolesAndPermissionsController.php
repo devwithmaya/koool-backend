@@ -72,7 +72,12 @@ class RolesAndPermissionsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $role = Role::find($id);
+        $permissions = $role->permissions->pluck('name')->toArray();
+        //dd($permissions);
+        $permission_groups = Permission::all()->groupBy('section');
+        
+        return view('roles.edit', compact("role", "permission_groups", "permissions"));
     }
 
     /**
@@ -84,7 +89,12 @@ class RolesAndPermissionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $role = Role::findOrFail($id);
+ 
+        $role = Role::create(['name' => $request->name]);
+        $role->syncPermissions($request->permissions);
+
+        return redirect()->route('roles.index')->with("success", "Role a bien été modifié");
     }
 
     /**

@@ -48,10 +48,10 @@
 
                          <div class="form-group mb-3">
                               <label for="role" class="form-label">Role</label>
-                              <select name="role" id="role" class="form-control">
+                              <select name="role" id="role" class="form-control @error('role') is-invalid @enderror @error('email') is-invalid @enderror">
                                    <option value="">Select role</option>
                                    @foreach($roles as $role)
-                                        <option value="{{$role->id}}">{{$role->name}}</option>
+                                        <option value="{{$role->name}}">{{$role->name}}</option>
                                    @endforeach
                               </select>
                               @error("role")
@@ -63,7 +63,12 @@
 
                          <div class="form-group mb-3">
                               <label for="password" class="form-label">Mot de passe</label>
-                              <input type="password" class="form-control" id="password" name="password" placholder="Mot de passe" />
+                              <input type="password" class="form-control @error('email') is-invalid @enderror" id="password" name="password" placholder="Mot de passe" />
+                              @error("password")
+                                   <div class="invalid-feedback">
+                                        {{ $message }}
+                                   </div>
+                              @enderror
                          </div>
 
                          <button class="btn btn-primary" type="submit">Enregistrer</button>

@@ -268,6 +268,9 @@ body {
     white-space: wrap;
 }
 
+.table td{
+    padding: 0.5rem;
+}
 @media screen and (max-width: 560px) {
      .sidebar-folded .page-wrapper .navbar {
          width: 100% !important;
