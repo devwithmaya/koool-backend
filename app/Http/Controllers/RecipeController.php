@@ -52,6 +52,7 @@ class RecipeController extends Controller
             'recipes' => $recipes
         ], Response::HTTP_OK);
     }
+    
     /**
      * Display a listing of the resource.
      */
@@ -182,6 +183,7 @@ class RecipeController extends Controller
             'recipe' => $recipe
         ]);
     }
+    
     /**
      * Update the specified resource in storage.
      */

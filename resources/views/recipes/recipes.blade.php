@@ -34,30 +34,30 @@
                 <th>Image</th>
                 <th>Title</th>
                 <th>Start date</th>
-                  <th>Actions</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
             @if($recipes)
-            @foreach($recipes as $recipe)
-              <tr>
-                <td><img src="{{asset('storage/'.$recipe->image)}}" alt="Image des recêtte"></td>
-                <td>{{$recipe->title}}</td>
-                <td>{{ $recipe->created_at }}</td>
-                  <td class="d-flex d-inline-block gap-2">
-                      <form action="{{ route('recipes.destroy',$recipe->id) }}" method="POST">
-                          @csrf
-                          @method('DELETE')
-                          <button class="btn btn-sm btn-danger">
-                              <i data-feather="delete"></i>
-                          </button>
-                      </form>
-                      <a class="btn btn-sm btn-success" href="{{route('recipes.edit',$recipe->id)}}">
-                          <i data-feather="edit"></i>
-                      </a>
-                  </td>
-              </tr>
-            @endforeach
+              @foreach($recipes as $recipe)
+                <tr>
+                  <td><img src="{{asset('storage/'.$recipe->image)}}" alt="Image des recêtte"></td>
+                  <td>{{$recipe->title}}</td>
+                  <td>{{ $recipe->created_at }}</td>
+                    <td class="d-flex d-inline-block gap-2">
+                        <form action="{{ route('recipes.destroy',$recipe->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-danger circle">
+                                <i data-feather="trash"></i>
+                            </button>
+                        </form>
+                        <a class="btn btn-sm btn-success circle" href="{{route('recipes.edit',$recipe->id)}}">
+                            <i data-feather="edit"></i>
+                        </a>
+                    </td>
+                </tr>
+              @endforeach
             @endif
             </tbody>
           </table>
