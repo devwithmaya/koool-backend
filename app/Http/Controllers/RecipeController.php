@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RecipeController extends Controller
 {
-       
-    
+
+
 
     /**
      * Display a listing of the resource.
@@ -141,7 +141,7 @@ class RecipeController extends Controller
             'categories' => $categories
         ]);
     }
-    
+
     /**
      * Update the specified resource in storage.
      */
@@ -150,7 +150,7 @@ class RecipeController extends Controller
     {
         $rules = [
             'title' => 'required|string|max:255',
-            'image' => 'required|file',
+            //'image' => 'required|file',
             'summary' => 'required|string',
             'ingredients' => 'required|array|min:1',
             'ingredients.*.name' => 'required|string|max:255',
