@@ -45,13 +45,13 @@
                 <td><img src="{{asset('storage/'.$recipe->image)}}" alt="Image du recipe"></td>
                 <td>{{$recipe->title}}</td>
                 <td>
-                    <select class="js-example-basic-single form-control"  data-width="100%">
+
                         @if($recipe->ingredientss)
                             @foreach($recipe->ingredientss as $ingredient)
-                                <option value="">{{$ingredient->name}}({{$ingredient->quantity}}g)</option>
+                                <div class="badge badge-primary" >{{$ingredient->name}}/{{$ingredient->quantity}}</div>
                             @endforeach
                         @endif
-                    </select>
+
                 </td>
                   <td>
                       <select class="js-example-basic-single form-control"  data-width="100%">

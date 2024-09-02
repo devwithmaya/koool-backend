@@ -28,11 +28,21 @@
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Title</label>
-                            <input id="name" class="form-control" name="name" type="text">
+                            <input id="name" class="form-control @if($errors->any()) is-invalid @endif" name="name" type="text">
+                            @if($errors->any())
+                              <div class="invalid-feedback">
+                                  name is required
+                              </div>
+                            @endif
                         </div>
                         <div class="mb-3">
                             <label for="quantity" class="form-label">Quantity</label>
-                            <input id="quantity" class="form-control" name="quantity" type="number">
+                            <input id="quantity" class="form-control @if($errors->any()) is-invalid @endif" name="quantity" type="number">
+                            @if($errors->any())
+                              <div class="invalid-feedback">
+                                  quantity is required
+                              </div>
+                              @endif
                         </div>
                         <button class="btn btn-primary" type="submit">Submit</button>
                     </form>
