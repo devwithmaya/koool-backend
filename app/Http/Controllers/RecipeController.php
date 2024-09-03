@@ -53,62 +53,45 @@ class RecipeController extends Controller
             'categories.*' => 'exists:categories,id',
         ];
 
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            $errors = $validator->errors()->all();
-            $errorMessage = implode('\\n', $errors);
-
-            return response()->make("<script>
-                alert('Bad request: $errorMessage');
-                window.history.back();
-            </script>");
-        }
-        $validatedData = $validator->validated();
-
-        try {
+        $validatedData = $request->validate($rules);
+        //$validator = Validator::make($request->all(), $rules);
+        //$validatedData = Validator::make($request->all(), $rules)->validated();
+        //dd($validatedData);
         if ($request->hasFile('image')) {
             if ($validatedData['image'] && Storage::exists($validatedData['image'])) {
                 Storage::delete($validatedData['image']);
             }
             $validatedData['image'] = $request->file('image')->store('images');
         }
-            DB::beginTransaction();
 
-            $recipe = Recipe::create([
-                'title' => $validatedData['title'],
-                'image' => $validatedData['image'],
-                'summary' => $validatedData['summary'],
-            ]);
+        $recipe = Recipe::create([
+            'title' => $validatedData['title'],
+            'image' => $validatedData['image'],
+            'summary' => $validatedData['summary'],
+            'instructions' => $validatedData['instructions'],
+            'nutrition' => $validatedData['nutrition'],
+            'video' => $validatedData['video'],
+            'prepTime' => $validatedData['prepTime'],
+            'cookTime' => $validatedData['cookTime'],
+        ]);
 
-            $ingredients = [];
-            foreach ($validatedData['ingredients'] as $ingredientData) {
-                $ingredient = Ingredient::firstOrCreate(
-                    ['name' => $ingredientData['name']],
-                    ['quantity' => $ingredientData['quantity']]
-                );
-                $ingredients[$ingredient->id] = ['quantity' => $ingredientData['quantity']];
-            }
-
-            $recipe->ingredientss()->attach($ingredients);
-
-            $recipe->categories()->attach($validatedData['categories']);
-
-            DB::commit();
-
-            $recipe->load('ingredientss');
-            $recipe->load('categories');
-
-            return to_route('recipes.index');
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-                $errorMessage =  $e->getMessage();
-                return response()->make("<script>
-                alert('Bad request: $errorMessage');
-                window.history.back();
-            </script>");
+        $ingredients = [];
+        foreach ($validatedData['ingredients'] as $ingredientData) {
+            $ingredient = Ingredient::firstOrCreate(
+                ['name' => $ingredientData['name']],
+                ['quantity' => $ingredientData['quantity']]
+            );
+            $ingredients[$ingredient->id] = ['quantity' => $ingredientData['quantity']];
         }
+
+        $recipe->ingredientss()->attach($ingredients);
+
+        $recipe->categories()->attach($validatedData['categories']);
+
+        //$recipe->load('ingredientss');
+        //$recipe->load('categories');
+
+        return to_route('recipes.index')->with("success", "Recipe Added bu Success");
     }
 
 

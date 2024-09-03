@@ -40,7 +40,7 @@
                 @foreach($categories as $recipe)
                   <tr>
                     <td>{{$recipe->name}}</td>
-                    <td class="d-flex d-inline-block gap-2">
+                    <td class="actions">
                         <form action="{{ route('categories.destroy',$recipe->id) }}" method="POST">
                             @csrf
                             @method('DELETE')

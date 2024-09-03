@@ -58,17 +58,17 @@
                               </div>
                           @endforeach
                         </td>
-                        <td class="d-flex gap-2">
-                              <form action="{{ route('roles.destroy',$role->id) }}" method="POST">
-                                  @csrf
-                                  @method('DELETE')
-                                  <button class="btn btn-sm btn-danger circle">
-                                        <i data-feather="trash"></i>
-                                  </button>
-                              </form>
-                              <a class="btn btn-sm btn-success circle" href="{{route('roles.edit',$role->id)}}">
-                                  <i data-feather="edit"></i>
-                              </a>
+                        <td class="actions">
+                          <form action="{{ route('roles.destroy',$role->id) }}" method="POST">
+                              @csrf
+                              @method('DELETE')
+                              <button class="btn btn-sm btn-danger circle">
+                                    <i data-feather="trash"></i>
+                              </button>
+                          </form>
+                          <a class="btn btn-sm btn-success circle" href="{{route('roles.edit',$role->id)}}">
+                              <i data-feather="edit"></i>
+                          </a>
                         </td>
                     </tr>
                   @endforeach

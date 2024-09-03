@@ -72,7 +72,7 @@
 
       <li class="nav-item {{ active_class(['meals']) }}">
         <a href="{{ route('meals.index') }}" class="nav-link">
-            <i class="link-icon" data-feather="sliders"></i>
+            <i class="link-icon" data-feather="clock"></i>
             <span class="link-title">Meals</span>
         </a>
       </li>
