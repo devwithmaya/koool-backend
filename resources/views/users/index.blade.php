@@ -57,25 +57,25 @@
                @if($users)
                     @foreach($users as $user)
                     <tr>
-                         <td>{{$user->name}}</td>
-                         <td>{{$user->email}}</td>
-                         <td>
-                          @foreach ($user->roles as $role)
-                            <div class="badge bg-primary">{{ $role->name }}</div>
-                          @endforeach
-                         </td>
-                         <td class="d-flex justify-content-center gap-2">
-                              <form action="{{ route('users.destroy',$user->id) }}" method="POST">
-                                   @csrf
-                                   @method('DELETE')
-                                   <button class="btn btn-sm btn-danger circle">
-                                        <i data-feather="trash"></i>
-                                   </button>
-                              </form>
-                              <a class="btn btn-sm btn-success circle" href="{{route('users.edit',$user->id)}}">
-                                   <i data-feather="edit"></i>
-                              </a>
-                         </td>
+                      <td>{{$user->name}}</td>
+                      <td>{{$user->email}}</td>
+                      <td>
+                      @foreach ($user->roles as $role)
+                        <div class="badge bg-primary">{{ $role->name }}</div>
+                      @endforeach
+                      </td>
+                      <td class="actions">
+                        <form action="{{ route('users.destroy',$user->id) }}" method="POST">
+                          @csrf
+                          @method('DELETE')
+                          <button class="btn btn-sm btn-danger circle">
+                              <i data-feather="trash"></i>
+                          </button>
+                        </form>
+                        <a class="btn btn-sm btn-success circle" href="{{route('users.edit',$user->id)}}">
+                          <i data-feather="edit"></i>
+                        </a>
+                      </td>
                     </tr>
                     @endforeach
                @endif

@@ -45,8 +45,6 @@
                                 <th>User</th>
                                 <th>Recipe</th>
                                 <th>Type</th>
-                                <th>Ingredients</th>
-                                <th>Categories</th>
                                 <th>Date</th>
                                 <th class="no-sort">Actions</th>
                             </tr>
@@ -58,22 +56,8 @@
                                             <td>{{ $meal->user->name }}</td>
                                             <td>{{ $meal->recipe->title }}</td>
                                             <td>{{ $meal->meal_type }}</td>
-                                            <td>
-                                                @if($meal->ingredientss)
-                                                    @foreach($meal->ingredientss as $ingredient)
-                                                        <div class="badge bg-primary" >{{$ingredient->name}}/{{$ingredient->quantity}}</div>
-                                                    @endforeach
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if($meal->categories)
-                                                    @foreach($meal->categories as $category)
-                                                        <div class="badge bg-primary">{{$category->name}}</div>
-                                                    @endforeach
-                                                @endif
-                                            </td>
                                             <td> {{ $meal->date }} </td>
-                                            <td class="d-flex d-inline-block gap-2">
+                                            <td class="actions">
                                                 <form action="{{ route('meals.destroy',$meal->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
