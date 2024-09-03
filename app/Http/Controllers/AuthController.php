@@ -17,7 +17,9 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
-        return response()->json($user);
+        return to_route('pages.auth.register',[
+            'user' => $user
+        ]);
     }
 
     public function login()
