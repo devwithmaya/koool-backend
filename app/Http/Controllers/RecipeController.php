@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RecipeController extends Controller
 {
-       
-    
 
     /**
      * Display a listing of the resource.
@@ -22,17 +20,16 @@ class RecipeController extends Controller
     public function index()
     {
         $recipes = Recipe::with('ingredientss')->with('categories')->orderBy('created_at', 'DESC')->get();
-        return view('recipes.recipes',[
+        return view('recipes.index',[
             'recipes' => $recipes
         ]);
-
     }
 
     public function create()
     {
         $ingredients = Ingredient::all();
 
-        return view('recipes.create-recipe',[
+        return view('recipes.create',[
             'ingredients' => $ingredients,
             'categories' => Category::all()
 
@@ -45,7 +42,6 @@ class RecipeController extends Controller
 
     public function store(Request $request)
     {
-        //dd('salut');
         $rules = [
             'title' => 'required|string|max:255',
             'image' => 'required|file',
@@ -69,8 +65,7 @@ class RecipeController extends Controller
             </script>");
         }
         $validatedData = $validator->validated();
-        //dd($validatedData);
-        //$validatedData['image'] = $validatedData->image->store('uploads');
+
         try {
         if ($request->hasFile('image')) {
             if ($validatedData['image'] && Storage::exists($validatedData['image'])) {
@@ -85,7 +80,7 @@ class RecipeController extends Controller
                 'image' => $validatedData['image'],
                 'summary' => $validatedData['summary'],
             ]);
-            //dd($validatedData['ingredients']);
+
             $ingredients = [];
             foreach ($validatedData['ingredients'] as $ingredientData) {
                 $ingredient = Ingredient::firstOrCreate(
@@ -94,17 +89,16 @@ class RecipeController extends Controller
                 );
                 $ingredients[$ingredient->id] = ['quantity' => $ingredientData['quantity']];
             }
-            //dd($ingredients);
 
             $recipe->ingredientss()->attach($ingredients);
 
             $recipe->categories()->attach($validatedData['categories']);
-            //dd($recipe);
+
             DB::commit();
 
             $recipe->load('ingredientss');
             $recipe->load('categories');
-            //dd($recipe);
+
             return to_route('recipes.index');
 
         } catch (\Exception $e) {
@@ -114,8 +108,6 @@ class RecipeController extends Controller
                 alert('Bad request: $errorMessage');
                 window.history.back();
             </script>");
-
-
         }
     }
 
@@ -135,8 +127,8 @@ class RecipeController extends Controller
     {
         $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
         $categories = Category::all();
-        //dd($recipe->ingredientss);
-        return view('recipes.edit-recipe',[
+
+        return view('recipes.edit',[
             'recipe' => $recipe,
             'categories' => $categories
         ]);
@@ -173,7 +165,7 @@ class RecipeController extends Controller
 
         $validatedData = $validator->validated();
         $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
-        //dd($recipe);
+
         logger('recipe with ingredients',['recipe'=>$recipe]);
         try {
             DB::beginTransaction();
@@ -185,7 +177,6 @@ class RecipeController extends Controller
             } else {
                 $validatedData['image'] = $recipe->image;
             }
-           // dd($validatedData);
 
             $recipe->update([
                 'title' => $validatedData['title'],
@@ -199,7 +190,6 @@ class RecipeController extends Controller
             $ingredients = [];
 
             foreach ($validatedData['ingredients'] as $ingredientData) {
-                //dd($ingredientData['name']);
                 $ingredient = Ingredient::firstOrCreate(
                     ['name' => $ingredientData['name']],
                     ['quantity' => $ingredientData['quantity']]
@@ -215,33 +205,26 @@ class RecipeController extends Controller
             $recipe->load('ingredientss');
             $recipe->load('categories');
 
-            //dd($recipe);
             logger('final recipe', ['recipe' => $recipe]);
             return to_route('recipes.index')->with('success', 'Your recipe have been updated successfully');
 
         } catch (\Exception $e) {
             DB::rollBack();
-
                 $errorMessage =  $e->getMessage();
                 return response()->make("<script>
                 alert('Bad request: $errorMessage');
                 window.history.back();
             </script>");
-
-
         }
     }
-
-
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //dd($id);
         $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
-        //dd($recipe);
+
         if ($recipe === null) {
             $errorMessage = 'Recipe not found';
             return response()->make("<script>

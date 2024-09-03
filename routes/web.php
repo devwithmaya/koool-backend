@@ -11,8 +11,10 @@
 |
 */
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\MealController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\RolesAndPermissionsController;
 use App\Http\Controllers\UserController;
@@ -24,13 +26,13 @@ Route::get('/', function () {
     return view('dashboard');
 })->middleware('auth')->name('dashboard');
 
-Route::get('login',[\App\Http\Controllers\AuthController::class,'login'])
+Route::get('login',[AuthController::class,'login'])
     ->middleware('guest')
     ->name('login');
 
-Route::post('login',[\App\Http\Controllers\AuthController::class,'doLogin'])->name('doLogin');
+Route::post('login',[AuthController::class,'doLogin'])->name('doLogin');
 
-Route::delete('logout',[\App\Http\Controllers\AuthController::class,'logout'])
+Route::delete('logout',[AuthController::class,'logout'])
     ->middleware('auth')
     ->name('logout');
 
@@ -42,6 +44,8 @@ Route::resource('ingredients', IngredientController::class)->middleware('auth');
 Route::resource('categories', CategoryController::class)->middleware('auth');
 
 Route::resource('users', UserController::class)->middleware('auth');
+
+Route::resource('meals', MealController::class)->middleware('auth');
 
 Route::resource('roles', RolesAndPermissionsController::class)->middleware('auth');
 Route::get('/permissions', [RolesAndPermissionsController::class, 'storePermissions'])->name('roles.permissions.store');

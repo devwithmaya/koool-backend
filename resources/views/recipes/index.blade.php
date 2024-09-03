@@ -30,11 +30,11 @@
                         <table id="dataTableExample" class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Image</th>
+                                <th class="no-sort">Image</th>
                                 <th>Title</th>
                                 <th>Ingredients</th>
                                 <th>Categories</th>
-                                <th>Actions</th>
+                                <th class="no-sort">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
