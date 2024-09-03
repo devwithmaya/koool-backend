@@ -15,8 +15,8 @@
 
           <div class="col-md-12 ps-md-0">
             <div class="auth-form-wrapper px-4 py-5">
-              <a href="#" class="noble-ui-logo d-block mb-2">Noble<span>UI</span></a>
-              <h5 class="text-muted fw-normal mb-4">Welcome back! Log in to your account.</h5>
+              <a href="#" class="noble-ui-logo d-block text-center mb-2">Koool</a>
+              <h5 class="text-muted fw-normal text-center mb-4">Welcome back! Log in to your account.</h5>
 
               <form class="forms-sample" action="{{route('login')}}" method="POST">
                   @csrf
@@ -43,14 +43,14 @@
                     Remember me
                   </label>
                 </div>
-                <div>
-                  <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0">Login</button>
-                  <button type="submit" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary w-50 mb-2 mb-0">Login</button>
+                  {{--<button type="submit" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
                     <i class="btn-icon-prepend" data-feather="twitter"></i>
                     Login with twitter
-                  </button>
+                  </button>--}}
                 </div>
-                <a href="{{ url('/auth/register') }}" class="d-block mt-3 text-muted">Not a user? Sign up</a>
+                {{--<a href="{{ url('/auth/register') }}" class="d-block mt-3 text-muted">Not a user? Sign up</a>--}}
               </form>
             </div>
           </div>

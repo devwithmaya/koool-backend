@@ -24,20 +24,17 @@ class AuthController extends Controller
 
     public function login()
     {
-        //dd('Salut');
-
-        return view('pages.auth.login');
+        return view('auth.login');
     }
+
     public function doLogin(LoginForm $request)
     {
-        //dd('Salut');
         logger('Salut');
         $credentials = $request->validated();
         //dd($credentials);
-        if (Auth::attempt($credentials))
-        {
+        if (Auth::attempt($credentials)){
             $request->session()->regenerate();
-            return redirect()->intended(route('recipes.index'));
+            return redirect()->intended(route('dashboard'));
         }
         return back()->withErrors([
             "email" => 'Identifiants incorrectes'
@@ -46,7 +43,6 @@ class AuthController extends Controller
 
     public function logout()
     {
-        //dd('SAlut');
         Auth::logout();
         return to_route('login')->with('success', 'Vous êtes bien déconnecté');
     }

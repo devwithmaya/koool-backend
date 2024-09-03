@@ -30,8 +30,8 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>quantity</th>
-                  <th>Actions</th>
+                <th>Quantity</th>
+                <th class="no-sort">Actions</th>
               </tr>
             </thead>
             <tbody>
