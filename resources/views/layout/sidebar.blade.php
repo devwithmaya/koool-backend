@@ -97,6 +97,12 @@
             <span class="link-title">Roles et permessions</span>
         </a>
       </li>
+        <li class="nav-item {{ active_class(['roles']) }}">
+            <a href="{{ route('roles.index') }}" class="nav-link">
+                <i class="link-icon" data-feather="shield"></i>
+                <span class="link-title">Settings</span>
+            </a>
+        </li>
 
      {{-- <li class="nav-item nav-category">Components</li>
       <li class="nav-item {{ active_class(['ui-components/*']) }}">
