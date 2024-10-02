@@ -63,16 +63,16 @@ class RecipeController extends Controller
             }
             $validatedData['image'] = $request->file('image')->store('images');
         }
-
+        //dd($request->all());
         $recipe = Recipe::create([
             'title' => $validatedData['title'],
             'image' => $validatedData['image'],
             'summary' => $validatedData['summary'],
-            'instructions' => $validatedData['instructions'],
-            'nutrition' => $validatedData['nutrition'],
-            'video' => $validatedData['video'],
-            'prepTime' => $validatedData['prepTime'],
-            'cookTime' => $validatedData['cookTime'],
+            'instructions' => $request->instructions,
+            'nutrition' => $request->nutrition,
+            'video' => $request->video,
+            'prepTime' => $request->prepTime,
+            'cookTime' => $request->cookTime,
         ]);
 
         $ingredients = [];
@@ -116,7 +116,7 @@ class RecipeController extends Controller
             'categories' => $categories
         ]);
     }
-    
+
     /**
      * Update the specified resource in storage.
      */
