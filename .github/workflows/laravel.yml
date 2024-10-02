@@ -31,3 +31,7 @@ jobs:
           **/.gitignore
           **/package-lock.json
           **/readme.md
+          **/vendor/**
+          **/storage/*.key
+          **/.env
+          
