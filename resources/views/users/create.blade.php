@@ -35,7 +35,6 @@
                                    </div>
                               @enderror
                          </div>
-
                          <div class="form-group mb-3">
                               <label for="email" class="form-label">Email</label>
                               <input type="email" id="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Email">
@@ -45,33 +44,38 @@
                                    </div>
                               @enderror
                          </div>
-
-                         <div class="form-group mb-3">
-                              <label for="role" class="form-label">Role</label>
-                              <select name="role" id="role" class="form-control @error('role') is-invalid @enderror @error('email') is-invalid @enderror">
-                                   <option value="">Select role</option>
-                                   @foreach($roles as $role)
-                                        <option value="{{$role->name}}">{{$role->name}}</option>
-                                   @endforeach
-                              </select>
-                              @error("role")
-                                   <div class="invalid-feedback">
-                                        {{ $message }}
-                                   </div>
-                              @enderror
-                         </div>
-
                          <div class="form-group mb-3">
                               <label for="password" class="form-label">Mot de passe</label>
-                              <input type="password" class="form-control @error('email') is-invalid @enderror" id="password" name="password" placholder="Mot de passe" />
+                              <input type="password" class="form-control @error('email') is-invalid @enderror" id="password" name="password" placeholder="Mot de passe" />
                               @error("password")
                                    <div class="invalid-feedback">
                                         {{ $message }}
                                    </div>
                               @enderror
                          </div>
-
-                         <button class="btn btn-primary" type="submit">Enregistrer</button>
+                        <div class="form-group mb-3">
+                            <label for="password" class="form-label">Confirmer votre mot de passe</label>
+                            <input type="password" class="form-control @error('email') is-invalid @enderror" id="password" name="confirm-password" placeholder="Confirmer votre Mot de passe" />
+                            @error("password")
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="role" class="form-label">Role</label>
+                            <select name="roles[]" class="form-select" multiple>
+                                @foreach($roles as $key => $value)
+                                    <option value="{{ $key }}">{{ $value }}</option>
+                                @endforeach
+                            </select>
+                            @error("role")
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                         <button class="btn btn-primary" type="submit">Create</button>
                     </form>
                </div>
           </div>

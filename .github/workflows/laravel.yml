@@ -34,3 +34,19 @@ jobs:
           **/vendor/**
           **/storage/*.key
           **/.env
+    - name: SSH into the production server and restart
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.sftp_host }}
+        username: ${{ secrets.sftp_user }}
+        password: ${{ secrets.sftp_password }}
+        port: 22
+        script: |
+          cd sites/koool.mayaapps.site/
+          composer update
+          composer install
+          php artisan migrate:status
+          php artisan migrate
+          php artisan db:seed --class=PermissionTableSeeder
+          php artisan db:seed --class=CreateAdminUserSeeder
+          php artisan storage:link

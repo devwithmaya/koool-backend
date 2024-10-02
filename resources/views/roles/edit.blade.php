@@ -6,6 +6,7 @@
 @endpush
 
 @section('content')
+
 <nav class="page-breadcrumb">
      <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="#">Roles et permessions</a></li>
@@ -22,46 +23,28 @@
                <form action="{{ route('roles.update', $role->id) }}" method="POST">
                     @csrf
                     @method('PUT')
-                    
+
                     <div class="card-body">
                          <div class="form-group mb-3">
                               <label class="from-label" for="name">{{__('Nom du rôle')}}</label>
                               <input type="text" placeholder="{{__('Nom du rôle')}}" id="name" name="name" class="form-control" value="{{ $role->name }}" required>
                          </div>
-
-                         <div class="card-header mb-3 d-flex px-0 justify-content-between">
-                              <h4 class="mb-0">{{ __('Permissions') }}</h5>
-                              <div>
-                                   <button type="button" class="btn btn-primary btn-sm text-white" id="selectAll">Tout sélectionner</button>
-                                   <a href="{{ route('roles.permissions.store') }}" class="btn btn-success btn-sm">Charger les permissions</a>
-                              </div>
-                         </div>
-
                          <br>
-
-                         @foreach ($permission_groups as $key => $permission_group)
-                              <ul class="list-group mb-4">
-                                   <li class="list-group-item bg-light" aria-current="true"> {{ __(Str::headline($permission_group[0]['section'])) }}</li>
-                                   <li class="list-group-item">
-                                        <div class="row">
-                                             @foreach ($permission_group as $key => $permission)
-                                                  <div class="col-3">
-                                                       <div class="p-2 border mt-1 mb-2 d-flex justify-content-between">
-                                                            <label class="control-label d-flex">{{ __(Str::headline($permission->name)) }}</label>
-                                                            <div class="form-check form-switch">
-                                                                 <input type="checkbox" class="form-check-input" name="permissions[]" class="form-control demo-sw" value="{{ $permission->name }}" @if(in_array($permission->name, $permissions))checked @endif>
-                                                                 <span class="slider round"></span>
-                                                            </div>
-                                                       </div>
-                                                  </div>
-                                             @endforeach
-                                        </div>
-                                   </li>
-                              </ul>
-                         @endforeach
-
+                         <div class="mb-3">
+                            <label for="permission" class="form-label"><strong>Permissions:</strong></label>
+                            <div class="list-group">
+                                @foreach ($permission as $value)
+                                    <label class="list-group-item d-flex align-items-center">
+                                        <input type="checkbox" name="permission[]" value="{{ $value->id }}"
+                                               class="form-check-input me-3" id="permission{{ $value->id }}"
+                                            {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}>
+                                        {{ $value->name }}
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
                          <div class="form-group mb-3 mt-3 text-right">
-                              <button type="submit" class="btn btn-primary">{{__('Sauvegarder')}}</button>
+                              <button type="submit" class="btn btn-primary">{{__('Update')}}</button>
                          </div>
                     </div>
                </form>
