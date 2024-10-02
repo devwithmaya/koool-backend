@@ -8,33 +8,44 @@
     {{-- @dump($recipes)--}}
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Tables</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Data Table Recipes</li>
+            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Recipes</li>
         </ol>
     </nav>
 
     <div class="row">
+        <div class="col-md-12">
+            @if(Session::has("success"))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>{{ Session::get("success") }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"></button>
+                </div>
+            @endif
+        
+            @if(Session::has("error"))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{ Session::get("erreur") }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"></button>
+                </div>
+            @endif
+        </div>
+
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items my-3">
-                        <h6 class="card-title">Data Table Recipes</h6>
-                        <a href="{{route('recipes.create')}}" class="btn btn-primary">Create</a>
+                        <h6 class="card-title">Recipes</h6>
+                        <a href="{{route('recipes.create')}}" class="btn btn-primary">Add New recipe</a>
                     </div>
                     <div class="table-responsive">
-                        @if(session('success'))
-                            <div class="w-50 m-auto alert bg-alert-success">
-                                <p class="text-center">{{ session('success') }}</p>
-                            </div>
-                        @endif
                         <table id="dataTableExample" class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Image</th>
+                                <th class="no-sort">Image</th>
                                 <th>Title</th>
                                 <th>Ingredients</th>
                                 <th>Categories</th>
-                                <th>Actions</th>
+                                <th class="no-sort">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -47,7 +58,7 @@
 
                                             @if($recipe->ingredientss)
                                                 @foreach($recipe->ingredientss as $ingredient)
-                                                    <div class="badge bg-primary" >{{$ingredient->name}}/{{$ingredient->quantity}}</div>
+                                                    <div class="badge bg-primary">{{$ingredient->quantity}} {{$ingredient->name}}</div>
                                                 @endforeach
                                             @endif
 
@@ -59,7 +70,7 @@
                                                 @endforeach
                                             @endif
                                         </td>
-                                        <td class="d-flex d-inline-block gap-2">
+                                        <td class="actions">
                                             <form action="{{ route('recipes.destroy',$recipe->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')

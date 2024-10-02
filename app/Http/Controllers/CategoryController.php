@@ -18,11 +18,7 @@ class CategoryController extends Controller
     public function index(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $categories = Category::orderBy('created_at', 'DESC')->get();
-        return view('categories.categories',[
-            'categories' => $categories
-        ]);
-        return response()->json([
-            'status' => Response::HTTP_OK,
+        return view('categories.index',[
             'categories' => $categories
         ]);
     }
@@ -34,7 +30,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create-categories');
+        return view('categories.create');
     }
 
     /**
@@ -64,7 +60,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return view('categories.categories',[
+        return view('categories.show',[
             'category' => $category
             ]);
     }
@@ -77,7 +73,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('categories.edit-categories',[
+        return view('categories.edit',[
             'category' => $category
         ]);
     }

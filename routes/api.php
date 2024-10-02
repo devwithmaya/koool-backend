@@ -1,7 +1,8 @@
 <?php
 
-
+use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\IngredientController;
+use App\Http\Controllers\api\MealController;
 use App\Http\Controllers\api\RecipeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,8 @@ use Illuminate\Support\Facades\Route;
 #Route::get('/generateRecipes',[RecipeController::class,'search'])->middleware('auth');
 Route::apiResource('recipes',RecipeController::class);
 Route::apiResource('ingredients',IngredientController::class);
-Route::apiResource('categories',\App\Http\Controllers\api\CategoryController::class);
+Route::apiResource('categories',CategoryController::class);
+Route::apiResource('meals',MealController::class);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

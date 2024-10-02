@@ -14,25 +14,22 @@ use Symfony\Component\HttpFoundation\Response;
 class RecipeController extends Controller
 {
 
-
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $recipes = Recipe::with('ingredientss')->with('categories')->orderBy('created_at', 'DESC')->get();
-        return view('recipes.recipes',[
+        return view('recipes.index',[
             'recipes' => $recipes
         ]);
-
     }
 
     public function create()
     {
         $ingredients = Ingredient::all();
 
-        return view('recipes.create-recipe',[
+        return view('recipes.create',[
             'ingredients' => $ingredients,
             'categories' => Category::all()
 
@@ -45,7 +42,87 @@ class RecipeController extends Controller
 
     public function store(Request $request)
     {
-        //dd('salut');
+        $rules = [
+            'title' => 'required|string|max:255',
+            'image' => 'required|file',
+            'summary' => 'required|string',
+            'ingredients' => 'required|array|min:1',
+            'ingredients.*.name' => 'required|string|max:255',
+            'ingredients.*.quantity' => 'required|string|max:255',
+            'categories' => 'required|array|min:1',
+            'categories.*' => 'exists:categories,id',
+        ];
+
+        $validatedData = $request->validate($rules);
+        //$validator = Validator::make($request->all(), $rules);
+        //$validatedData = Validator::make($request->all(), $rules)->validated();
+        //dd($validatedData);
+        if ($request->hasFile('image')) {
+            if ($validatedData['image'] && Storage::exists($validatedData['image'])) {
+                Storage::delete($validatedData['image']);
+            }
+            $validatedData['image'] = $request->file('image')->store('images');
+        }
+
+        $recipe = Recipe::create([
+            'title' => $validatedData['title'],
+            'image' => $validatedData['image'],
+            'summary' => $validatedData['summary'],
+            'instructions' => $validatedData['instructions'],
+            'nutrition' => $validatedData['nutrition'],
+            'video' => $validatedData['video'],
+            'prepTime' => $validatedData['prepTime'],
+            'cookTime' => $validatedData['cookTime'],
+        ]);
+
+        $ingredients = [];
+        foreach ($validatedData['ingredients'] as $ingredientData) {
+            $ingredient = Ingredient::firstOrCreate(
+                ['name' => $ingredientData['name']],
+                ['quantity' => $ingredientData['quantity']]
+            );
+            $ingredients[$ingredient->id] = ['quantity' => $ingredientData['quantity']];
+        }
+
+        $recipe->ingredientss()->attach($ingredients);
+
+        $recipe->categories()->attach($validatedData['categories']);
+
+        //$recipe->load('ingredientss');
+        //$recipe->load('categories');
+
+        return to_route('recipes.index')->with("success", "Recipe Added bu Success");
+    }
+
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
+        return \response()->json([
+            'recipe' => $recipe
+        ],Response::HTTP_OK);
+    }
+
+    public function edit(string $id)
+    {
+        $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
+        $categories = Category::all();
+
+        return view('recipes.edit',[
+            'recipe' => $recipe,
+            'categories' => $categories
+        ]);
+    }
+    
+    /**
+     * Update the specified resource in storage.
+     */
+
+    public function update(Request $request, string $id)
+    {
         $rules = [
             'title' => 'required|string|max:255',
             'image' => 'required|file',
@@ -68,112 +145,10 @@ class RecipeController extends Controller
                 window.history.back();
             </script>");
         }
-        $validatedData = $validator->validated();
-        //dd($validatedData);
-        //$validatedData['image'] = $validatedData->image->store('uploads');
-        try {
-        if ($request->hasFile('image')) {
-            if ($validatedData['image'] && Storage::exists($validatedData['image'])) {
-                Storage::delete($validatedData['image']);
-            }
-            $validatedData['image'] = $request->file('image')->store('images');
-        }
-            DB::beginTransaction();
-
-            $recipe = Recipe::create([
-                'title' => $validatedData['title'],
-                'image' => $validatedData['image'],
-                'summary' => $validatedData['summary'],
-            ]);
-            //dd($validatedData['ingredients']);
-            $ingredients = [];
-            foreach ($validatedData['ingredients'] as $ingredientData) {
-                $ingredient = Ingredient::firstOrCreate(
-                    ['name' => $ingredientData['name']],
-                    ['quantity' => $ingredientData['quantity']]
-                );
-                $ingredients[$ingredient->id] = ['quantity' => $ingredientData['quantity']];
-            }
-            //dd($ingredients);
-
-            $recipe->ingredientss()->attach($ingredients);
-
-            $recipe->categories()->attach($validatedData['categories']);
-            //dd($recipe);
-            DB::commit();
-
-            $recipe->load('ingredientss');
-            $recipe->load('categories');
-            //dd($recipe);
-            return to_route('recipes.index');
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-                $errorMessage =  $e->getMessage();
-                return response()->make("<script>
-                alert('Bad request: $errorMessage');
-                window.history.back();
-            </script>");
-
-
-        }
-    }
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
-        return \response()->json([
-            'recipe' => $recipe
-        ],Response::HTTP_OK);
-    }
-
-    public function edit(string $id)
-    {
-        $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
-        $categories = Category::all();
-        //dd($recipe->ingredientss);
-        return view('recipes.edit-recipe',[
-            'recipe' => $recipe,
-            'categories' => $categories
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-
-    public function update(Request $request, string $id)
-    {
-        $rules = [
-            'title' => 'required|string|max:255',
-            //'image' => 'required|file',
-            'summary' => 'required|string',
-            'ingredients' => 'required|array|min:1',
-            'ingredients.*.name' => 'required|string|max:255',
-            'ingredients.*.quantity' => 'required|string|max:255',
-            'categories' => 'required|array|min:1',
-            'categories.*' => 'exists:categories,id',
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            $errors = $validator->errors()->all();
-            $errorMessage = implode('\\n', $errors);
-
-            return response()->make("<script>
-                alert('Bad request: $errorMessage');
-                window.history.back();
-            </script>");
-        }
 
         $validatedData = $validator->validated();
         $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
-        //dd($recipe);
+
         logger('recipe with ingredients',['recipe'=>$recipe]);
         try {
             DB::beginTransaction();
@@ -185,7 +160,6 @@ class RecipeController extends Controller
             } else {
                 $validatedData['image'] = $recipe->image;
             }
-           // dd($validatedData);
 
             $recipe->update([
                 'title' => $validatedData['title'],
@@ -199,7 +173,6 @@ class RecipeController extends Controller
             $ingredients = [];
 
             foreach ($validatedData['ingredients'] as $ingredientData) {
-                //dd($ingredientData['name']);
                 $ingredient = Ingredient::firstOrCreate(
                     ['name' => $ingredientData['name']],
                     ['quantity' => $ingredientData['quantity']]
@@ -215,33 +188,26 @@ class RecipeController extends Controller
             $recipe->load('ingredientss');
             $recipe->load('categories');
 
-            //dd($recipe);
             logger('final recipe', ['recipe' => $recipe]);
             return to_route('recipes.index')->with('success', 'Your recipe have been updated successfully');
 
         } catch (\Exception $e) {
             DB::rollBack();
-
                 $errorMessage =  $e->getMessage();
                 return response()->make("<script>
                 alert('Bad request: $errorMessage');
                 window.history.back();
             </script>");
-
-
         }
     }
-
-
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //dd($id);
         $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
-        //dd($recipe);
+
         if ($recipe === null) {
             $errorMessage = 'Recipe not found';
             return response()->make("<script>

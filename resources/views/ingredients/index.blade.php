@@ -30,8 +30,8 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>quantity</th>
-                  <th>Actions</th>
+                <th>Quantity</th>
+                <th class="no-sort">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -40,15 +40,15 @@
               <tr>
                 <td>{{$recipe->name}}</td>
                 <td>{{$recipe->quantity}}</td>
-                  <td class="d-flex d-inline-block gap-2">
+                  <td class="actions">
                       <form action="{{ route('ingredients.destroy',$recipe->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
-                          <button class="btn btn-sm btn-danger">
-                              <i data-feather="delete"></i>
+                          <button class="btn btn-sm btn-danger circle">
+                              <i data-feather="trash"></i>
                           </button>
                       </form>
-                      <a class="btn btn-sm btn-success" href="{{route('ingredients.edit',$recipe->id)}}">
+                      <a class="btn btn-sm btn-success circle" href="{{route('ingredients.edit',$recipe->id)}}">
                           <i data-feather="edit-3"></i>
                       </a>
                   </td>

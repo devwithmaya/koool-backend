@@ -14,13 +14,8 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        return view('ingredients.ingredients',[
+        return view('ingredients.index',[
             'ingredients' => Ingredient::orderBy('created_at','DESC')->get()
-        ]);
-        return response()->json([
-            'status' => Response::HTTP_OK,
-            'message' => 'Liste des ingrédients',
-            'ingredients' => Ingredient::orderBy('created_at', 'DESC')->get()
         ]);
     }
 
@@ -37,15 +32,7 @@ class IngredientController extends Controller
             'name' => ['required','string'],
             'quantity' => ['required','string']
         ]);
-        #dd($validated->getData());
-        /*if ($validated->fails())
-        {
-            return \response()->json([
-                'status' => Response::HTTP_BAD_REQUEST,
-                'message' => 'Bad Request',
-                'errors' => $validated->errors()
-            ]);
-        }*/
+
         Ingredient::create($validated->getData());
         return to_route('ingredients.index');
         return \response()->json([
