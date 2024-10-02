@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Directory Permissions
-      run: chmod -R 775 storage bootstrap/cache
+      run: chmod -R 777 storage bootstrap/cache
     - name: Composer install
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: 📂 Sync Files
@@ -31,6 +31,3 @@ jobs:
           **/.gitignore
           **/package-lock.json
           **/readme.md
-          **/vendor/**
-          **/storage/*.key
-          **/.env
