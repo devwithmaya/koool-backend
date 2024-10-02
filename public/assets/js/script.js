@@ -1,5 +1,4 @@
-
-    let ingredientIndex = 1;
+ let ingredientIndex = 1;
     document.getElementById('add-ingredient').addEventListener('click', function() {
     const container = document.getElementById('ingredients-container');
     const newIngredient = document.createElement('div');
@@ -16,12 +15,10 @@
                     <div type="button" class="btn btn-danger remove-ingredient"><i data-feather="x-circle">Annuler</i></div>
                 </div>
             </div>
-
         `;
     container.appendChild(newIngredient);
     ingredientIndex++;
 });
-
     document.getElementById('ingredients-container').addEventListener('click', function(e) {
     if (e.target && e.target.classList.contains('remove-ingredient')) {
     e.target.closest('.ingredient-item').remove();

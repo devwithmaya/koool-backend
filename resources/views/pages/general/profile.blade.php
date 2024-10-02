@@ -6,7 +6,7 @@
     <div class="card">
       <div class="position-relative">
         <figure class="overflow-hidden mb-0 d-flex justify-content-center">
-          <img src="{{ url('https://via.placeholder.com/1300x272') }}"class="rounded-top" alt="profile cover">
+          <img src="{{ url('https://via.placeholder.com/1300x272') }}" class="rounded-top" alt="profile cover">
         </figure>
         <div class="d-flex justify-content-between align-items-center position-absolute top-90 w-100 px-2 px-md-4 mt-n4">
           <div>
@@ -105,7 +105,7 @@
           <div class="card-header">
             <div class="d-flex align-items-center justify-content-between">
               <div class="d-flex align-items-center">
-                <img class="img-xs rounded-circle" src="{{ url('https://via.placeholder.com/37x37') }}" alt="">													
+                <img class="img-xs rounded-circle" src="{{ url('https://via.placeholder.com/37x37') }}" alt="">
                 <div class="ms-2">
                   <p>Mike Popescu</p>
                   <p class="tx-11 text-muted">1 min ago</p>
@@ -151,7 +151,7 @@
           <div class="card-header">
             <div class="d-flex align-items-center justify-content-between">
               <div class="d-flex align-items-center">
-                <img class="img-xs rounded-circle" src="{{ url('https://via.placeholder.com/37x37') }}" alt="">													
+                <img class="img-xs rounded-circle" src="{{ url('https://via.placeholder.com/37x37') }}" alt="">
                 <div class="ms-2">
                   <p>Mike Popescu</p>
                   <p class="tx-11 text-muted">5 min ago</p>
@@ -258,7 +258,7 @@
             <h6 class="card-title">suggestions for you</h6>
             <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
               <div class="d-flex align-items-center hover-pointer">
-                <img class="img-xs rounded-circle" src="{{ url('https://via.placeholder.com/37x37') }}" alt="">													
+                <img class="img-xs rounded-circle" src="{{ url('https://via.placeholder.com/37x37') }}" alt="">
                 <div class="ms-2">
                   <p>Mike Popescu</p>
                   <p class="tx-11 text-muted">12 Mutual Friends</p>
@@ -268,7 +268,7 @@
             </div>
             <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
               <div class="d-flex align-items-center hover-pointer">
-                <img class="img-xs rounded-circle" src="{{ url('https://via.placeholder.com/37x37') }}" alt="">											
+                <img class="img-xs rounded-circle" src="{{ url('https://via.placeholder.com/37x37') }}" alt="">
                 <div class="ms-2">
                   <p>Mike Popescu</p>
                   <p class="tx-11 text-muted">12 Mutual Friends</p>
@@ -278,7 +278,7 @@
             </div>
             <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
               <div class="d-flex align-items-center hover-pointer">
-                <img class="img-xs rounded-circle" src="{{ url('https://via.placeholder.com/37x37') }}" alt="">											
+                <img class="img-xs rounded-circle" src="{{ url('https://via.placeholder.com/37x37') }}" alt="">
                 <div class="ms-2">
                   <p>Mike Popescu</p>
                   <p class="tx-11 text-muted">12 Mutual Friends</p>
@@ -288,7 +288,7 @@
             </div>
             <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
               <div class="d-flex align-items-center hover-pointer">
-                <img class="img-xs rounded-circle" src="{{ url('https://via.placeholder.com/37x37') }}" alt="">													
+                <img class="img-xs rounded-circle" src="{{ url('https://via.placeholder.com/37x37') }}" alt="">
                 <div class="ms-2">
                   <p>Mike Popescu</p>
                   <p class="tx-11 text-muted">12 Mutual Friends</p>
@@ -298,7 +298,7 @@
             </div>
             <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
               <div class="d-flex align-items-center hover-pointer">
-                <img class="img-xs rounded-circle" src="{{ url('https://via.placeholder.com/37x37') }}" alt="">													
+                <img class="img-xs rounded-circle" src="{{ url('https://via.placeholder.com/37x37') }}" alt="">
                 <div class="ms-2">
                   <p>Mike Popescu</p>
                   <p class="tx-11 text-muted">12 Mutual Friends</p>
@@ -308,7 +308,7 @@
             </div>
             <div class="d-flex justify-content-between">
               <div class="d-flex align-items-center hover-pointer">
-                <img class="img-xs rounded-circle" src="{{ url('https://via.placeholder.com/37x37') }}" alt="">													
+                <img class="img-xs rounded-circle" src="{{ url('https://via.placeholder.com/37x37') }}" alt="">
                 <div class="ms-2">
                   <p>Mike Popescu</p>
                   <p class="tx-11 text-muted">12 Mutual Friends</p>
