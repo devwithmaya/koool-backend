@@ -97,8 +97,8 @@
             <span class="link-title">Roles et permessions</span>
         </a>
       </li>
-        <li class="nav-item {{ active_class(['roles']) }}">
-            <a href="{{ route('roles.index') }}" class="nav-link">
+        <li class="nav-item {{ active_class(['settings']) }}">
+            <a href="{{ route('settings.index') }}" class="nav-link">
                 <i data-feather="settings" class="link-icon"></i>
                 <span class="link-title">Settings</span>
             </a>

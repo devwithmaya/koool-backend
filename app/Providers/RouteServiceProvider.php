@@ -32,9 +32,16 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
-        parent::boot();
+        //parent::boot();
+        //$this->configureRateLimiting();
+        /*$this->routes(function (){
+            Route::middleware('web')->group(base_path('routes/web.php'));
+            Route::middleware('web')->group(function (){
+                Route::get('meals',function (){
+                    return 'L\'application est en maintenance';
+                });
+            })->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance::class]);
+        });*/
     }
 
     /**
