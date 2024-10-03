@@ -50,6 +50,11 @@ Route::resource('meals', MealController::class)->middleware('auth');
 Route::resource('roles', RoleController::class)->middleware('auth');
 Route::get('/permissions', [RoleController::class, 'storePermissions'])->name('roles.permissions.store');
 
+Route::resource('settings',\App\Http\Controllers\MaintenanceController::class);
+Route::get('active',[\App\Http\Controllers\MaintenanceController::class,'activeMaintenance'])->name('active');
+Route::get('desactive',[\App\Http\Controllers\MaintenanceController::class,'desactiveMaintenance'])->name('desactive');
+
+
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });
     Route::get('read', function () { return view('pages.email.read'); });
