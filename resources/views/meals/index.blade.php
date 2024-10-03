@@ -8,11 +8,10 @@
     {{-- @dump($meals)--}}
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{url('/')}}">Dashboard</a></li>
             <li class="breadcrumb-item active" aria-current="page">Meals</li>
         </ol>
     </nav>
-
     <div class="row">
         <div class="col-md-12">
             @if(Session::has("success"))
@@ -21,7 +20,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"></button>
                 </div>
             @endif
-        
             @if(Session::has("error"))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>{{ Session::get("erreur") }}</strong>
@@ -29,7 +27,6 @@
                 </div>
             @endif
         </div>
-
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">

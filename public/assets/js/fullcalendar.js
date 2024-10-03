@@ -201,7 +201,14 @@ $(function() {
     // },
     dayMaxEvents: 2,
     events: [],
-    eventSources: [calendarEvents, birthdayEvents, holidayEvents, discoveredEvents, meetupEvents, otherEvents],
+    eventSources: [
+        calendarEvents,
+        birthdayEvents,
+        holidayEvents,
+        discoveredEvents,
+        meetupEvents,
+        otherEvents
+    ],
     drop: function(info) {
         // remove the element from the "Draggable Events" list
         // info.draggedEl.parentNode.removeChild(info.draggedEl);

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Meal extends Model
 {
@@ -11,11 +12,13 @@ class Meal extends Model
 
     protected $guarded = [];
 
-    public function user(){
-        return $this->belongsTo(User::class);
+    public function user():BelongsTo
+    {
+        return $this->belongsTo(User::class,'user_id');
     }
 
-    public function recipe(){
-        return $this->belongsTo(Recipe::class);
+    public function recipe(): BelongsTo
+    {
+        return $this->belongsTo(Recipe::class,'recipe_id');
     }
 }
