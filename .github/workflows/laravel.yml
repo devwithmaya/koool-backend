@@ -51,4 +51,3 @@ jobs:
           composer install
           php artisan migrate:status
           php artisan migrate
-          php artisan storage:link
