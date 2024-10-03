@@ -39,7 +39,7 @@
                                 <form method="post" action="{{ route(isset($setting) && $setting->exists ? 'settings.update' : 'settings.store',$setting)}}">
                                     @csrf
                                     @method(isset($setting) && $setting->exists ? 'PUT' : 'POST')
-                                    <input type="text" name="version" value="{{$setting->version}}" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                                    <input type="text" name="version" value="{{isset($setting) && $setting->exists ? $setting->version : ''}}" class="form-control" id="basic-url" aria-describedby="basic-addon3">
                                 </form>
                             </div>
                         </li>
