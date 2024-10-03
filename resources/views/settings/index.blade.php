@@ -36,9 +36,9 @@
                         <li class="list-group-item">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon2">version-koool</span>
-                                <form method="post" action="{{ route($setting -> exists ? 'settings.update' : 'settings.store',$setting)}}">
+                                <form method="post" action="{{ route(isset($setting) && $setting->exists ? 'settings.update' : 'settings.store',$setting)}}">
                                     @csrf
-                                    @method($setting->exists ? 'PUT' : 'POST')
+                                    @method(isset($setting) && $setting->exists ? 'PUT' : 'POST')
                                     <input type="text" name="version" value="{{$setting->version}}" class="form-control" id="basic-url" aria-describedby="basic-addon3">
                                 </form>
                             </div>
