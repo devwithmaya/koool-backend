@@ -99,7 +99,7 @@
       </li>
         <li class="nav-item {{ active_class(['roles']) }}">
             <a href="{{ route('roles.index') }}" class="nav-link">
-                <i class="link-icon" data-feather="shield"></i>
+                <i data-feather="settings" class="link-icon"></i>
                 <span class="link-title">Settings</span>
             </a>
         </li>

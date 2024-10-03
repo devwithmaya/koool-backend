@@ -51,6 +51,6 @@ jobs:
           composer install
           php artisan migrate:status
           php artisan migrate
-          php artisan db:seed --class=PermissionTableSeeder
-          php artisan db:seed --class=CreateAdminUserSeeder
+#          php artisan db:seed --class=PermissionTableSeeder
+#          php artisan db:seed --class=CreateAdminUserSeeder
           php artisan storage:link

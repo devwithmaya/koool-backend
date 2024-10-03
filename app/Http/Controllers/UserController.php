@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
@@ -25,6 +26,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $users = User::orderBy('created_at','DESC')->paginate(5);
+        //dd(UserResource::collection($users));
         return view('users.index',compact('users'))->with('i', ($request->input('page', 1) - 1) * 5);
     }
 

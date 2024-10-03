@@ -36,9 +36,10 @@
       <div class="col-12 col-md-9">
         <div class="card">
           <div class="card-body">
-            <div id='fullcalendar'></div>
+            <div id='fullcalendar'>
+            </div>
           </div>
-          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -51,7 +52,9 @@
         <h4 id="modalTitle1" class="modal-title"></h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal"><span class="visually-hidden">close</span></button>
       </div>
-      <div id="modalBody1" class="modal-body"></div>
+      <div id="modalBody1" class="modal-body">
+
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button class="btn btn-primary">Event Page</button>
@@ -68,20 +71,65 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"><span class="visually-hidden">close</span></button>
       </div>
       <div id="modalBody2" class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="formGroupExampleInput" class="form-label">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="mb-3">
-            <label for="formGroupExampleInput2" class="form-label">Another label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button class="btn btn-primary">Add</button>
+          <form action="{{ route('meals.store') }}" method="POST">
+              @csrf
+              {{--<div class="mb-3">
+                  <label class="form-label" for="user">User</label>
+                  <select name="user" id="user" class="form-control @error("user") is-invalid @enderror" required>
+                      <option value="">Choose user</option>
+                       @foreach($users as $user)
+                          <option value="{{ $user->id }}">{{ $user->name }}</option>
+                       @endforeach
+                  </select>
+                  @error("user")
+                  <div class="invalid-feedback">
+                      {{ $message }}
+                  </div>
+                  @enderror
+              </div>
+              <div class="mb-3">
+                  <label class="form-label">Recipe</label>
+                  <select name="recipe" id="recipe" class="form-control @error("recipe") is-invalid @enderror" required>
+                      <option value="">Choose recipe</option>
+                        @foreach($recipes as $recipe)
+                          <option value="{{ $recipe->id }}">{{ $recipe->title }}</option>
+                        @endforeach
+                  </select>
+                  @error("recipe")
+                  <div class="invalid-feedback">
+                      {{ $message }}
+                  </div>
+                  @enderror
+              </div>--}}
+              <div class="mb-3">
+                  <label class="form-label" for="type">Type Meal</label>
+                  <select name="type" id="type" class="form-control @error("type") is-invalid @enderror" required>
+                      <option value="">Choose type</option>
+                      <option value="breakfast">Breakfast</option>
+                      <option value="lunch">Lunch</option>
+                      <option value="dinner">Dinner</option>
+                      <option value="snack">Snack</option>
+                  </select>
+                  @error("type")
+                  <div class="invalid-feedback">
+                      {{ $message }}
+                  </div>
+                  @enderror
+              </div>
+              <div class="mb-3">
+                  <label for="date" class="form-label">Date</label>
+                  <input type="date" name="date" id="date" class="form-control @error("date") is-invalid @enderror" required />
+                  @error("date")
+                  <div class="invalid-feedback">
+                      {{ $message }}
+                  </div>
+                  @enderror
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary" type="submit">Add</button>
+              </div>
+          </form>
       </div>
     </div>
   </div>
