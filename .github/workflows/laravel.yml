@@ -40,6 +40,8 @@ jobs:
           **/vendor/**
           **/storage/*.key
           **/.env
+          **/.git*
+          **/.git/**/*
 
     - name: SSH into the production server and restart
       uses: appleboy/ssh-action@v0.1.5
