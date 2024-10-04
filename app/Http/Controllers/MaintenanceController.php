@@ -33,9 +33,14 @@ class MaintenanceController extends Controller
         //dd($setting);
         return redirect()->back()->with('success','La version a été modifié');
     }
-    public function activeMaintenance()
+    public function activeMaintenance(Request $request)
     {
-        Artisan::call('down');
+        $excludedRoutes = $request->get('excluded_routes', []);
+        $excludedRoutesString = implode(',', $excludedRoutes);
+        //dd($excludedRoutesString);
+        Artisan::call('down', [
+            '--except' => $excludedRoutesString,
+        ]);
         return redirect()->back()->with('success', 'Le mode maintenance est activé');
     }
     public function desactiveMaintenance()

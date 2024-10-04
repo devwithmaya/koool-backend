@@ -34,8 +34,8 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"></li>
                         <li class="list-group-item">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon2">version-koool-{{isset($setting) && $setting->exists ? $setting->version : ''}}</span>
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon2">version-koool/</span>
                                 <form method="post" action="{{ route(isset($setting) && $setting->exists ? 'settings.update' : 'settings.store',$setting)}}">
                                     @csrf
                                     @method(isset($setting) && $setting->exists ? 'PUT' : 'POST')
@@ -45,19 +45,22 @@
                         </li>
                         <li class="list-group-item"></li>
                     </ul>
-                    <h4>Mode Maintenance</h4>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"></li>
-                        <li class="list-group-item d-flex justify-content-between align-items">
-                            <h5 class="mt-1">Activer</h5>
-                            <a href="{{route('active')}}" class="btn btn-sm btn-primary">Activer</a>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items">
-                            <h5 class="mt-1">Désactiver</h5>
-                            <a href="{{route('desactive')}}" class="btn btn-sm btn-primary">Désactiver</a>
-                        </li>
-                        <li class="list-group-item"></li>
-                    </ul>
+                    <div class="d-flex justify-content-between align-items">
+                        <h4 class="mt-1">Mode Maintenance</h4>
+                        @if (App::isDownForMaintenance())
+                            <form action="{{ route('toggleMaintenance') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-success">Désactiver le mode maintenance</button>
+                            </form>
+                        @else
+                            <form action="{{ route('toggleMaintenance') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Activer le mode maintenance</button>
+                            </form>
+                        @endif
+                    </div>
+
+
                 </div>
             </div>
         </div>
