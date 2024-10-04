@@ -18,6 +18,8 @@ use App\Http\Controllers\MealController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -51,9 +53,22 @@ Route::resource('roles', RoleController::class)->middleware('auth');
 Route::get('/permissions', [RoleController::class, 'storePermissions'])->name('roles.permissions.store');
 
 Route::resource('settings',\App\Http\Controllers\MaintenanceController::class);
-Route::get('active',[\App\Http\Controllers\MaintenanceController::class,'activeMaintenance'])->name('active');
-Route::get('desactive',[\App\Http\Controllers\MaintenanceController::class,'desactiveMaintenance'])->name('desactive');
 
+/*Route::post('active',[\App\Http\Controllers\MaintenanceController::class,'activeMaintenance'])->name('active');
+Route::get('desactive',[\App\Http\Controllers\MaintenanceController::class,'desactiveMaintenance'])->name('desactive');*/
+
+Route::post('/toggle-maintenance', function (Request $request) {
+    if (App::isDownForMaintenance()) {
+        Artisan::call('up');
+        return redirect()->back()->with('success', 'Le mode maintenance est désactivé.');
+    } else {
+        Artisan::call('down',[
+            '--secret' => '1234',
+            '--render'=>"errors::503"
+        ]);
+        return redirect()->back()->with('success', 'Le mode maintenance est activé.');
+    }
+})->name('toggleMaintenance');
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });

@@ -5,6 +5,8 @@ use App\Http\Controllers\api\IngredientController;
 use App\Http\Controllers\api\MealController;
 use App\Http\Controllers\api\RecipeController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +31,11 @@ Route::apiResource('recipes',RecipeController::class);
 Route::apiResource('ingredients',IngredientController::class);
 Route::apiResource('categories',CategoryController::class);
 Route::apiResource('meals',MealController::class);
+#Route::post('/maintenance',[\App\Http\Controllers\MaintenanceController::class])->name('toggleMaintenance');
+
+Route::post('active',[\App\Http\Controllers\MaintenanceController::class,'activeMaintenance'])->name('active');
+Route::get('desactive',[\App\Http\Controllers\MaintenanceController::class,'desactiveMaintenance'])->name('desactive');
+
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
