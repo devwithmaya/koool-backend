@@ -19,6 +19,7 @@ class RecipeController extends Controller
      */
     public function index()
     {
+
         $recipes = Recipe::with('ingredientss')->with('categories')->orderBy('created_at', 'DESC')->get();
         return view('recipes.index',[
             'recipes' => $recipes
