@@ -47,19 +47,26 @@
                     </ul>
                     <div class="d-flex justify-content-between align-items">
                         <h4 class="mt-1">Mode Maintenance</h4>
-                        @if (App::isDownForMaintenance())
-                            <form action="{{ route('toggleMaintenance') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-success">Désactiver le mode maintenance</button>
-                            </form>
-                        @else
-                            <form action="{{ route('toggleMaintenance') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-danger">Activer le mode maintenance</button>
-                            </form>
-                        @endif
+                        <form action="{{ route('maintenance') }}" method="POST">
+                            @csrf
+                            <div class="form-check form-switch mb-2">
+                                <input type="checkbox" class="form-check-input" id="formSwitch1" name="maintenance_mode" onchange="this.form.submit()"
+                                       @if(App::isDownForMaintenance()) checked @endif>
+                                <label class="form-check-label" for="formSwitch1">
+                                    {{ App::isDownForMaintenance() ? 'Désactiver le mode maintenance' : 'Activer le mode maintenance' }}
+                                </label>
+                            </div>
+                        </form>
                     </div>
-
+                    {{--<form action="{{ route('active') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="excluded_routes" class="form-label">Routes à exclure</label>
+                            <input type="text" name="excluded_routes[]" class="form-control" placeholder="/login" />
+                            <input type="text" name="excluded_routes[]" class="form-control mt-2" placeholder="/api/*" />
+                        </div>
+                        <button type="submit" class="btn btn-danger">Activer le mode maintenance</button>
+                    </form>--}}
 
                 </div>
             </div>

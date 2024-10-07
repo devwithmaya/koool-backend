@@ -54,21 +54,24 @@ Route::get('/permissions', [RoleController::class, 'storePermissions'])->name('r
 
 Route::resource('settings',\App\Http\Controllers\MaintenanceController::class);
 
-/*Route::post('active',[\App\Http\Controllers\MaintenanceController::class,'activeMaintenance'])->name('active');
-Route::get('desactive',[\App\Http\Controllers\MaintenanceController::class,'desactiveMaintenance'])->name('desactive');*/
+Route::post('maintenance',[\App\Http\Controllers\MaintenanceController::class,'activeMaintenance'])->name('maintenance');
+#Route::get('desactive',[\App\Http\Controllers\MaintenanceController::class,'desactiveMaintenance'])->name('desactive');
 
-Route::post('/toggle-maintenance', function (Request $request) {
-    if (App::isDownForMaintenance()) {
-        Artisan::call('up');
-        return redirect()->back()->with('success', 'Le mode maintenance est désactivé.');
-    } else {
-        Artisan::call('down',[
-            '--secret' => '1234',
-            '--render'=>"errors::503"
-        ]);
-        return redirect()->back()->with('success', 'Le mode maintenance est activé.');
-    }
-})->name('toggleMaintenance');
+Route::get('/test', function () {
+    return 'Test route';
+})->middleware(\App\Http\Middleware\ExcludedFromMaintenance::class);
+#Route::post('/toggle-maintenance', function (Request $request) {
+#    if (App::isDownForMaintenance()) {
+#        Artisan::call('up');
+#        return redirect()->back()->with('success', 'Le mode maintenance est désactivé.');
+#    } else {
+#        Artisan::call('down',[
+#            '--secret' => '1234',
+#            '--render'=>"errors::503"
+#        ]);
+#        return redirect()->back()->with('success', 'Le mode maintenance est activé.');
+#    }
+#})->name('toggleMaintenance');
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });
