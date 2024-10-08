@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\APIKEY;
 use App\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -12,8 +13,10 @@ class MaintenanceController extends Controller
     public function index()
     {
         $setting = Setting::first();
+        $apiKeys = APIKEY::orderBy('created_at', 'DESC')->get();
         return view('settings.index',[
-            'setting' => $setting
+            'setting' => $setting,
+            'apiKeys' => $apiKeys
         ]);
     }
 

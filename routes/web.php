@@ -54,6 +54,8 @@ Route::get('/permissions', [RoleController::class, 'storePermissions'])->name('r
 
 Route::resource('settings',\App\Http\Controllers\MaintenanceController::class);
 
+Route::resource('apikeys',\App\Http\Controllers\ApiKeyController::class);
+
 Route::post('maintenance',[\App\Http\Controllers\MaintenanceController::class,'activeMaintenance'])->name('maintenance');
 #Route::get('desactive',[\App\Http\Controllers\MaintenanceController::class,'desactiveMaintenance'])->name('desactive');
 
