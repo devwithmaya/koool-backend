@@ -58,15 +58,60 @@
                             </div>
                         </form>
                     </div>
-                    {{--<form action="{{ route('active') }}" method="POST">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="excluded_routes" class="form-label">Routes à exclure</label>
-                            <input type="text" name="excluded_routes[]" class="form-control" placeholder="/login" />
-                            <input type="text" name="excluded_routes[]" class="form-control mt-2" placeholder="/api/*" />
-                        </div>
-                        <button type="submit" class="btn btn-danger">Activer le mode maintenance</button>
-                    </form>--}}
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"></li>
+                        <h4 class="my-2">API KEYS</h4>
+{{--                        @dump($errors->key)--}}
+                        <li class="list-group-item">
+                            <form class="mt-2" method="POST" action="{{ route('apikeys.store') }}">
+                                @csrf
+                                <div class="row mx-1" >
+                                    <div class="col-md-8">
+                                        <input class="form-control" name="key" placeholder="Key">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" name="value" placeholder="Value">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button class="btn btn-sm btn-primary" type="submit">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="container ">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th class="col-md-8">Key</th>
+                                        <th class="col-md-3">Value</th>
+                                        <th class="col-md-1">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @if(isset($apiKeys))
+                                        @foreach($apiKeys as $apikey)
+                                            <tr>
+                                                <td class="col-md-8">{{$apikey->key}}</td>
+                                                <td class="col-md-3">{{$apikey->value}}</td>
+                                                <td class="col-md-1">
+                                                    <form method="POST" action="{{route('apikeys.destroy',$apikey->id)}}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-sm btn-success">DELETE</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>ApiKey n'existe pas</tr>
+                                    @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </li>
+
+                    </ul>
 
                 </div>
             </div>
@@ -81,4 +126,6 @@
 
 @push('custom-scripts')
     <script src="{{ asset('assets/js/data-table.js') }}"></script>
+    <script src="{{ asset('assets/js/script1.js') }}"></script>
 @endpush
+

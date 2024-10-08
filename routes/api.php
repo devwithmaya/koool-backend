@@ -27,15 +27,17 @@ use Illuminate\Support\Facades\Route;
 
 #Api public
 #Route::get('/generateRecipes',[RecipeController::class,'search'])->middleware('auth');
-Route::apiResource('recipes',RecipeController::class);
+#Route::apiResource('recipes',RecipeController::class);
 Route::apiResource('ingredients',IngredientController::class);
 Route::apiResource('categories',CategoryController::class);
 Route::apiResource('meals',MealController::class);
 #Route::post('/maintenance',[\App\Http\Controllers\MaintenanceController::class])->name('toggleMaintenance');
 
-Route::post('active',[\App\Http\Controllers\MaintenanceController::class,'activeMaintenance'])->name('active');
-Route::get('desactive',[\App\Http\Controllers\MaintenanceController::class,'desactiveMaintenance'])->name('desactive');
+Route::post('maintenance',[\App\Http\Controllers\MaintenanceController::class,'activeMaintenance'])->name('active');
 
+Route::middleware(['geoBlock'])->group(function (){
+    Route::apiResource('recipes',RecipeController::class);
+});
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
