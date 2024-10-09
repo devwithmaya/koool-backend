@@ -1,12 +1,12 @@
 <?php
 
+use App\Http\Controllers\api\ApiKeyController;
 use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\IngredientController;
+use App\Http\Controllers\api\MaintenanceController;
 use App\Http\Controllers\api\MealController;
 use App\Http\Controllers\api\RecipeController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,23 +20,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-#Route::get('users',[\App\Http\Controllers\AuthController::class,'index']);
-#Route::post('login',[\App\Http\Controllers\AuthController::class,'login'])->middleware('guest')->name('login');
-#Route::post('register',[\App\Http\Controllers\AuthController::class,'register'])->middleware('guest')->name('register');
-#Route::delete('logout',[\App\Http\Controllers\AuthController::class,'logout'])->middleware('auth')->name('logout');
-
-#Api public
-#Route::get('/generateRecipes',[RecipeController::class,'search'])->middleware('auth');
-#Route::apiResource('recipes',RecipeController::class);
+Route::apiResource('recipes',RecipeController::class);
 Route::apiResource('ingredients',IngredientController::class);
 Route::apiResource('categories',CategoryController::class);
 Route::apiResource('meals',MealController::class);
-#Route::post('/maintenance',[\App\Http\Controllers\MaintenanceController::class])->name('toggleMaintenance');
+Route::apiResource('settings',MaintenanceController::class);
+Route::apiResource('apikeys',ApiKeyController::class);
 
-Route::post('maintenance',[\App\Http\Controllers\MaintenanceController::class,'activeMaintenance'])->name('active');
+Route::post('maintenance',[MaintenanceController::class,'activeMaintenance'])->name('maintenance');
 
 Route::middleware(['geoBlock'])->group(function (){
-    Route::apiResource('recipes',RecipeController::class);
+   # Route::apiResource('recipes',RecipeController::class);
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

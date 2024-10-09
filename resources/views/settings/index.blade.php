@@ -79,8 +79,8 @@
                             </form>
                         </li>
                         <li class="list-group-item">
-                            <div class="container ">
-                                <table class="table">
+                            <div class="container">
+                                <table class="table rounded-1">
                                     <thead>
                                     <tr>
                                         <th class="col-md-8">Key</th>
@@ -98,7 +98,7 @@
                                                     <form method="POST" action="{{route('apikeys.destroy',$apikey->id)}}">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button class="btn btn-sm btn-success">DELETE</button>
+                                                        <button class="btn btn-sm btn-danger">DELETE</button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -110,9 +110,7 @@
                                 </table>
                             </div>
                         </li>
-
                     </ul>
-
                 </div>
             </div>
         </div>
