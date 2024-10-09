@@ -51,7 +51,12 @@
                                 <span class="badge @if(isset($services) && $services['api'] == 'Operational') bg-primary @else bg-danger @endif">{{$services['api']}}</span>
                             </div>
                         </li>
-                        <li class="list-group-item"></li>
+                        <li class="list-group-item">
+                            <div class=" d-flex justify-content-between align-items">
+                                <span class="fs-5">Server</span>
+                                <span class="badge @if(isset($services) && $services['server'] == 'Operational') bg-primary @else bg-danger @endif">{{$services['server']}}</span>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>

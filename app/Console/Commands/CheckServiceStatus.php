@@ -51,7 +51,7 @@ class CheckServiceStatus extends Command
             $services['cache'] = 'Down';
         }
         try{
-            $response = Http::get('https://restcountries.com/v3.1/all');
+            $response = Http::get('https://restcountries.com/v3.1/al');
             if ($response->successful())
             {
                 $services['api'] = 'Operational';
@@ -62,10 +62,21 @@ class CheckServiceStatus extends Command
         {
             $services['api'] = 'Down';
         }
+        try {
+            $serverResponse = Http::get('https://koool.mayaapps.site/api/recipes');
+            if ($serverResponse->successful()) {
+                $services['server'] = 'Operational';
+            } else {
+                $services['server'] = 'Down';
+            }
+        } catch (\Exception $e) {
+            $services['server'] = 'Down';
+        }
+
         logger($services);
         if (in_array('Down', $services)){
             logger('hey');
-             Notification::route('mail', 'admin@gmail.com')
+             Notification::route('mail', 'meissagningue7@gmail.com')
             ->notify(new ServiceStatusNotification($services));
              logger('salut');
         }
