@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Console\Commands\CheckServiceStatus::class,
     ];
 
     /**
@@ -26,6 +26,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        //Automatisation de la commande à chaque 5 minutes
+        $schedule->command('check:service-status')->everyFiveMinutes();
     }
 
     /**

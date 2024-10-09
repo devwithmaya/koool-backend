@@ -59,21 +59,12 @@ Route::resource('apikeys',\App\Http\Controllers\ApiKeyController::class);
 Route::post('maintenance',[\App\Http\Controllers\MaintenanceController::class,'activeMaintenance'])->name('maintenance');
 #Route::get('desactive',[\App\Http\Controllers\MaintenanceController::class,'desactiveMaintenance'])->name('desactive');
 
+Route::get('status',[\App\Http\Controllers\ServiceStatusController::class,'index'])->name('status');
+
 Route::get('/test', function () {
     return 'Test route';
 })->middleware(\App\Http\Middleware\ExcludedFromMaintenance::class);
-#Route::post('/toggle-maintenance', function (Request $request) {
-#    if (App::isDownForMaintenance()) {
-#        Artisan::call('up');
-#        return redirect()->back()->with('success', 'Le mode maintenance est désactivé.');
-#    } else {
-#        Artisan::call('down',[
-#            '--secret' => '1234',
-#            '--render'=>"errors::503"
-#        ]);
-#        return redirect()->back()->with('success', 'Le mode maintenance est activé.');
-#    }
-#})->name('toggleMaintenance');
+
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });

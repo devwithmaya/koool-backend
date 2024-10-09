@@ -5,5 +5,7 @@ return [
         'settings',
         'maintenance',
         'health',
+        'desactive',
+        'status'
     ]
 ];
