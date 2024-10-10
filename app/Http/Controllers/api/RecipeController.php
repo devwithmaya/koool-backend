@@ -8,6 +8,8 @@ use App\Recipe;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -54,6 +56,15 @@ class RecipeController extends Controller
     {
         $recipes = Recipe::with('ingredientss')->with('categories')->orderBy('created_at', 'DESC')->get();
         #dd($recipes);
+        $services = Artisan::output();
+        if(App::isDownForMaintenance())
+        {
+            return \response()->json([
+                'status' => Response::HTTP_SERVICE_UNAVAILABLE,
+                'message' => 'Le service est pas indisponible',
+                'services' => $services
+            ]);
+        }
         return response()->json([
             'status' => Response::HTTP_OK,
             'message' => 'Liste des recettes',

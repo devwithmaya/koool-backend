@@ -5,6 +5,8 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Ingredient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -29,6 +31,15 @@ class IngredientController extends Controller
  */
     public function index()
     {
+        $services = Artisan::output();
+        if(App::isDownForMaintenance())
+        {
+            return \response()->json([
+                'status' => Response::HTTP_SERVICE_UNAVAILABLE,
+                'message' => 'Le service est pas indisponible',
+                'services' => $services
+            ]);
+        }
         return response()->json([
             'status' => Response::HTTP_OK,
             'message' => 'Liste des ingrédients',

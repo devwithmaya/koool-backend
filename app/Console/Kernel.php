@@ -28,6 +28,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         //Automatisation de la commande à chaque 5 minutes
         $schedule->command('check:service-status')->everyFiveMinutes();
+        //$schedule->command('sanctum:prune-expired --hours=24')->everyMinute();
     }
 
     /**

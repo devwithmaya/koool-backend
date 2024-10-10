@@ -56,3 +56,6 @@ jobs:
           composer install
           php artisan migrate:status
           php artisan migrate
+          php artisan config:clear
+          php artisan config:cache
+
