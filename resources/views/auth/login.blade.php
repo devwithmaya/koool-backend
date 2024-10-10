@@ -45,10 +45,10 @@
                 </div>
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary w-50 mb-2 mb-0">Login</button>
-                  {{--<button type="submit" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
+                  <a href="{{route('google')}}"  class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
                     <i class="btn-icon-prepend" data-feather="twitter"></i>
-                    Login with twitter
-                  </button>--}}
+                    Login with google
+                  </a>
                 </div>
                 {{--<a href="{{ url('/auth/register') }}" class="d-block mt-3 text-muted">Not a user? Sign up</a>--}}
               </form>

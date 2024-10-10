@@ -38,6 +38,8 @@ Route::delete('logout',[AuthController::class,'logout'])
     ->middleware('auth')
     ->name('logout');
 
+Route::get('auth/google',[AuthController::class,'redirectToGoogle'])->name('google');
+Route::get('callback/google',[AuthController::class,'handleCallBack']);
 
 Route::resource('recipes', RecipeController::class)->middleware('auth');
 
