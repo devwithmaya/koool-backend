@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Notifications\ServiceStatusNotification;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -51,7 +52,8 @@ class CheckServiceStatus extends Command
             $services['cache'] = 'Down';
         }
         try{
-            $response = Http::get('https://restcountries.com/v3.1/al');
+            $response = Http::get('https://koool.mayaapps.site/api/recipes');
+            logger('response api', ['response' => $response->successful()]);
             if ($response->successful())
             {
                 $services['api'] = 'Operational';
@@ -63,7 +65,8 @@ class CheckServiceStatus extends Command
             $services['api'] = 'Down';
         }
         try {
-            $serverResponse = Http::get('https://koool.mayaapps.site/api/recipes');
+            $serverResponse = Http::get('https://koool.mayaapps.site');
+            logger('success',['response' => $serverResponse->successful()]);
             if ($serverResponse->successful()) {
                 $services['server'] = 'Operational';
             } else {
@@ -72,7 +75,16 @@ class CheckServiceStatus extends Command
         } catch (\Exception $e) {
             $services['server'] = 'Down';
         }
-
+        try {
+            if (!App::isDownForMaintenance())
+            {
+                $services['maintenance'] = 'Operational';
+            }else{
+                $services['maintenance'] = 'Down';
+            }
+        }catch (\Exception $e){
+            $services['maintenance'] = 'Down';
+        }
         logger($services);
         if (in_array('Down', $services)){
             logger('hey');
