@@ -25,18 +25,19 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
 
+#Route Public
+Route::middleware(['guest'])->group(function (){
 
-Route::get('login',[AuthController::class,'login'])
-    ->middleware('guest')
-    ->name('login');
+    Route::get('login',[AuthController::class,'login'])
+        ->name('login');
 
-Route::post('login',[AuthController::class,'doLogin'])
-    ->middleware('guest')
-    ->name('doLogin');
+    Route::post('login',[AuthController::class,'doLogin'])
+        ->name('doLogin');
 
 
-Route::get('auth/google',[AuthController::class,'redirectToGoogle'])->name('google');
-Route::get('callback/google',[AuthController::class,'handleCallBack']);
+    Route::get('auth/google',[AuthController::class,'redirectToGoogle'])->name('google');
+    Route::get('callback/google',[AuthController::class,'handleCallBack']);
+});
 
 #Route Private
 Route::middleware(['auth'])->group(function (){
