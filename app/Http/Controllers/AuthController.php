@@ -13,18 +13,24 @@ class AuthController extends Controller
 {
     public function redirectToGoogle()
     {
-        logger('Salut');
-        return Socialite::driver('google')->redirect();
+        logger('redirect to google');
+        return Socialite::driver('google')
+            ->scopes(['profile', 'email'])
+            ->redirect();
     }
 
     public function handleCallBack()
     {
         try {
             $user = Socialite::driver('google')->user();
-
+            //dd($user);
+            logger('user',['user' => $user]);
             $findUser = User::where('social_id',$user->id)->first();
+            logger('user find',['userfind' => $findUser]);
+            //dd($findUser);
             if($findUser)
             {
+                logger('user is finded and connected',['findUser' => $findUser]);
                 Auth::login($findUser);
                 return to_route('dashboard');
             }else{
@@ -35,14 +41,14 @@ class AuthController extends Controller
                     'social_type' => 'google',
                     'password' => Hash::make('my-google')
                 ]);
+                logger('user is new', ['newUser'=>$newUser]);
+                //dd($newUser);
                 Auth::login($newUser);
                 return to_route('dashboard');
             }
-
         }catch (\Exception $e){
-            dd($e->getMessage());
+            logger($e->getMessage());
         }
-
     }
     public function register(Request $request)
     {

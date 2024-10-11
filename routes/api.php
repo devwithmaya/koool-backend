@@ -21,26 +21,31 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+#Route public
 Route::middleware(['auth:sanctum'])->group(function (){
     Route::apiResource('recipes', RecipeController::class);
+    Route::apiResource('ingredients',IngredientController::class);
+    Route::apiResource('categories',CategoryController::class);
+    Route::apiResource('meals',MealController::class);
+    Route::apiResource('settings',MaintenanceController::class);
+    Route::apiResource('apikeys',ApiKeyController::class);
 
+    Route::post('maintenance',[MaintenanceController::class,'activeMaintenance'])->name('maintenance');
+    Route::get('health',[ServiceStatusController::class,'index']);
 });
-Route::apiResource('ingredients',IngredientController::class);
-Route::apiResource('categories',CategoryController::class);
-Route::apiResource('meals',MealController::class);
-Route::apiResource('settings',MaintenanceController::class);
-Route::apiResource('apikeys',ApiKeyController::class);
 
-Route::post('maintenance',[MaintenanceController::class,'activeMaintenance'])->name('maintenance');
 
-Route::get('health',[ServiceStatusController::class,'index']);
+#Route private
+Route::middleware(['guest'])->group(function (){
+    Route::get('auth/google',[AuthController::class,'redirectToGoogle'])->name('google');
+    Route::get('callback/google',[AuthController::class,'handleCallBack']);
 
-Route::post('register',[AuthController::class,'register'])->middleware('guest');
-Route::post('login',[AuthController::class,'login'])->middleware('guest');
+    Route::post('register',[AuthController::class,'register']);
+    Route::post('login',[AuthController::class,'login']);
+});
 
 
 Route::middleware(['geoBlock'])->group(function (){
-
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
