@@ -31,11 +31,10 @@ class ApiKeyController extends Controller
                 'errors' => $validator->errors()
             ]);
         }
-        $apikey = APIKEY::create([
-           'key' => $request->key,
+        APIKEY::create([
+           'key' => strtoupper($request->key),
            'value' => $request->value
         ]);
-        //dd($apikey);
         return to_route('settings.index');
     }
 
