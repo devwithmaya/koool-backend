@@ -24,14 +24,35 @@ class AuthController extends Controller
     {
         try {
             $user = Socialite::driver('google')->user();
+
             $findUser = User::where('social_id',$user->id)->first();
             if($findUser)
             {
-                Auth::login($findUser);
-                return redirect('/');
-            }
-        }catch (\Exception $e){
+                //Auth::login($findUser);
+                return \response()->json([
+                    'status' => Response::HTTP_OK,
+                    'message' => 'L\'utilisateur est bien connecter à google',
+                    'user' => $findUser
+                ]);
+            }else{
+                $newUser = User::create([
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'social_id' => $user->id,
+                    'social_type' => 'google',
+                    'password' => Hash::make('my-google')
+                ]);
+                //Auth::login($newUser);
 
+                return \response()->json([
+                    'status' => Response::HTTP_CREATED,
+                    'message' => 'Vous êtes bien enrégistré',
+                    'user' => $newUser
+                ]);
+            }
+
+        }catch (\Exception $e){
+            dd($e->getMessage());
         }
 
     }
