@@ -17,7 +17,9 @@ class AuthController extends Controller
 {
     public function redirectToGoogle()
     {
-         return Socialite::driver('google')->redirect();
+         return Socialite::driver('google')
+             ->scopes(['profile', 'email'])
+             ->redirect();
     }
 
     public function handleCallBack()
@@ -52,7 +54,7 @@ class AuthController extends Controller
             }
 
         }catch (\Exception $e){
-            dd($e->getMessage());
+            logger($e->getMessage());
         }
 
     }
