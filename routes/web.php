@@ -24,48 +24,57 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard');
+
 
 Route::get('login',[AuthController::class,'login'])
     ->middleware('guest')
     ->name('login');
 
-Route::post('login',[AuthController::class,'doLogin'])->name('doLogin');
+Route::post('login',[AuthController::class,'doLogin'])
+    ->middleware('guest')
+    ->name('doLogin');
 
-Route::delete('logout',[AuthController::class,'logout'])
-    ->middleware('auth')
-    ->name('logout');
 
 Route::get('auth/google',[AuthController::class,'redirectToGoogle'])->name('google');
 Route::get('callback/google',[AuthController::class,'handleCallBack']);
 
-Route::resource('recipes', RecipeController::class)->middleware('auth');
+#Route Private
+Route::middleware(['auth'])->group(function (){
+    Route::get('/', function () {
+        return view('dashboard');
+    })->middleware('auth')->name('dashboard');
 
-Route::resource('ingredients', IngredientController::class)->middleware('auth');
+    Route::resource('recipes', RecipeController::class)->middleware('auth');
 
-Route::resource('categories', CategoryController::class)->middleware('auth');
+    Route::resource('ingredients', IngredientController::class)->middleware('auth');
 
-Route::resource('users', UserController::class)->middleware('auth');
+    Route::resource('categories', CategoryController::class)->middleware('auth');
 
-Route::resource('meals', MealController::class)->middleware('auth');
+    Route::resource('users', UserController::class)->middleware('auth');
 
-Route::resource('roles', RoleController::class)->middleware('auth');
-Route::get('/permissions', [RoleController::class, 'storePermissions'])->name('roles.permissions.store');
+    Route::resource('meals', MealController::class)->middleware('auth');
 
-Route::resource('settings',\App\Http\Controllers\MaintenanceController::class);
+    Route::resource('roles', RoleController::class)->middleware('auth');
+    Route::get('/permissions', [RoleController::class, 'storePermissions'])->name('roles.permissions.store');
 
-Route::resource('apikeys',\App\Http\Controllers\ApiKeyController::class);
+    Route::resource('settings',\App\Http\Controllers\MaintenanceController::class);
 
-Route::post('maintenance',[\App\Http\Controllers\MaintenanceController::class,'activeMaintenance'])->name('maintenance');
-#Route::get('desactive',[\App\Http\Controllers\MaintenanceController::class,'desactiveMaintenance'])->name('desactive');
+    Route::resource('apikeys',\App\Http\Controllers\ApiKeyController::class)->except('edit', 'update');
 
-Route::get('status',[\App\Http\Controllers\ServiceStatusController::class,'index'])->name('status');
+    Route::post('maintenance',[\App\Http\Controllers\MaintenanceController::class,'activeMaintenance'])->name('maintenance');
+    #Route::get('desactive',[\App\Http\Controllers\MaintenanceController::class,'desactiveMaintenance'])->name('desactive');
 
-Route::get('/test', function () {
-    return 'Test route';
-})->middleware(\App\Http\Middleware\ExcludedFromMaintenance::class);
+    Route::get('status',[\App\Http\Controllers\ServiceStatusController::class,'index'])->name('status');
+
+    #Route apikey
+    Route::get('apikeys/{apikey}/edit',[\App\Http\Controllers\MaintenanceController::class,'editApiKey'])->name('apikeys.edit');
+    Route::put('apikeys/{apikey}',[\App\Http\Controllers\MaintenanceController::class,'updateApiKey'])->name('apikeys.update');
+
+    Route::delete('logout',[AuthController::class,'logout'])
+        ->middleware('auth')
+        ->name('logout');
+});
+
 
 
 Route::group(['prefix' => 'email'], function(){

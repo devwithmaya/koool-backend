@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\APIKEY;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -36,10 +39,12 @@ class ApiKeyController extends Controller
         return to_route('settings.index');
     }
 
+
+
     public function destroy($id)
     {
         $apikey = APIKEY::find($id);
         $apikey->delete();
-        return to_route('settings.index');
+        return to_route('settings.index')->with('success', 'La suppression a réussie');
     }
 }
