@@ -52,7 +52,7 @@ class CheckServiceStatus extends Command
             $services['cache'] = 'Down';
         }
         try{
-            $response = Http::get('https://koool.mayaapps.site/api/recipes');
+            $response = Http::get('http://locahost:8000/api/recipes');
             logger('response api', ['response' => $response->successful()]);
             if ($response->successful())
             {

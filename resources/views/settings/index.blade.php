@@ -35,8 +35,8 @@
                         <li class="list-group-item"></li>
                         <li class="list-group-item">
                             <div class="input-group">
-                                <span class="input-group-text" id="basic-addon2">version-koool/</span>
-                                <form method="post" action="{{ route(isset($setting) && $setting->exists ? 'settings.update' : 'settings.store',$setting)}}">
+                                <span class="input-group-text" id="basic-addon2">version-koool</span>
+                                <form method="post" action="{{ route(isset($setting) && $setting->exists ? 'settings.update' : 'settings.store',$setting ?? null)}}">
                                     @csrf
                                     @method(isset($setting) && $setting->exists ? 'PUT' : 'POST')
                                     <input type="text" name="version" value="{{isset($setting) && $setting->exists ? $setting->version : ''}}" placeholder="Saisir la version" class="form-control" id="basic-url" aria-describedby="basic-addon3">
@@ -63,49 +63,59 @@
                         <h4 class="my-2">API KEYS</h4>
 {{--                        @dump($errors->key)--}}
                         <li class="list-group-item">
-                            <form class="mt-2" method="POST" action="{{ route('apikeys.store') }}">
+                            <form class="mt-2" method="POST" action="{{ route( isset($apikey) && $apikey->exists ? 'apikeys.update' :  'apikeys.store',$apikey ?? null ) }}">
                                 @csrf
-                                <div class="row mx-1" >
-                                    <div class="col-md-8">
-                                        <input class="form-control" name="key" placeholder="Key">
+                                @method(isset($apikey) && $apikey->exists ? 'PUT' : 'POST')
+                                <div class="row m-auto " >
+                                    <div class="input-group">
+                                        <div class="col-md-4">
+                                            <input class="form-control" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" required pattern="^[A-Za-z0-9_]+$" @if(isset($apikey) && $apikey->exists) value="{{$apikey->key}}" @endif  name="key" placeholder="Key">
+                                            <span class="invalid-feedback">Veuillez entrer un format valide (XXXX_YYYY_ZZZZ).</span>
+                                        </div>
+                                        <div class="col-md-6 me-2">
+                                            <input class="form-control" required  name="value" @if(isset($apikey) && $apikey->exists) value="{{$apikey->key}}" @endif placeholder="Value">
+                                        </div>
+                                        <div class="col-md-1">
+                                        <button class="btn btn-primary" type="submit">
+                                            @if(isset($apikey) && $apikey->exists)
+                                                Update
+                                            @else
+                                                Save
+                                            @endif
+                                        </button>
                                     </div>
-                                    <div class="col-md-3">
-                                        <input class="form-control" name="value" placeholder="Value">
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button class="btn btn-sm btn-primary" type="submit">Save</button>
                                     </div>
                                 </div>
                             </form>
                         </li>
                         <li class="list-group-item">
+
                             <div class="container">
                                 <table class="table rounded-1">
                                     <thead>
                                     <tr>
-                                        <th class="col-md-8">Key</th>
-                                        <th class="col-md-3">Value</th>
-                                        <th class="col-md-1">Actions</th>
+                                        <th class="col-md-4">Key</th>
+                                        <th class="col-md-6">Value</th>
+                                        <th class="col-md-2" colspan="2">Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @if(isset($apiKeys))
                                         @foreach($apiKeys as $apikey)
                                             <tr>
-                                                <td class="col-md-8">{{$apikey->key}}</td>
-                                                <td class="col-md-3">{{$apikey->value}}</td>
-                                                <td class="col-md-1">
+                                                <td class="col-md-4">{{$apikey->key}}</td>
+                                                <td class="col-md-6">{{$apikey->value}}</td>
+                                                <td class="">
                                                     <form method="POST" action="{{route('apikeys.destroy',$apikey->id)}}">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button class="btn btn-sm btn-danger">DELETE</button>
+                                                        <button class="btn btn-sm btn-danger circle"><i data-feather="delete"></i></button>
                                                     </form>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-sm btn-success circle" href="{{ route('apikeys.edit',$apikey->id) }}" ><i data-feather="edit"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach
-                                    @else
-                                        <tr>ApiKey n'existe pas</tr>
-                                    @endif
                                     </tbody>
                                 </table>
                             </div>
