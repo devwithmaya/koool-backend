@@ -20,7 +20,7 @@
         </a>
       </li>
 
-      <li class="nav-item nav-category">web apps</li>
+      {{--<li class="nav-item nav-category">web apps</li>
       <li class="nav-item {{ active_class(['email/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#email" role="button" aria-expanded="{{ is_active_route(['email/*']) }}" aria-controls="email">
           <i class="link-icon" data-feather="mail"></i>
@@ -54,7 +54,7 @@
           <i class="link-icon" data-feather="calendar"></i>
           <span class="link-title">Calendar</span>
         </a>
-      </li>
+      </li>--}}
 
       <li class="nav-item {{ active_class(['recipes']) }}">
           <a href="{{route('recipes.index')}}" class="nav-link">
