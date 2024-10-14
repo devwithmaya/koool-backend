@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
 
+#Route Public
 Route::middleware(['guest'])->group(function (){
 
     Route::get('login',[AuthController::class,'login'])
