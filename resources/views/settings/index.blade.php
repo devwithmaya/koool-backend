@@ -60,7 +60,7 @@
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"></li>
-                        <h4 class="my-2">API KEYS</h4>
+                        <h4 class="my-2">API Keys</h4>
 {{--                        @dump($errors->key)--}}
                         <li class="list-group-item">
                             <form class="mt-2" method="POST" action="{{ route( isset($apikey) && $apikey->exists ? 'apikeys.update' :  'apikeys.store',$apikey ?? null ) }}">
