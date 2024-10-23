@@ -6,6 +6,7 @@ return [
         'maintenance',
         'health',
         'desactive',
-        'status'
+        'status',
+        'login'
     ]
 ];

@@ -30,17 +30,13 @@ class IngredientController extends Controller
     {
         $validated = Validator::make($request->all(),[
             'name' => ['required','string'],
-            'quantity' => ['required','string']
+            'quantity' => ['required','string'],
+            'metric' => ['required', 'string'],
+            'calories' => ['required','decimal']
         ]);
 
         Ingredient::create($validated->getData());
         return to_route('ingredients.index');
-        return \response()->json([
-            'status' => Response::HTTP_CREATED,
-            'message' => 'Recipe add successfully',
-            'ingredient' => $ingredient
-        ]);
-
     }
 
 
@@ -83,11 +79,7 @@ class IngredientController extends Controller
         $ingredient = Ingredient::find($id);
         $ingredient->update($request->all());
         return to_route('ingredients.index');
-        return \response()->json([
-            'status' => Response::HTTP_CREATED,
-            'message' => 'Recipe update successfully',
-            'ingredient' => $ingredient
-        ]);
+
     }
 
     /**

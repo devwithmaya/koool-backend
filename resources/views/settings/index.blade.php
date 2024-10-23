@@ -60,7 +60,7 @@
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"></li>
-                        <h4 class="my-2">API Keys</h4>
+                        <h4 class="my-3">API Keys</h4>
 {{--                        @dump($errors->key)--}}
                         <li class="list-group-item">
                             <form class="mt-2" method="POST" action="{{ route( isset($apikey) && $apikey->exists ? 'apikeys.update' :  'apikeys.store',$apikey ?? null ) }}">
@@ -91,7 +91,7 @@
                         <li class="list-group-item">
 
                             <div class="container">
-                                <table class="table rounded-1">
+                                <table class="table rounded-1 table-responsive">
                                     <thead>
                                     <tr>
                                         <th class="col-md-4">Key</th>

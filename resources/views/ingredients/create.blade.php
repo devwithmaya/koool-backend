@@ -21,9 +21,7 @@
         <div class="w-75 m-auto grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    {{--          id="signupForm"--}}
                     <h4 class="card-title">Add Your Ingredient</h4>
-                    {{--        <p class="text-muted mb-3">Read the <a href="https://jqueryvalidation.org/" target="_blank"> Official jQuery Validation Documentation </a>for a full list of instructions and other options.</p>--}}
                     <form  action="{{ route('ingredients.store') }}" method="POST">
                         @csrf
                         <div class="mb-3">
@@ -43,6 +41,24 @@
                                   quantity is required
                               </div>
                               @endif
+                        </div>
+                        <div class="mb-3">
+                            <label for="metric" class="form-label">Metric</label>
+                            <input id="metric" class="form-control @if($errors->any()) is-invalid @endif" name="metric" type="text">
+                            @if($errors->any())
+                                <div class="invalid-feedback">
+                                    metric is required
+                                </div>
+                            @endif
+                        </div>
+                        <div class="mb-3">
+                            <label for="calories" class="form-label">Calories</label>
+                            <input id="calories" class="form-control @if($errors->any()) is-invalid @endif" name="calories" type="number">
+                            @if($errors->any())
+                                <div class="invalid-feedback">
+                                    calories is required
+                                </div>
+                            @endif
                         </div>
                         <button class="btn btn-primary" type="submit">Submit</button>
                     </form>
