@@ -71,7 +71,7 @@
                                             </div>
                                         @endif
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <input type="text" class="form-control @if($errors->any()) is-invalid @endif" name="ingredients[0][calories]" value="{{$ingredient->calories}}" placeholder="Calories" required>
                                         @if($errors->any())
                                             <div class="invalid-feedback">
