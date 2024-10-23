@@ -64,14 +64,14 @@
                                         @endif
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="number" class="form-control @if($errors->any()) is-invalid @endif" name="ingredients[0][metric]" value="{{$ingredient->metric}}" placeholder="Metric" required>
+                                        <input type="text" class="form-control @if($errors->any()) is-invalid @endif" name="ingredients[0][metric]" value="{{$ingredient->metric}}" placeholder="Metric" required>
                                         @if($errors->any())
                                             <div class="invalid-feedback">
                                                 metric quantity is required
                                             </div>
                                         @endif
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <input type="text" class="form-control @if($errors->any()) is-invalid @endif" name="ingredients[0][calories]" value="{{$ingredient->calories}}" placeholder="Calories" required>
                                         @if($errors->any())
                                             <div class="invalid-feedback">
