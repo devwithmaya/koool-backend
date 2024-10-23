@@ -20,52 +20,65 @@
         <div class="w-75 m-auto grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    {{--          id="signupForm"--}}
                     <h4 class="card-title">Update Your Recipe</h4>
-                    {{--        <p class="text-muted mb-3">Read the <a href="https://jqueryvalidation.org/" target="_blank"> Official jQuery Validation Documentation </a>for a full list of instructions and other options.</p>--}}
                     <form  action="{{ route('recipes.update',$recipe) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
-                            <label for="name" class="form-label">Title</label>
+                            <label for="name" class="form-label">Name</label>
                             <input id="name" class="form-control @if($errors->any()) is-invalid @endif" name="title" value="{{$recipe->title}}" type="text">
                             @if($errors->any())
-                      <div class="invalid-feedback">
-                          title is required
-                      </div>
-              @endif
+                                  <div class="invalid-feedback">
+                                      title is required
+                                  </div>
+                            @endif
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Image</label>
-                            <input id="image" class="form-control @if($errors->any()) is-invalid @endif" name="image" value="{{$recipe->image}}" type="file">
+                            <input id="image" required class="form-control @if($errors->any()) is-invalid @endif" name="image" value="{{$recipe->image}}" type="file">
                             @if($errors->any())
-                      <div class="invalid-feedback">
-                          Image is required
-                      </div>
-              @endif
+                                  <div class="invalid-feedback">
+                                      Image is required
+                                  </div>
+                            @endif
                         </div>
                         <div id="ingredients-container" class="mb-3">
                             <h4>Ingrédients</h4>
                             <div class="ingredient-item">
                                 @foreach($recipe->ingredientss as $ingredient)
                                 <div class="row mb-3">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <input type="text" class="form-control @if($errors->any()) is-invalid @endif" name="ingredients[0][name]" value="{{$ingredient->name}}" placeholder="Nom de l'ingrédient" required>
                                         @if($errors->any())
-                              <div class="invalid-feedback">
-                                  ingredient name is required
-                              </div>
-                            @endif
+                                          <div class="invalid-feedback">
+                                              ingredient name is required
+                                          </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control @if($errors->any()) is-invalid @endif" name="ingredients[0][quantity]" value="{{$ingredient->quantity}}" placeholder="Quantity" required>
+                                        @if($errors->any())
+                                          <div class="invalid-feedback">
+                                              ingredient quantity is required
+                                          </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="number" class="form-control @if($errors->any()) is-invalid @endif" name="ingredients[0][metric]" value="{{$ingredient->metric}}" placeholder="Metric" required>
+                                        @if($errors->any())
+                                            <div class="invalid-feedback">
+                                                metric quantity is required
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control @if($errors->any()) is-invalid @endif" name="ingredients[0][quantity]" value="{{$ingredient->quantity}}" placeholder="Quantité" required>
+                                        <input type="text" class="form-control @if($errors->any()) is-invalid @endif" name="ingredients[0][calories]" value="{{$ingredient->calories}}" placeholder="Calories" required>
                                         @if($errors->any())
-                              <div class="invalid-feedback">
-                                  ingredient quantity is required
-                              </div>
-                            @endif
+                                            <div class="invalid-feedback">
+                                                calories quantity is required
+                                            </div>
+                                        @endif
                                     </div>
-
                                 </div>
                                 @endforeach
                             </div>

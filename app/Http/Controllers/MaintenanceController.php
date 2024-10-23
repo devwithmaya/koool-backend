@@ -75,18 +75,6 @@ class MaintenanceController extends Controller
             ]);
             return redirect()->back()->with('success', 'Le mode maintenance est activé.');
         }
-        /*return response()->json([
-            'message' => 'Le mode maintenance est activé'
-        ]);*/
-        //return redirect()->back()->with('success', 'Le mode maintenance est activé');
-    }
-    public function desactiveMaintenance()
-    {
-        //dd('salut');
-        Artisan::call('up');
-        /*return response()->json([
-            'message' => 'Le mode maintenance est désactivé'
-        ]);*/
-        return to_route('settings')->with('success','Le mode maintenance est désactivé');
+
     }
 }

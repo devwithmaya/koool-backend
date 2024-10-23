@@ -13,22 +13,19 @@
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Forms</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Add Your Ingredient</li>
+            <li class="breadcrumb-item active" aria-current="page">Edit Your Ingredient</li>
         </ol>
     </nav>
-@dump($ingredient)
     <div class="row">
         <div class="w-75 m-auto grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    {{--          id="signupForm"--}}
                     <h4 class="card-title">Add Your Ingredient</h4>
-                    {{--        <p class="text-muted mb-3">Read the <a href="https://jqueryvalidation.org/" target="_blank"> Official jQuery Validation Documentation </a>for a full list of instructions and other options.</p>--}}
                     <form  action="{{ route('ingredients.update',$ingredient->id) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
-                            <label for="name" class="form-label">Title</label>
+                            <label for="name" class="form-label">Name</label>
                             <input id="name" class="form-control @if($errors->any()) is-invalid @endif" name="name" value="{{$ingredient->name}}" type="text">
                             @if($errors->any())
                               <div class="invalid-feedback">
@@ -45,14 +42,30 @@
                               </div>
                             @endif
                         </div>
+                        <div class="mb-3">
+                            <label for="metric" class="form-label">Metric</label>
+                            <input id="metric" class="form-control @if($errors->any()) is-invalid @endif" name="metric" value="{{$ingredient->metric}}" type="text">
+                            @if($errors->any())
+                                <div class="invalid-feedback">
+                                    metric is required
+                                </div>
+                            @endif
+                        </div>
+                        <div class="mb-3">
+                            <label for="calories" class="form-label">Calories</label>
+                            <input id="calories" class="form-control @if($errors->any()) is-invalid @endif" name="calories" value="{{$ingredient->calories}}" type="number">
+                            @if($errors->any())
+                                <div class="invalid-feedback">
+                                    calories is required
+                                </div>
+                            @endif
+                        </div>
                         <button class="btn btn-primary" type="submit">Submit</button>
                     </form>
                 </div>
             </div>
         </div>
-
     </div>
-
 
 @endsection
 

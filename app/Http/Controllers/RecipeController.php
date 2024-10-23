@@ -50,13 +50,13 @@ class RecipeController extends Controller
             'ingredients' => 'required|array|min:1',
             'ingredients.*.name' => 'required|string|max:255',
             'ingredients.*.quantity' => 'required|string|max:255',
+            'ingredients.*.metric' => 'required|string|max:255',
+            'ingredients.*.calories' => 'required|numeric|min:0',
             'categories' => 'required|array|min:1',
             'categories.*' => 'exists:categories,id',
         ];
-
-        $validatedData = $request->validate($rules);
-        //$validator = Validator::make($request->all(), $rules);
-        //$validatedData = Validator::make($request->all(), $rules)->validated();
+        $validated = Validator::make($request->all(),$rules);
+        $validatedData = $validated->getData();
         //dd($validatedData);
         if ($request->hasFile('image')) {
             if ($validatedData['image'] && Storage::exists($validatedData['image'])) {
@@ -78,19 +78,18 @@ class RecipeController extends Controller
 
         $ingredients = [];
         foreach ($validatedData['ingredients'] as $ingredientData) {
-            $ingredient = Ingredient::firstOrCreate(
-                ['name' => $ingredientData['name']],
-                ['quantity' => $ingredientData['quantity']]
-            );
+            $ingredient = Ingredient::firstOrCreate([
+                'name' => $ingredientData['name'],
+                //'quantity' => $ingredientData['quantity'],
+                'metric' => $ingredientData['metric'],
+                'calories' => $ingredientData['quantity']*$ingredientData['calories']
+                ]);
             $ingredients[$ingredient->id] = ['quantity' => $ingredientData['quantity']];
         }
-
+            //dd($ingredient);
         $recipe->ingredientss()->attach($ingredients);
 
         $recipe->categories()->attach($validatedData['categories']);
-
-        //$recipe->load('ingredientss');
-        //$recipe->load('categories');
 
         return to_route('recipes.index')->with("success", "Recipe Added bu Success");
     }
@@ -131,6 +130,8 @@ class RecipeController extends Controller
             'ingredients' => 'required|array|min:1',
             'ingredients.*.name' => 'required|string|max:255',
             'ingredients.*.quantity' => 'required|string|max:255',
+            'ingredients.*.metric' => 'required|string|max:255',
+            'ingredients.*.calories' => 'required|numeric|min:0',
             'categories' => 'required|array|min:1',
             'categories.*' => 'exists:categories,id',
         ];
@@ -174,13 +175,15 @@ class RecipeController extends Controller
             $ingredients = [];
 
             foreach ($validatedData['ingredients'] as $ingredientData) {
-                $ingredient = Ingredient::firstOrCreate(
-                    ['name' => $ingredientData['name']],
-                    ['quantity' => $ingredientData['quantity']]
-                );
+                $ingredient = Ingredient::firstOrCreate([
+                    'name' => $ingredientData['name'],
+                    'metric' => $ingredientData['metric'],
+                    'calories' => $ingredientData['quantity']*$ingredientData['calories']
+                        ]);
 
                 $ingredients[$ingredient->id] = ['quantity' => $ingredientData['quantity']];
             }
+            dd($ingredients);
             $recipe->ingredientss()->attach($ingredients);
 
             $recipe->categories()->attach($validatedData['categories']);

@@ -35,7 +35,7 @@
           @csrf
 
           <div class="mb-3">
-            <label for="name" class="form-label">Title</label>
+            <label for="name" class="form-label">Name</label>
             <input type="text" id="name" class="form-control @error("name") is-invalid @enderror" name="title" value="{{ old('name') }}">
             @error("name")
               <div class="invalid-feedback">
@@ -46,7 +46,7 @@
 
           <div class="mb-3">
             <label for="image" class="form-label">Image</label>
-            <input type="file" id="image" class="form-control @error("image") is-invalid @enderror" name="image">
+            <input type="file" id="image" class="form-control @error("image") is-invalid @enderror" required name="image">
             @error("image")
               <div class="invalid-feedback">
                 {{ $message }}
@@ -58,7 +58,7 @@
             <h4 class="mb-2">Ingrédients</h4>
             <div class="ingredient-item mb-2">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <input type="text" class="form-control @error("ingredients[0][name]") is-invalid @enderror"
                     name="ingredients[0][name]" placeholder="Nom de l'ingrédient" value="{{ old('ingredients[0][name]') }}" required>
                   @error("ingredients[0][name]")
@@ -67,15 +67,33 @@
                     </div>
                   @enderror
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                   <input type="text" class="form-control @error("ingredients[0][quantity]") is-invalid @enderror"
-                    name="ingredients[0][quantity]" placeholder="Quantité" value="{{ old('ingredients[0][quantity]') }}" required>
+                    name="ingredients[0][quantity]" placeholder="Quantity" value="{{ old('ingredients[0][quantity]') }}" required>
                   @error("ingredients[0][quantity]")
                     <div class="invalid-feedback">
                       {{ $message }}
                     </div>
                   @enderror
                 </div>
+                  <div class="col-md-2">
+                      <input type="text" class="form-control @error("ingredients[0][metric]") is-invalid @enderror"
+                             name="ingredients[0][metric]" placeholder="Metric" value="{{ old('ingredients[0][metric]') }}" required>
+                      @error("ingredients[0][metric]")
+                      <div class="invalid-feedback">
+                          {{ $message }}
+                      </div>
+                      @enderror
+                  </div>
+                  <div class="col-md-3">
+                      <input type="number" class="form-control @error("ingredients[0][calories]") is-invalid @enderror"
+                             name="ingredients[0][calories]" placeholder="Unité calorie en Kcal" value="{{ old('ingredients[0][calories]') }}" required>
+                      @error("ingredients[0][calories]")
+                      <div class="invalid-feedback">
+                          {{ $message }}
+                      </div>
+                      @enderror
+                  </div>
               </div>
             </div>
           </div>

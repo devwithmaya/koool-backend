@@ -31,6 +31,8 @@
               <tr>
                 <th>Name</th>
                 <th>Quantity</th>
+                  <th>Metric</th>
+                  <th>Calories(Kcal/100g)</th>
                 <th class="no-sort">Actions</th>
               </tr>
             </thead>
@@ -40,6 +42,8 @@
               <tr>
                 <td>{{$recipe->name}}</td>
                 <td>{{$recipe->quantity}}</td>
+                  <td>{{$recipe->metric}}</td>
+                  <td>{{$recipe->calories}}</td>
                   <td class="actions">
                       <form action="{{ route('ingredients.destroy',$recipe->id) }}" method="POST">
                           @csrf

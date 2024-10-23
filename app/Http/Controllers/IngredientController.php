@@ -21,7 +21,7 @@ class IngredientController extends Controller
 
     public function create()
     {
-        return view('pages.forms.create-ingredient');
+        return view('ingredients.create');
     }
     /**
      * Store a newly created resource in storage.
@@ -35,7 +35,16 @@ class IngredientController extends Controller
             'calories' => ['required','decimal']
         ]);
 
-        Ingredient::create($validated->getData());
+        $validatedData = $validated->getData();
+
+        //dd($validatedData['name']);
+        Ingredient::create([
+            'name' => $validatedData['name'],
+            'quantity' => $validatedData['quantity'],
+            'metric' => $validatedData['metric'],
+            'calories' => $validatedData['calories']
+        ]);
+
         return to_route('ingredients.index');
     }
 
@@ -53,7 +62,7 @@ class IngredientController extends Controller
 
     public function edit(Ingredient $ingredient)
     {
-        return view('ingredients.edit-ingredient',[
+        return view('ingredients.edit',[
             'ingredient' => $ingredient
         ]);
     }
@@ -65,17 +74,10 @@ class IngredientController extends Controller
     {
         $validated = Validator::make($request->all(),[
             'name' => ['required','string'],
-            'quantity' => ['required','string']
+            'quantity' => ['required','string'],
+            'metric' => ['required', 'string'],
+            'calories' => ['required','decimal']
         ]);
-        //dd($validated->fails());
-        if ($validated->fails())
-        {
-            return \response()->json([
-                'status' => Response::HTTP_BAD_REQUEST,
-                'message' => 'Bad Request',
-                'errors' => $validated->errors()
-            ]);
-        }
         $ingredient = Ingredient::find($id);
         $ingredient->update($request->all());
         return to_route('ingredients.index');

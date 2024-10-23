@@ -25,40 +25,40 @@
                     <form  action="{{ route('ingredients.store') }}" method="POST">
                         @csrf
                         <div class="mb-3">
-                            <label for="name" class="form-label">Title</label>
-                            <input id="name" class="form-control @if($errors->any()) is-invalid @endif" name="name" type="text">
-                            @if($errors->any())
-                              <div class="invalid-feedback">
-                                  name is required
-                              </div>
-                            @endif
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" id="name" required class="form-control @error("name") is-invalid @enderror" name="name">
+                            @error("name")
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="quantity" class="form-label">Quantity</label>
-                            <input id="quantity" class="form-control @if($errors->any()) is-invalid @endif" name="quantity" type="number">
-                            @if($errors->any())
-                              <div class="invalid-feedback">
-                                  quantity is required
-                              </div>
-                              @endif
+                            <input id="quantity" required class="form-control @error("quantity") is-invalid @enderror" name="quantity" type="number">
+                            @error("quantity")
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="metric" class="form-label">Metric</label>
-                            <input id="metric" class="form-control @if($errors->any()) is-invalid @endif" name="metric" type="text">
-                            @if($errors->any())
-                                <div class="invalid-feedback">
-                                    metric is required
-                                </div>
-                            @endif
+                            <input id="metric" required class="form-control @error("metric") is-invalid @enderror" name="metric" type="text">
+                            @error("metric")
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="calories" class="form-label">Calories</label>
-                            <input id="calories" class="form-control @if($errors->any()) is-invalid @endif" name="calories" type="number">
-                            @if($errors->any())
-                                <div class="invalid-feedback">
-                                    calories is required
-                                </div>
-                            @endif
+                            <input id="calories" required class="form-control @error("calories") is-invalid @enderror" name="calories" type="number">
+                            @error("calories")
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <button class="btn btn-primary" type="submit">Submit</button>
                     </form>
