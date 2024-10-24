@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\CalorieController;
 use App\Http\Controllers\Controller;
 use App\Ingredient;
 use App\Recipe;
@@ -217,11 +218,14 @@ class RecipeController extends Controller
      * }
      * }
      */
-    public function show(string $id)
+    public function show(string $id, CalorieController $calorieController)
     {
         //dd($id);
         $recipe = Recipe::with('ingredientss')->with('categories')->find($id);
+        $calories = $calorieController->calculatorCalorie($id);
+        //dd($calories);
         return \response()->json([
+            'calories' => $calories,
             'recipe' => $recipe
         ],Response::HTTP_OK);
     }

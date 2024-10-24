@@ -21,7 +21,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"></button>
                 </div>
             @endif
-        
+
             @if(Session::has("error"))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>{{ Session::get("erreur") }}</strong>
@@ -55,10 +55,9 @@
                                         <td><img src="{{asset('storage/'.$recipe->image)}}" alt="Image du recipe"></td>
                                         <td>{{$recipe->title}}</td>
                                         <td>
-
                                             @if($recipe->ingredientss)
                                                 @foreach($recipe->ingredientss as $ingredient)
-                                                    <div class="badge bg-primary">{{$ingredient->quantity}} {{$ingredient->name}}</div>
+                                                    <div class="badge bg-primary">{{$ingredient->quantity}}{{$ingredient->metric}} {{$ingredient->name}}</div>
                                                 @endforeach
                                             @endif
 
