@@ -92,4 +92,9 @@ class IngredientController extends Controller
         $ingredient->delete();
         return to_route('ingredients.index')->with('success', 'L\'ingredient a bien été supprimé');
     }
+
+    public function getCalorie()
+    {
+
+    }
 }

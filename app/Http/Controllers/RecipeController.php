@@ -177,13 +177,14 @@ class RecipeController extends Controller
             foreach ($validatedData['ingredients'] as $ingredientData) {
                 $ingredient = Ingredient::firstOrCreate([
                     'name' => $ingredientData['name'],
+                    'quantity' => $ingredientData['quantity'],
                     'metric' => $ingredientData['metric'],
                     'calories' => $ingredientData['quantity']*$ingredientData['calories']
                         ]);
 
                 $ingredients[$ingredient->id] = ['quantity' => $ingredientData['quantity']];
             }
-            dd($ingredients);
+            //dd($ingredients);
             $recipe->ingredientss()->attach($ingredients);
 
             $recipe->categories()->attach($validatedData['categories']);
